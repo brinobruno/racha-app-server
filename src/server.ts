@@ -9,11 +9,13 @@ const PORT_NUMBER: number =
   parseInt(<string>process.env.PORT_NUMBER, 10) || 3333
 
 app.get('/hello', async () => {
-  const transaction = await knex('transactions').insert({
-    id: crypto.randomUUID(),
-    title: 'Transaction test 3',
-    amount: 1000,
-  })
+  const transaction = await knex('transactions')
+    .insert({
+      id: crypto.randomUUID(),
+      title: 'Transaction test 3',
+      amount: 1000,
+    })
+    .returning('*')
 
   return transaction
 })
