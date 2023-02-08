@@ -1,30 +1,13 @@
 import 'dotenv/config'
 import fastify from 'fastify'
-import crypto from 'node:crypto'
-import { knex } from './database'
+import { usersRoutes } from './routes/users'
 
 const app = fastify()
 
+app.register(usersRoutes)
+
 const PORT_NUMBER: number =
   parseInt(<string>process.env.PORT_NUMBER, 10) || 3333
-
-app.get('/hello', async () => {
-  const transaction = await knex('transactions')
-    .insert({
-      id: crypto.randomUUID(),
-      title: 'Transaction test 3',
-      amount: 1000,
-    })
-    .returning('*')
-
-  return transaction
-})
-
-app.get('/getdb', async () => {
-  const transactions = await knex.select('*').from('transactions')
-
-  return transactions
-})
 
 app
   .listen({
