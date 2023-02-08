@@ -1,7 +1,7 @@
+import 'dotenv/config'
 import fastify from 'fastify'
 import crypto from 'node:crypto'
 import { knex } from './database'
-require('dotenv').config()
 
 const app = fastify()
 
