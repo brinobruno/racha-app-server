@@ -11,11 +11,17 @@ const PORT_NUMBER: number =
 app.get('/hello', async () => {
   const transaction = await knex('transactions').insert({
     id: crypto.randomUUID(),
-    title: 'Transaction test 1',
+    title: 'Transaction test 3',
     amount: 1000,
   })
 
   return transaction
+})
+
+app.get('/getdb', async () => {
+  const transactions = await knex.select('*').from('transactions')
+
+  return transactions
 })
 
 app
