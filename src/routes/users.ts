@@ -3,21 +3,15 @@ import { knex } from './../database'
 import { FastifyInstance } from 'fastify'
 
 export async function usersRoutes(app: FastifyInstance) {
-  app.get('/hello', async () => {
-    const transaction = await knex('transactions')
+  app.post('/users/create', async () => {
+    const user = await knex('users')
       .insert({
         id: crypto.randomUUID(),
-        title: 'Transaction test 3',
-        amount: 1000,
+        email: 'brunosantos6ft@gmail.com',
+        password: 'password123',
       })
       .returning('*')
 
-    return transaction
-  })
-
-  app.get('/getdb', async () => {
-    const transactions = await knex.select('*').from('transactions')
-
-    return transactions
+    return user
   })
 }
