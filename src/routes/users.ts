@@ -3,7 +3,7 @@ import { knex } from './../database'
 import { FastifyInstance } from 'fastify'
 
 export async function usersRoutes(app: FastifyInstance) {
-  app.post('/users/create', async () => {
+  app.post('/create', async () => {
     const user = await knex('users')
       .insert({
         id: crypto.randomUUID(),
