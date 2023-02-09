@@ -2,6 +2,7 @@ import crypto from 'node:crypto'
 import { knex } from './../database'
 import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
+import { hash } from 'bcryptjs'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/create', async (request, reply) => {
@@ -12,10 +13,22 @@ export async function usersRoutes(app: FastifyInstance) {
 
     const { email, password } = createUserBodySchema.parse(request.body)
 
+    const userAlreadyExists = await knex
+      .select('email')
+      .from('users')
+      .where('email', email)
+      .first()
+
+    if (userAlreadyExists) {
+      return reply.status(403).send({ message: 'User already exists' })
+    }
+
+    const passwordHash = await hash(password, 8)
+
     await knex('users').insert({
       id: crypto.randomUUID(),
       email,
-      password,
+      password: passwordHash,
     })
 
     return reply.status(201).send({ message: 'User created successfully.' })
