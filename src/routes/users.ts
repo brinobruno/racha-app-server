@@ -2,7 +2,7 @@ import crypto from 'node:crypto'
 import { knex } from './../database'
 import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
-import { hash } from 'bcryptjs'
+import { compare, hash } from 'bcryptjs'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/create', async (request, reply) => {
@@ -55,5 +55,32 @@ export async function usersRoutes(app: FastifyInstance) {
     return {
       user,
     }
+  })
+
+  app.post('/login', async (request, reply) => {
+    const loginUserBodySchema = z.object({
+      email: z.string().email(),
+      password: z.string(),
+    })
+
+    const { email, password } = loginUserBodySchema.parse(request.body)
+
+    const userExists = await knex
+      .select('email', 'password')
+      .from('users')
+      .where('email', email)
+      .first()
+
+    if (!userExists) {
+      return reply.status(422).send({ message: 'User does not exist' })
+    }
+
+    const matchPassword = await compare(password, userExists.password)
+
+    if (!matchPassword) {
+      return reply.status(401).send({ error: 'Incorrect email or password' })
+    }
+
+    return reply.status(200).send({ message: 'User logged in successfully' })
   })
 }
