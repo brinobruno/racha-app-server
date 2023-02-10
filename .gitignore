@@ -1,6 +1,9 @@
 docs
 node_modules
+build
+
 .env
 .env.test
+
 db/app.db
 db/test.db
