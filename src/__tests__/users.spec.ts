@@ -1,4 +1,12 @@
-import { describe, expect, it, beforeAll, afterAll } from '@jest/globals'
+import {
+  describe,
+  expect,
+  it,
+  beforeAll,
+  afterAll,
+  beforeEach,
+} from '@jest/globals'
+import { execSync } from 'node:child_process'
 import request from 'supertest'
 import { app } from '../app'
 
@@ -10,6 +18,12 @@ describe('Users routes', () => {
 
   afterAll(async () => {
     await app.close()
+  })
+
+  // To always get a clean database on each test
+  beforeEach(() => {
+    execSync('yarn knex migrate:rollback --all')
+    execSync('yarn knex migrate:latest')
   })
 
   it('Should be able to create a new account', async () => {
