@@ -20,4 +20,6 @@ describe('Users routes', () => {
 
     expect(response.statusCode).toBe(201)
   })
+
+  it.todo('Should be able to list all users')
 })
