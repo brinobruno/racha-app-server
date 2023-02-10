@@ -44,15 +44,16 @@ describe('Users routes', () => {
       })
 
     const cookies = createUserResponse.get('Set-Cookie')
+    const newUserId = createUserResponse.body.id
 
     const listUserResponse = await request(app.server)
-      .get('/users/dbd87ae4-2c02-4619-94f1-bb51b3502971')
+      .get(`/users/${newUserId}`)
       .set('Cookie', cookies)
       .expect(200)
 
     expect(listUserResponse.body.user).toEqual(
       expect.objectContaining({
-        email: expect.any(String),
+        email: 'accountjest@jest.com',
         password: expect.any(String),
       }),
     )
