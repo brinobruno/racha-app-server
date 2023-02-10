@@ -23,12 +23,24 @@ export async function usersRoutes(app: FastifyInstance) {
       return reply.status(403).send({ message: 'User already exists' })
     }
 
+    let sessionId = request.cookies.sessionId
+
+    if (!sessionId) {
+      sessionId = crypto.randomUUID()
+
+      reply.cookie('sessionId', sessionId, {
+        path: '/',
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days in milliseconds
+      })
+    }
+
     const passwordHash = await hash(password, 8)
 
     await knex('users').insert({
       id: crypto.randomUUID(),
       email,
       password: passwordHash,
+      session_id: sessionId,
     })
 
     return reply.status(201).send({ message: 'User created successfully.' })
