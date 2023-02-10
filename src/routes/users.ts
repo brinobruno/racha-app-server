@@ -5,6 +5,7 @@ import { compare, hash } from 'bcryptjs'
 
 import { knex } from './../database'
 import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
+import { getDaysAmountInMS } from '../utils/getDaysAmountInMS'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/create', async (request, reply) => {
@@ -32,7 +33,7 @@ export async function usersRoutes(app: FastifyInstance) {
 
       reply.cookie('sessionId', sessionId, {
         path: '/',
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days in milliseconds
+        maxAge: getDaysAmountInMS(7), // 7 days in milliseconds
       })
     }
 
