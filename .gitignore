@@ -12,5 +12,4 @@ build
 .env.test
 
 # Database
-db/app.db
-db/test.db
+db/*.db
