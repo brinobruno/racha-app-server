@@ -39,14 +39,18 @@ export async function usersRoutes(app: FastifyInstance) {
 
     const passwordHash = await hash(password, 8)
 
-    await knex('users').insert({
-      id: crypto.randomUUID(),
-      email,
-      password: passwordHash,
-      session_id: sessionId,
-    })
+    const userToCreate = await knex('users')
+      .insert({
+        id: crypto.randomUUID(),
+        email,
+        password: passwordHash,
+        session_id: sessionId,
+      })
+      .returning('id')
 
-    return reply.status(201).send({ message: 'User created successfully.' })
+    return reply
+      .status(201)
+      .send({ message: 'User created successfully.', id: userToCreate[0].id })
   })
 
   app.get('/', async () => {
