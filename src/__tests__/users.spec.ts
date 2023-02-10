@@ -14,11 +14,34 @@ describe('Users routes', () => {
 
   it('Should be able to create a new account', async () => {
     const response = await request(app.server).post('/users/create').send({
-      email: 'account12@jest.com',
+      email: 'account123456@jest.com',
       password: 'weakpasssword123',
     })
 
     expect(response.statusCode).toBe(201)
+  })
+
+  it('Should be able to list a user by id if cookie is present', async () => {
+    const createUserResponse = await request(app.server)
+      .post('/users/create')
+      .send({
+        email: 'accountjest@jest.com',
+        password: 'weakpasssword123',
+      })
+
+    const cookies = createUserResponse.get('Set-Cookie')
+
+    const listUserResponse = await request(app.server)
+      .get('/users/dbd87ae4-2c02-4619-94f1-bb51b3502971')
+      .set('Cookie', cookies)
+      .expect(200)
+
+    expect(listUserResponse.body.user).toEqual(
+      expect.objectContaining({
+        email: expect.any(String),
+        password: expect.any(String),
+      }),
+    )
   })
 
   it.todo('Should be able to list all users')
