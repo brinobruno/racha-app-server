@@ -14,7 +14,7 @@
     "api"
   ],
   "engines": {
-    "node": "^16"
+    "node": ">=18"
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
