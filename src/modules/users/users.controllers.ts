@@ -5,6 +5,7 @@ import { compare, hash } from 'bcryptjs'
 
 import { knex } from '../../database'
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
+import { findUsers } from './users.services'
 
 export async function createUserHandler(
   request: FastifyRequest,
@@ -54,11 +55,8 @@ export async function createUserHandler(
     .send({ message: 'User created successfully.', id: userToCreate[0].id })
 }
 
-export async function getUsersHandler(
-  request: FastifyRequest,
-  reply: FastifyReply,
-) {
-  const users = await knex('users').select('*')
+export async function getUsersHandler() {
+  const users = await findUsers()
 
   return {
     users,
