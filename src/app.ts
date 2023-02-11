@@ -1,5 +1,5 @@
 import fastify from 'fastify'
-import { usersRoutes } from './routes/users'
+import { usersRoutes } from './modules/users/users.routes'
 import cookie from '@fastify/cookie'
 
 export const app = fastify()
