@@ -14,12 +14,6 @@ export async function findUserById(id: string) {
   return await knex('users').where('id', id).first()
 }
 
-export function setUserParamsSchema() {
-  return z.object({
-    id: z.string().uuid(),
-  })
-}
-
 export async function createUser(
   input: z.infer<typeof createUserBodySchema>,
   sessionId: string | undefined,
@@ -48,4 +42,10 @@ export async function createUser(
     .returning('id')
 
   return userToCreate
+}
+
+export function setUserParamsSchema() {
+  return z.object({
+    id: z.string().uuid(),
+  })
 }
