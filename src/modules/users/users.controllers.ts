@@ -1,58 +1,43 @@
-import crypto from 'node:crypto'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { compare, hash } from 'bcryptjs'
+import { compare } from 'bcryptjs'
+import crypto from 'node:crypto'
 
 import { knex } from '../../database'
+import { createUserBodySchema } from './users.schemas'
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
-import { findUserById, findUsers, setUserParamsSchema } from './users.services'
+import {
+  createUser,
+  findUserById,
+  findUsers,
+  setUserParamsSchema,
+} from './users.services'
 
 export async function createUserHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const createUserBodySchema = z.object({
-    email: z.string().email(),
-    password: z.string(),
-  })
-
-  const { email, password } = createUserBodySchema.parse(request.body)
-
-  const userAlreadyExists = await knex
-    .select('email')
-    .from('users')
-    .where('email', email)
-    .first()
-
-  if (userAlreadyExists) {
-    return reply.status(403).send({ message: 'User already exists' })
-  }
-
+  const body = createUserBodySchema.parse(request.body)
   let sessionId = request.cookies.sessionId
 
-  if (!sessionId) {
-    sessionId = crypto.randomUUID()
+  try {
+    const user = await createUser(body, sessionId)
 
-    reply.cookie('sessionId', sessionId, {
-      path: '/',
-      maxAge: getDaysAmountInMS(7), // 7 days in milliseconds
-    })
+    if (!sessionId) {
+      sessionId = crypto.randomUUID()
+
+      reply.cookie('sessionId', sessionId, {
+        path: '/',
+        maxAge: getDaysAmountInMS(7), // 7 days in milliseconds
+      })
+    }
+
+    return reply
+      .status(201)
+      .send({ message: 'User created successfully.', id: user[0].id })
+  } catch (error) {
+    return reply.status(403).send({ error: 'User already exists' })
   }
-
-  const passwordHash = await hash(password, 8)
-
-  const userToCreate = await knex('users')
-    .insert({
-      id: crypto.randomUUID(),
-      email,
-      password: passwordHash,
-      session_id: sessionId,
-    })
-    .returning('id')
-
-  return reply
-    .status(201)
-    .send({ message: 'User created successfully.', id: userToCreate[0].id })
 }
 
 export async function getUsersHandler() {
