@@ -1,15 +1,14 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { compare } from 'bcryptjs'
 import crypto from 'node:crypto'
 
-import { knex } from '../../database'
 import { createUserBodySchema } from './users.schemas'
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
 import {
   createUser,
   findUserById,
   findUsers,
+  loginUser,
   setUserParamsSchema,
 } from './users.services'
 
@@ -72,23 +71,13 @@ export async function loginUserHandler(
     password: z.string(),
   })
 
-  const { email, password } = loginUserBodySchema.parse(request.body)
+  const body = loginUserBodySchema.parse(request.body)
 
-  const userExists = await knex
-    .select('email', 'password')
-    .from('users')
-    .where('email', email)
-    .first()
+  try {
+    await loginUser(body)
 
-  if (!userExists) {
-    return reply.status(422).send({ message: 'User does not exist' })
+    return reply.status(200).send({ message: 'User logged in successfully' })
+  } catch (error: any) {
+    reply.status(error.code).send({ error: error.message })
   }
-
-  const matchPassword = await compare(password, userExists.password)
-
-  if (!matchPassword) {
-    return reply.status(401).send({ error: 'Incorrect email or password' })
-  }
-
-  return reply.status(200).send({ message: 'User logged in successfully' })
 }
