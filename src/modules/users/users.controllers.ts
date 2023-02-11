@@ -5,7 +5,7 @@ import { compare, hash } from 'bcryptjs'
 
 import { knex } from '../../database'
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
-import { findUsers } from './users.services'
+import { findUserById, findUsers, setUserParamsSchema } from './users.services'
 
 export async function createUserHandler(
   request: FastifyRequest,
@@ -67,14 +67,11 @@ export async function getUserByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const getUserParamsSchema = z.object({
-    id: z.string().uuid(),
-  })
+  const getUserParamsSchema = setUserParamsSchema()
 
   const { id } = getUserParamsSchema.parse(request.params)
 
-  /* Use first() to avoid returning an array when only one item is expected */
-  const user = await knex('users').where('id', id).first()
+  const user = await findUserById(id)
 
   return {
     user,
