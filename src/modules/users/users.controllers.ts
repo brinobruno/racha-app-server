@@ -75,10 +75,12 @@ export async function getUserByIdHandler(
 
   const { id } = getUserParamsSchema.parse(request.params)
 
-  const user = await findUserById(id)
+  try {
+    const user = await findUserById(id)
 
-  return {
-    user,
+    return reply.status(200).send({ message: 'User found', user })
+  } catch (error: any) {
+    reply.status(error.code).send({ error: error.message })
   }
 }
 

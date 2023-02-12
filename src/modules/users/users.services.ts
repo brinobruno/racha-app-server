@@ -64,7 +64,11 @@ export async function findUsers() {
 
 export async function findUserById(id: string) {
   /* Use first() to avoid returning an array when only one item is expected */
-  return await knex('users').where('id', id).first()
+  const user = await knex('users').where('id', id).first()
+
+  if (!user) throw new HttpError(404, 'User not found')
+
+  return user
 }
 
 export async function deleteUserById(id: string) {
