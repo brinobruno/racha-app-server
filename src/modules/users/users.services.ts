@@ -36,7 +36,10 @@ export async function createUser(
   return userToCreate
 }
 
-export async function loginUser(input: z.infer<typeof loginUserBodySchema>) {
+export async function loginUser(
+  input: z.infer<typeof loginUserBodySchema>,
+  sessionId: string | undefined,
+) {
   const { email, password } = input
 
   const userExists = await knex
