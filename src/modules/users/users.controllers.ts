@@ -90,7 +90,17 @@ export async function deleteUserByIdHandler(
 ) {
   const getUserParamsSchema = setUserParamsSchema()
 
-  const { id } = getUserParamsSchema.parse(request.params)
+  try {
+    const { id } = getUserParamsSchema.parse(request.params)
 
-  return await deleteUserById(id)
+    await deleteUserById(id)
+
+    return reply.status(200).send({ message: 'User deleted' })
+  } catch (error: any) {
+    if (error.message.includes('Invalid uuid')) {
+      return reply.status(400).send({ error: 'Invalid UUID format' })
+    }
+
+    reply.status(error.code).send({ error: error.message })
+  }
 }
