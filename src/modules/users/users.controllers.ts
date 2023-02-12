@@ -6,6 +6,7 @@ import { setUserParamsSchema, createUserBodySchema } from './users.schemas'
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
 import {
   createUser,
+  deleteUserById,
   findUserById,
   findUsers,
   loginUser,
@@ -79,4 +80,15 @@ export async function getUserByIdHandler(
   return {
     user,
   }
+}
+
+export async function deleteUserByIdHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const getUserParamsSchema = setUserParamsSchema()
+
+  const { id } = getUserParamsSchema.parse(request.params)
+
+  return await deleteUserById(id)
 }
