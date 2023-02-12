@@ -29,12 +29,34 @@ describe('Users routes', () => {
   })
 
   it('Should be able to create a new account', async () => {
-    const response = await request(app.server).post('/users/create').send({
-      email: 'account123456@jest.com',
-      password: 'weakpasssword123',
-    })
+    const createUserResponse = await request(app.server)
+      .post('/users/create')
+      .send({
+        email: 'account123456@jest.com',
+        password: 'weakpasssword123',
+      })
+      .expect(201)
 
-    expect(response.statusCode).toBe(201)
+    const cookies = createUserResponse.get('Set-Cookie')
+    const userId = createUserResponse.body.id
+
+    const getUserResponse = await request(app.server)
+      .get(`/users/${userId}`)
+      .set('Cookie', cookies)
+      .expect(200)
+
+    const isPasswordCorrect = await compare(
+      'weakpasssword123',
+      getUserResponse.body.user.password,
+    )
+
+    expect(isPasswordCorrect).toBe(true)
+
+    expect(getUserResponse.body.user).toEqual(
+      expect.objectContaining({
+        email: 'account123456@jest.com',
+      }),
+    )
   })
 
   it('Should be able to login a user', async () => {
