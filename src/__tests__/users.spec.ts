@@ -78,9 +78,9 @@ describe('Users routes', () => {
   })
 
   it('Should be able to list all users', async () => {
-    const users = await request(app.server).get('/users').expect(200)
+    const response = await request(app.server).get('/users').expect(200)
 
-    expect(users.body.users).toEqual([])
+    expect(response.body.users).toEqual([])
   })
 
   it('Should be able to list a user by id if cookie is present', async () => {
@@ -146,17 +146,17 @@ describe('Users routes', () => {
       })
       .expect(200)
 
-    const getResponse = await request(app.server)
+    const getUserResponse = await request(app.server)
       .get(`/users/${userId}`)
       .set('Cookie', cookies)
       .expect(200)
 
     const isPasswordCorrect = await compare(
       'strongerpassword456',
-      getResponse.body.user.password,
+      getUserResponse.body.user.password,
     )
 
-    expect(getResponse.body.user.email).toBe('updatedemail@jest.com')
+    expect(getUserResponse.body.user.email).toBe('updatedemail@jest.com')
     expect(isPasswordCorrect).toBe(true)
   })
 })
