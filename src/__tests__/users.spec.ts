@@ -94,15 +94,21 @@ describe('Users routes', () => {
     const cookies = createUserResponse.get('Set-Cookie')
     const newUserId = createUserResponse.body.id
 
-    const listUserResponse = await request(app.server)
+    const getUserResponse = await request(app.server)
       .get(`/users/${newUserId}`)
       .set('Cookie', cookies)
       .expect(200)
 
-    expect(listUserResponse.body.user).toEqual(
+    const isPasswordCorrect = await compare(
+      'weakpasssword123',
+      getUserResponse.body.user.password,
+    )
+
+    expect(isPasswordCorrect).toBe(true)
+
+    expect(getUserResponse.body.user).toEqual(
       expect.objectContaining({
         email: 'accountjest@jest.com',
-        password: expect.any(String),
       }),
     )
   })
