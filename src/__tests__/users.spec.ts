@@ -77,5 +77,9 @@ describe('Users routes', () => {
     )
   })
 
-  it.todo('Should be able to list all users')
+  it('Should be able to list all users', async () => {
+    const users = await request(app.server).get('/users').expect(200)
+
+    expect(users.body.users).toEqual([])
+  })
 })
