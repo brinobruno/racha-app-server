@@ -35,6 +35,24 @@ describe('Users routes', () => {
     expect(response.statusCode).toBe(201)
   })
 
+  it('Should be able to login a user', async () => {
+    const userCreated = await request(app.server).post('/users/create').send({
+      email: 'account@jest.com',
+      password: 'weakpassword123',
+    })
+
+    expect(userCreated.statusCode).toBe(201)
+
+    const authenticatedUser = await request(app.server)
+      .post('/users/login')
+      .send({
+        email: 'account@jest.com',
+        password: 'weakpassword123',
+      })
+
+    expect(authenticatedUser.statusCode).toBe(200)
+  })
+
   it('Should be able to list a user by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
