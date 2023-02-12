@@ -12,6 +12,8 @@ import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/create', createUserHandler)
 
+  app.post('/login', loginUserHandler)
+
   app.get('/', getUsersHandler)
 
   app.get(
@@ -21,8 +23,6 @@ export async function usersRoutes(app: FastifyInstance) {
     },
     getUserByIdHandler,
   )
-
-  app.post('/login', loginUserHandler)
 
   app.delete(
     '/:id',
