@@ -1,3 +1,5 @@
+import request from 'supertest'
+import { execSync } from 'node:child_process'
 import {
   describe,
   expect,
@@ -6,8 +8,7 @@ import {
   afterAll,
   beforeEach,
 } from '@jest/globals'
-import { execSync } from 'node:child_process'
-import request from 'supertest'
+
 import { app } from '../app'
 
 describe('Users routes', () => {
