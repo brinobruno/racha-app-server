@@ -2,14 +2,13 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import crypto from 'node:crypto'
 
-import { createUserBodySchema } from './users.schemas'
+import { setUserParamsSchema, createUserBodySchema } from './users.schemas'
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
 import {
   createUser,
   findUserById,
   findUsers,
   loginUser,
-  setUserParamsSchema,
 } from './users.services'
 
 export async function createUserHandler(
