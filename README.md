@@ -10,3 +10,7 @@
 
 # Non-funcional requirements
 - [ ] 
+
+# TODO
+- [ ] Uniform naming on tests/controllers/services
+- [ ] Add repository info for tests
