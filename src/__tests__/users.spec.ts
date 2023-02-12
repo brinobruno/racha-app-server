@@ -53,6 +53,12 @@ describe('Users routes', () => {
     expect(authenticatedUser.statusCode).toBe(200)
   })
 
+  it('Should be able to list all users', async () => {
+    const users = await request(app.server).get('/users').expect(200)
+
+    expect(users.body.users).toEqual([])
+  })
+
   it('Should be able to list a user by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
@@ -75,11 +81,5 @@ describe('Users routes', () => {
         password: expect.any(String),
       }),
     )
-  })
-
-  it('Should be able to list all users', async () => {
-    const users = await request(app.server).get('/users').expect(200)
-
-    expect(users.body.users).toEqual([])
   })
 })
