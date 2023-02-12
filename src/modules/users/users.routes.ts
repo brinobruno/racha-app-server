@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify'
 
 import {
   createUserHandler,
+  deleteUserByIdHandler,
   getUserByIdHandler,
   getUsersHandler,
   loginUserHandler,
@@ -22,4 +23,12 @@ export async function usersRoutes(app: FastifyInstance) {
   )
 
   app.post('/login', loginUserHandler)
+
+  app.delete(
+    '/:id',
+    {
+      preHandler: [checkSessionIdExists], // Middleware
+    },
+    deleteUserByIdHandler,
+  )
 }
