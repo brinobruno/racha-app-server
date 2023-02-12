@@ -6,12 +6,6 @@ import { knex } from '../../database'
 import { createUserBodySchema, loginUserBodySchema } from './users.schemas'
 import { HttpError } from '../../errors/customException'
 
-export function setUserParamsSchema() {
-  return z.object({
-    id: z.string().uuid(),
-  })
-}
-
 export async function createUser(
   input: z.infer<typeof createUserBodySchema>,
   sessionId: string | undefined,
