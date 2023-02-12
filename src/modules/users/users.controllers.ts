@@ -39,6 +39,26 @@ export async function createUserHandler(
   }
 }
 
+export async function loginUserHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const loginUserBodySchema = z.object({
+    email: z.string().email(),
+    password: z.string(),
+  })
+
+  const body = loginUserBodySchema.parse(request.body)
+
+  try {
+    await loginUser(body)
+
+    return reply.status(200).send({ message: 'User logged in successfully' })
+  } catch (error: any) {
+    reply.status(error.code).send({ error: error.message })
+  }
+}
+
 export async function getUsersHandler() {
   const users = await findUsers()
 
@@ -59,25 +79,5 @@ export async function getUserByIdHandler(
 
   return {
     user,
-  }
-}
-
-export async function loginUserHandler(
-  request: FastifyRequest,
-  reply: FastifyReply,
-) {
-  const loginUserBodySchema = z.object({
-    email: z.string().email(),
-    password: z.string(),
-  })
-
-  const body = loginUserBodySchema.parse(request.body)
-
-  try {
-    await loginUser(body)
-
-    return reply.status(200).send({ message: 'User logged in successfully' })
-  } catch (error: any) {
-    reply.status(error.code).send({ error: error.message })
   }
 }
