@@ -72,5 +72,12 @@ export async function findUserById(id: string) {
 }
 
 export async function deleteUserById(id: string) {
+  const userExists = await knex('users').where('id', id)
+
+  if (Object.keys(userExists).length === 0)
+    throw new HttpError(404, 'User not found')
+
   await knex('users').where('id', id).delete()
+
+  return {}
 }
