@@ -1,8 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { z } from 'zod'
 import crypto from 'node:crypto'
 
-import { setUserParamsSchema, createUserBodySchema } from './users.schemas'
+import {
+  setUserParamsSchema,
+  createUserBodySchema,
+  loginUserBodySchema,
+} from './users.schemas'
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
 import {
   createUser,
@@ -43,11 +46,6 @@ export async function loginUserHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const loginUserBodySchema = z.object({
-    email: z.string().email(),
-    password: z.string(),
-  })
-
   const body = loginUserBodySchema.parse(request.body)
 
   try {
