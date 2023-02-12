@@ -10,6 +10,7 @@ import {
 } from '@jest/globals'
 
 import { app } from '../app'
+import { compare } from 'bcryptjs'
 
 describe('Users routes', () => {
   /* Make sure app (and thefore its routes) are done loading before testing */
@@ -101,5 +102,39 @@ describe('Users routes', () => {
       .expect(200)
 
     expect(deleteUserResponse.statusCode).toBe(200)
+  })
+
+  it('Should be able to update a user by id if cookie is present', async () => {
+    const createUserResponse = await request(app.server)
+      .post('/users/create')
+      .send({
+        email: 'account123456@jest.com',
+        password: 'weakpasssword123',
+      })
+
+    const cookies = createUserResponse.get('Set-Cookie')
+    const userId = createUserResponse.body.id
+
+    await request(app.server)
+      .put(`/users/${userId}`)
+      .set('Cookie', cookies)
+      .send({
+        email: 'updatedemail@jest.com',
+        password: 'strongerpassword456',
+      })
+      .expect(200)
+
+    const getResponse = await request(app.server)
+      .get(`/users/${userId}`)
+      .set('Cookie', cookies)
+      .expect(200)
+
+    const isPasswordCorrect = await compare(
+      'strongerpassword456',
+      getResponse.body.user.password,
+    )
+
+    expect(getResponse.body.user.email).toBe('updatedemail@jest.com')
+    expect(isPasswordCorrect).toBe(true)
   })
 })
