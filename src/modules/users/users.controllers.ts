@@ -73,13 +73,17 @@ export async function getUserByIdHandler(
 ) {
   const getUserParamsSchema = setUserParamsSchema()
 
-  const { id } = getUserParamsSchema.parse(request.params)
-
   try {
+    const { id } = getUserParamsSchema.parse(request.params)
+
     const user = await findUserById(id)
 
     return reply.status(200).send({ message: 'User found', user })
   } catch (error: any) {
+    if (error.message.includes('Invalid uuid')) {
+      return reply.status(400).send({ error: 'Invalid UUID format' })
+    }
+
     reply.status(error.code).send({ error: error.message })
   }
 }
