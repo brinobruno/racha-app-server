@@ -5,6 +5,7 @@ import {
   setUserParamsSchema,
   createUserBodySchema,
   loginUserBodySchema,
+  updateUserBodySchema,
 } from './users.schemas'
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
 import {
@@ -13,6 +14,7 @@ import {
   findUserById,
   findUsers,
   loginUser,
+  updateUser,
 } from './users.services'
 
 export async function createUserHandler(
@@ -118,5 +120,27 @@ export async function deleteUserByIdHandler(
     }
 
     reply.status(error.code).send({ error: error.message })
+  }
+}
+
+export async function updateUserByIdHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const getUserParamsSchema = setUserParamsSchema()
+
+  const body = updateUserBodySchema.parse(request.body)
+
+  try {
+    const { id } = getUserParamsSchema.parse(request.params)
+    const sessionId = request.cookies.sessionId
+
+    const updatedUser = await updateUser(body, id, sessionId)
+
+    return reply
+      .status(200)
+      .send({ message: 'User updated successfully.', id: updatedUser[0].id })
+  } catch (error) {
+    return reply.status(400).send({ error: 'Error updating user' })
   }
 }

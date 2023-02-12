@@ -3,7 +3,11 @@ import { compare, hash } from 'bcryptjs'
 import crypto from 'node:crypto'
 
 import { knex } from '../../database'
-import { createUserBodySchema, loginUserBodySchema } from './users.schemas'
+import {
+  createUserBodySchema,
+  loginUserBodySchema,
+  updateUserBodySchema,
+} from './users.schemas'
 import { HttpError } from '../../errors/customException'
 
 export async function createUser(
@@ -83,4 +87,23 @@ export async function deleteUserById(id: string) {
   await knex('users').where('id', id).delete()
 
   return {}
+}
+
+export async function updateUser(
+  input: z.infer<typeof updateUserBodySchema>,
+  id: string,
+  sessionId: string | undefined,
+) {
+  const { email, password } = input
+
+  const userToUpdate = await knex('users')
+    .where({ id })
+    .update({
+      email,
+      password: password ? await hash(password, 8) : undefined,
+      session_id: sessionId,
+    })
+    .returning('id')
+
+  return userToUpdate
 }
