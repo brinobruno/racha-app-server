@@ -82,4 +82,23 @@ describe('Users routes', () => {
       }),
     )
   })
+
+  it('Should be able to delete a user by id if cookie is present', async () => {
+    const createUserResponse = await request(app.server)
+      .post('/users/create')
+      .send({
+        email: 'accountjest@jest.com',
+        password: 'weakpasssword123',
+      })
+
+    const cookies = createUserResponse.get('Set-Cookie')
+    const newUserId = createUserResponse.body.id
+
+    const deleteUserResponse = await request(app.server)
+      .delete(`/users/${newUserId}`)
+      .set('Cookie', cookies)
+      .expect(200)
+
+    expect(deleteUserResponse.statusCode).toBe(200)
+  })
 })
