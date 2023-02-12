@@ -99,6 +99,10 @@ export async function deleteUserByIdHandler(
 
     await deleteUserById(id)
 
+    reply.cookie('sessionId', '', {
+      path: '/',
+    })
+
     return reply.status(200).send({ message: 'User deleted' })
   } catch (error: any) {
     if (error.message.includes('Invalid uuid')) {
