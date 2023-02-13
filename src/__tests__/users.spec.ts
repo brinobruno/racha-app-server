@@ -11,6 +11,12 @@ import {
 
 import { app } from '../app'
 import { compare } from 'bcryptjs'
+import {
+  USER_EMAIL,
+  USER_PASSWORD,
+  USER_UPDATED_EMAIL,
+  USER_UPDATED_PASSWORD,
+} from './repository'
 
 describe('Users routes', () => {
   /* Make sure app (and thefore its routes) are done loading before testing */
@@ -32,8 +38,8 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: 'account123456@jest.com',
-        password: 'weakpasssword123',
+        email: USER_EMAIL,
+        password: USER_PASSWORD,
       })
       .expect(201)
 
@@ -46,7 +52,7 @@ describe('Users routes', () => {
       .expect(200)
 
     const isPasswordCorrect = await compare(
-      'weakpasssword123',
+      USER_PASSWORD,
       getUserResponse.body.user.password,
     )
 
@@ -54,15 +60,15 @@ describe('Users routes', () => {
 
     expect(getUserResponse.body.user).toEqual(
       expect.objectContaining({
-        email: 'account123456@jest.com',
+        email: USER_EMAIL,
       }),
     )
   })
 
   it('Should be able to login a user', async () => {
     const userCreated = await request(app.server).post('/users/create').send({
-      email: 'account@jest.com',
-      password: 'weakpassword123',
+      email: USER_EMAIL,
+      password: USER_PASSWORD,
     })
 
     expect(userCreated.statusCode).toBe(201)
@@ -70,8 +76,8 @@ describe('Users routes', () => {
     const authenticatedUser = await request(app.server)
       .post('/users/login')
       .send({
-        email: 'account@jest.com',
-        password: 'weakpassword123',
+        email: USER_EMAIL,
+        password: USER_PASSWORD,
       })
 
     expect(authenticatedUser.statusCode).toBe(200)
@@ -87,8 +93,8 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: 'accountjest@jest.com',
-        password: 'weakpasssword123',
+        email: USER_EMAIL,
+        password: USER_PASSWORD,
       })
 
     const cookies = createUserResponse.get('Set-Cookie')
@@ -100,7 +106,7 @@ describe('Users routes', () => {
       .expect(200)
 
     const isPasswordCorrect = await compare(
-      'weakpasssword123',
+      USER_PASSWORD,
       getUserResponse.body.user.password,
     )
 
@@ -108,7 +114,7 @@ describe('Users routes', () => {
 
     expect(getUserResponse.body.user).toEqual(
       expect.objectContaining({
-        email: 'accountjest@jest.com',
+        email: USER_EMAIL,
       }),
     )
   })
@@ -117,8 +123,8 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: 'accountjest@jest.com',
-        password: 'weakpasssword123',
+        email: USER_EMAIL,
+        password: USER_PASSWORD,
       })
 
     const cookies = createUserResponse.get('Set-Cookie')
@@ -136,8 +142,8 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: 'account123456@jest.com',
-        password: 'weakpasssword123',
+        email: USER_EMAIL,
+        password: USER_PASSWORD,
       })
 
     const cookies = createUserResponse.get('Set-Cookie')
@@ -147,8 +153,8 @@ describe('Users routes', () => {
       .put(`/users/${userId}`)
       .set('Cookie', cookies)
       .send({
-        email: 'updatedemail@jest.com',
-        password: 'strongerpassword456',
+        email: USER_UPDATED_EMAIL,
+        password: USER_UPDATED_PASSWORD,
       })
       .expect(200)
 
@@ -158,11 +164,11 @@ describe('Users routes', () => {
       .expect(200)
 
     const isPasswordCorrect = await compare(
-      'strongerpassword456',
+      USER_UPDATED_PASSWORD,
       getUserResponse.body.user.password,
     )
 
-    expect(getUserResponse.body.user.email).toBe('updatedemail@jest.com')
+    expect(getUserResponse.body.user.email).toBe(USER_UPDATED_EMAIL)
     expect(isPasswordCorrect).toBe(true)
   })
 })
