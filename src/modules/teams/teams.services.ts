@@ -32,3 +32,7 @@ export async function createTeam(
 
   return teamToCreate
 }
+
+export async function findTeams() {
+  return await knex('teams').select('*')
+}
