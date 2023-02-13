@@ -1,5 +1,6 @@
 import request from 'supertest'
 import { execSync } from 'node:child_process'
+import { compare } from 'bcryptjs'
 import {
   describe,
   expect,
@@ -10,13 +11,12 @@ import {
 } from '@jest/globals'
 
 import { app } from '../app'
-import { compare } from 'bcryptjs'
 import {
   USER_EMAIL,
   USER_PASSWORD,
   USER_UPDATED_EMAIL,
   USER_UPDATED_PASSWORD,
-} from './repository'
+} from '../mockup-repository'
 
 describe('Users routes', () => {
   /* Make sure app (and thefore its routes) are done loading before testing */
