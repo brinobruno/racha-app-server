@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 
-import { createTeamHandler } from './teams.controllers'
+import { createTeamHandler, getTeamsHandler } from './teams.controllers'
 import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
 
 export async function teamsRoutes(app: FastifyInstance) {
@@ -11,4 +11,6 @@ export async function teamsRoutes(app: FastifyInstance) {
     },
     createTeamHandler,
   )
+
+  app.get('/', getTeamsHandler)
 }
