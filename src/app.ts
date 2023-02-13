@@ -1,6 +1,7 @@
 import fastify from 'fastify'
 import { usersRoutes } from './modules/users/users.routes'
 import cookie from '@fastify/cookie'
+import { teamsRoutes } from './modules/teams/teams.routes'
 
 export const app = fastify()
 
@@ -9,4 +10,8 @@ app.register(cookie)
 
 app.register(usersRoutes, {
   prefix: 'users',
+})
+
+app.register(teamsRoutes, {
+  prefix: 'users/teams',
 })
