@@ -6,7 +6,7 @@ import { knex } from '../../database'
 import { createTeamBodySchema } from './teams.schemas'
 
 export async function createTeam(input: z.infer<typeof createTeamBodySchema>) {
-  const { title, owner, badgeUrl } = input
+  const { title, owner, badge_url } = input
 
   const teamAlreadyExists = await knex
     .select('title')
@@ -23,7 +23,7 @@ export async function createTeam(input: z.infer<typeof createTeamBodySchema>) {
       id: crypto.randomUUID(),
       title,
       owner,
-      badge_url: badgeUrl,
+      badge_url,
     })
     .returning('id')
 
