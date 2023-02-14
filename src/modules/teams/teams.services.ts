@@ -42,3 +42,14 @@ export async function findTeamById(id: string) {
 
   return team
 }
+
+export async function deleteTeamById(id: string) {
+  const teamExists = await knex('teams').where('id', id)
+
+  if (Object.keys(teamExists).length === 0)
+    throw new HttpError(404, 'Team not found')
+
+  await knex('teams').where('id', id).delete()
+
+  return {}
+}
