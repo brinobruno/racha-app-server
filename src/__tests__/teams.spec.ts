@@ -129,4 +129,6 @@ describe('Teams routes', () => {
 
     expect(deleteTeamResponse.statusCode).toBe(200)
   })
+
+  it.todo('Should be able to update a team by ID')
 })
