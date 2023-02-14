@@ -14,6 +14,13 @@ const TEAM_OWNER = '777 Partners'
 
 const TEAM_BADGE_URL = 'https://github.com/brinobruno.png'
 
+const TEAM_UPDATED_TITLE = 'Queens Bosque Rangers'
+
+const TEAM_UPDATED_OWNER = 'John Textor'
+
+const TEAM_UPDATED_BADGE_URL =
+  'https://github.githubassets.com/images/modules/profile/achievements/quickdraw-default.png'
+
 export {
   USER_EMAIL,
   USER_PASSWORD,
@@ -22,4 +29,7 @@ export {
   TEAM_TITLE,
   TEAM_OWNER,
   TEAM_BADGE_URL,
+  TEAM_UPDATED_TITLE,
+  TEAM_UPDATED_OWNER,
+  TEAM_UPDATED_BADGE_URL,
 }
