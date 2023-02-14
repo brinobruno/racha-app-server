@@ -5,10 +5,7 @@ import { z } from 'zod'
 import { knex } from '../../database'
 import { createTeamBodySchema } from './teams.schemas'
 
-export async function createTeam(
-  input: z.infer<typeof createTeamBodySchema>,
-  sessionId: string | undefined,
-) {
+export async function createTeam(input: z.infer<typeof createTeamBodySchema>) {
   const { title, owner, badgeUrl } = input
 
   const teamAlreadyExists = await knex

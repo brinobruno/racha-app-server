@@ -8,10 +8,9 @@ export async function createTeamHandler(
   reply: FastifyReply,
 ) {
   const body = createTeamBodySchema.parse(request.body)
-  const sessionId = request.cookies.sessionId
 
   try {
-    const team = await createTeam(body, sessionId)
+    const team = await createTeam(body)
 
     return reply
       .status(201)
