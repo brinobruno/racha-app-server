@@ -1,11 +1,17 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { createTeamBodySchema, setUserParamsSchema } from './teams.schemas'
+import {
+  createTeamBodySchema,
+  setTeamParamsSchema,
+  setUserParamsSchema,
+  updateTeamBodySchema,
+} from './teams.schemas'
 import {
   createTeam,
   deleteTeamById,
   findTeamById,
   findTeams,
+  updateTeam,
 } from './teams.services'
 
 export async function createTeamHandler(
@@ -77,5 +83,26 @@ export async function deleteTeamByIdHandler(
     }
 
     reply.status(error.code).send({ error: error.message })
+  }
+}
+
+export async function updateTeamByIdHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const getTeamParamsSchema = setTeamParamsSchema()
+
+  const body = updateTeamBodySchema.parse(request.body)
+
+  try {
+    const { id } = getTeamParamsSchema.parse(request.params)
+
+    const updatedTeam = await updateTeam(body, id)
+
+    return reply
+      .status(200)
+      .send({ message: 'Team updated successfully.', id: updatedTeam[0].id })
+  } catch (error) {
+    return reply.status(400).send({ error: 'Error updating team' })
   }
 }
