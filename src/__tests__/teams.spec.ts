@@ -14,6 +14,9 @@ import {
   TEAM_BADGE_URL,
   TEAM_OWNER,
   TEAM_TITLE,
+  TEAM_UPDATED_BADGE_URL,
+  TEAM_UPDATED_OWNER,
+  TEAM_UPDATED_TITLE,
   USER_EMAIL,
   USER_PASSWORD,
 } from '../mockup-repository'
@@ -130,5 +133,45 @@ describe('Teams routes', () => {
     expect(deleteTeamResponse.statusCode).toBe(200)
   })
 
-  it.todo('Should be able to update a team by ID')
+  it('Should be able to update a team by id if cookie is present', async () => {
+    const createUserResponse = await request(app.server)
+      .post('/users/create')
+      .send({
+        email: USER_EMAIL,
+        password: USER_PASSWORD,
+      })
+
+    const cookies = createUserResponse.get('Set-Cookie')
+
+    const createTeamResponse = await request(app.server)
+      .post('/users/teams/create')
+      .set('Cookie', cookies)
+      .send({
+        title: TEAM_TITLE,
+        owner: TEAM_OWNER,
+        badge_url: TEAM_BADGE_URL,
+      })
+      .expect(201)
+
+    const teamId = createTeamResponse.body.id
+
+    await request(app.server)
+      .put(`/users/teams/${teamId}`)
+      .set('Cookie', cookies)
+      .send({
+        title: TEAM_UPDATED_TITLE,
+        owner: TEAM_UPDATED_OWNER,
+        badge_url: TEAM_UPDATED_BADGE_URL,
+      })
+      .expect(200)
+
+    const getTeamResponse = await request(app.server)
+      .get(`/users/teams/${teamId}`)
+      .set('Cookie', cookies)
+      .expect(200)
+
+    expect(getTeamResponse.body.team.title).toBe(TEAM_UPDATED_TITLE)
+    expect(getTeamResponse.body.team.owner).toBe(TEAM_UPDATED_OWNER)
+    expect(getTeamResponse.body.team.badge_url).toBe(TEAM_UPDATED_BADGE_URL)
+  })
 })
