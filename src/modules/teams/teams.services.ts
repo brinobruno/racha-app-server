@@ -4,6 +4,7 @@ import { z } from 'zod'
 
 import { knex } from '../../database'
 import { createTeamBodySchema } from './teams.schemas'
+import { HttpError } from '../../errors/customException'
 
 export async function createTeam(input: z.infer<typeof createTeamBodySchema>) {
   const { title, owner, badge_url } = input
@@ -32,4 +33,12 @@ export async function createTeam(input: z.infer<typeof createTeamBodySchema>) {
 
 export async function findTeams() {
   return await knex('teams').select('*')
+}
+
+export async function findTeamById(id: string) {
+  const team = await knex('teams').where('id', id).first()
+
+  if (!team) throw new HttpError(404, 'Team not found')
+
+  return team
 }
