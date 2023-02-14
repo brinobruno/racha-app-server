@@ -10,7 +10,13 @@ import {
 } from '@jest/globals'
 
 import { app } from '../app'
-import { USER_EMAIL, USER_PASSWORD } from '../mockup-repository'
+import {
+  TEAM_BADGE_URL,
+  TEAM_OWNER,
+  TEAM_TITLE,
+  USER_EMAIL,
+  USER_PASSWORD,
+} from '../mockup-repository'
 
 describe('Teams routes', () => {
   /* Make sure app (and thefore its routes) are done loading before testing */
@@ -43,9 +49,9 @@ describe('Teams routes', () => {
       .post('/users/teams/create')
       .set('Cookie', cookies)
       .send({
-        title: 'Blackburn Bosque',
-        owner: '777 Partners',
-        badge_url: 'https://nope.com/badge.png',
+        title: TEAM_TITLE,
+        owner: TEAM_OWNER,
+        badge_url: TEAM_BADGE_URL,
       })
       .expect(201)
   })
@@ -65,9 +71,9 @@ describe('Teams routes', () => {
       .post('/users/teams/create')
       .set('Cookie', cookies)
       .send({
-        title: 'Blackburn Bosque',
-        owner: '777 Partners',
-        badge_url: 'https://nope.com/badge.png',
+        title: TEAM_TITLE,
+        owner: TEAM_OWNER,
+        badge_url: TEAM_BADGE_URL,
       })
       .expect(201)
 
@@ -78,9 +84,9 @@ describe('Teams routes', () => {
     expect(getTeamsresponse.body.teams).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          title: 'Blackburn Bosque',
-          owner: '777 Partners',
-          badge_url: 'https://nope.com/badge.png',
+          title: TEAM_TITLE,
+          owner: TEAM_OWNER,
+          badge_url: TEAM_BADGE_URL,
         }),
       ]),
     )
@@ -108,9 +114,9 @@ describe('Teams routes', () => {
       .post('/users/teams/create')
       .set('Cookie', cookies)
       .send({
-        title: 'Blackburn Bosque',
-        owner: '777 Partners',
-        badge_url: 'https://nope.com/badge.png',
+        title: TEAM_TITLE,
+        owner: TEAM_OWNER,
+        badge_url: TEAM_BADGE_URL,
       })
       .expect(201)
 
