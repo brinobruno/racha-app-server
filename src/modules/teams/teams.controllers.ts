@@ -1,11 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import {
-  createTeamBodySchema,
-  setTeamParamsSchema,
-  setUserParamsSchema,
-  updateTeamBodySchema,
-} from './teams.schemas'
+import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import {
   createTeam,
   deleteTeamById,
@@ -13,6 +8,7 @@ import {
   findTeams,
   updateTeam,
 } from './teams.services'
+import { setIdParamsSchema } from '../users/users.schemas'
 
 export async function createTeamHandler(
   request: FastifyRequest,
@@ -48,7 +44,7 @@ export async function getTeamByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const getUserParamsSchema = setUserParamsSchema()
+  const getUserParamsSchema = setIdParamsSchema()
 
   try {
     const { id } = getUserParamsSchema.parse(request.params)
@@ -69,7 +65,7 @@ export async function deleteTeamByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const getUserParamsSchema = setUserParamsSchema()
+  const getUserParamsSchema = setIdParamsSchema()
 
   try {
     const { id } = getUserParamsSchema.parse(request.params)
@@ -90,7 +86,7 @@ export async function updateTeamByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const getTeamParamsSchema = setTeamParamsSchema()
+  const getTeamParamsSchema = setIdParamsSchema()
 
   const body = updateTeamBodySchema.parse(request.body)
 

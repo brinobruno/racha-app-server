@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import crypto from 'node:crypto'
 
 import {
-  setUserParamsSchema,
+  setIdParamsSchema,
   createUserBodySchema,
   loginUserBodySchema,
   updateUserBodySchema,
@@ -81,7 +81,7 @@ export async function getUserByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const getUserParamsSchema = setUserParamsSchema()
+  const getUserParamsSchema = setIdParamsSchema()
 
   try {
     const { id } = getUserParamsSchema.parse(request.params)
@@ -102,7 +102,7 @@ export async function deleteUserByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const getUserParamsSchema = setUserParamsSchema()
+  const getUserParamsSchema = setIdParamsSchema()
 
   try {
     const { id } = getUserParamsSchema.parse(request.params)
@@ -127,7 +127,7 @@ export async function updateUserByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const getUserParamsSchema = setUserParamsSchema()
+  const getUserParamsSchema = setIdParamsSchema()
 
   const body = updateUserBodySchema.parse(request.body)
 
