@@ -3,7 +3,7 @@ import crypto from 'node:crypto'
 import { z } from 'zod'
 
 import { knex } from '../../database'
-import { createTeamBodySchema } from './teams.schemas'
+import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import { HttpError } from '../../errors/customException'
 
 export async function createTeam(input: z.infer<typeof createTeamBodySchema>) {
@@ -52,4 +52,23 @@ export async function deleteTeamById(id: string) {
   await knex('teams').where('id', id).delete()
 
   return {}
+}
+
+export async function updateTeam(
+  input: z.infer<typeof updateTeamBodySchema>,
+  id: string,
+) {
+  const { title, owner, badge_url, active } = input
+
+  const teamToUpdate = await knex('teams')
+    .where({ id })
+    .update({
+      title,
+      owner,
+      badge_url,
+      active,
+    })
+    .returning('id')
+
+  return teamToUpdate
 }
