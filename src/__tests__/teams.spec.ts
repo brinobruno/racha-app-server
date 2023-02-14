@@ -85,4 +85,12 @@ describe('Teams routes', () => {
       ]),
     )
   })
+
+  it('Should be able to list teams if there are not any', async () => {
+    const getTeamsresponse = await request(app.server)
+      .get('/users/teams')
+      .expect(200)
+
+    expect(getTeamsresponse.body.teams).toEqual(expect.arrayContaining([]))
+  })
 })
