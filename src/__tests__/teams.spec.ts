@@ -93,4 +93,34 @@ describe('Teams routes', () => {
 
     expect(getTeamsresponse.body.teams).toEqual(expect.arrayContaining([]))
   })
+
+  it('Should be able to delete a team by id if cookie is present', async () => {
+    const createUserResponse = await request(app.server)
+      .post('/users/create')
+      .send({
+        email: USER_EMAIL,
+        password: USER_PASSWORD,
+      })
+
+    const cookies = createUserResponse.get('Set-Cookie')
+
+    const createTeamResponse = await request(app.server)
+      .post('/users/teams/create')
+      .set('Cookie', cookies)
+      .send({
+        title: 'Blackburn Bosque',
+        owner: '777 Partners',
+        badge_url: 'https://nope.com/badge.png',
+      })
+      .expect(201)
+
+    const newTeamId = createTeamResponse.body.id
+
+    const deleteTeamResponse = await request(app.server)
+      .delete(`/users/teams/${newTeamId}`)
+      .set('Cookie', cookies)
+      .expect(200)
+
+    expect(deleteTeamResponse.statusCode).toBe(200)
+  })
 })
