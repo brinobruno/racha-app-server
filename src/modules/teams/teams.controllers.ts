@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { createTeamBodySchema } from './teams.schemas'
-import { createTeam, findTeams } from './teams.services'
+import { createTeamBodySchema, setUserParamsSchema } from './teams.schemas'
+import { createTeam, findTeamById, findTeams } from './teams.services'
 
 export async function createTeamHandler(
   request: FastifyRequest,
@@ -30,5 +30,26 @@ export async function getTeamsHandler(
     return reply.status(200).send({ teams })
   } catch (error) {
     return reply.status(204).send({ message: 'No teams found.' })
+  }
+}
+
+export async function getTeamByIdHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const getUserParamsSchema = setUserParamsSchema()
+
+  try {
+    const { id } = getUserParamsSchema.parse(request.params)
+
+    const team = await findTeamById(id)
+
+    return reply.status(200).send({ message: 'Team found', team })
+  } catch (error: any) {
+    if (error.message.includes('Invalid uuid')) {
+      return reply.status(400).send({ error: 'Invalid UUID format' })
+    }
+
+    reply.status(error.code).send({ error: error.message })
   }
 }
