@@ -5,6 +5,7 @@ import {
   deleteTeamByIdHandler,
   getTeamByIdHandler,
   getTeamsHandler,
+  updateTeamByIdHandler,
 } from './teams.controllers'
 import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
 
@@ -33,5 +34,13 @@ export async function teamsRoutes(app: FastifyInstance) {
       preHandler: [checkSessionIdExists], // Middleware
     },
     deleteTeamByIdHandler,
+  )
+
+  app.put(
+    '/:id',
+    {
+      preHandler: [checkSessionIdExists], // Middleware
+    },
+    updateTeamByIdHandler,
   )
 }
