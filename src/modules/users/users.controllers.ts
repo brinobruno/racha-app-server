@@ -25,8 +25,6 @@ export async function createUserHandler(
   let sessionId = request.cookies.sessionId
 
   try {
-    const user = await createUser(body, sessionId)
-
     if (!sessionId) {
       sessionId = crypto.randomUUID()
 
@@ -35,6 +33,8 @@ export async function createUserHandler(
         maxAge: getDaysAmountInMS(7), // 7 days in milliseconds
       })
     }
+
+    const user = await createUser(body, sessionId)
 
     return reply
       .status(201)
