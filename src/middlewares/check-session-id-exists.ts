@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 
-import { getSessionById } from './helper/getSessionById'
+import { getSessionById } from './helpers/getSessionById'
 
 export async function checkSessionIdExists(
   request: FastifyRequest,
