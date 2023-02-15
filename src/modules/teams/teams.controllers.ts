@@ -10,14 +10,16 @@ import {
 } from './teams.services'
 import { setIdParamsSchema } from '../users/users.schemas'
 
-export async function createTeamHandler(
+export async function createTeamByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
+  const getUserParamsSchema = setIdParamsSchema()
   const body = createTeamBodySchema.parse(request.body)
 
   try {
-    const team = await createTeam(body)
+    const { id } = getUserParamsSchema.parse(request.params)
+    const team = await createTeam(id, body)
 
     return reply
       .status(201)
