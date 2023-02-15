@@ -37,7 +37,7 @@ describe('Teams routes', () => {
     execSync('yarn knex migrate:latest')
   })
 
-  it('Should be able to create a team', async () => {
+  it('Should be able to create a team by user id', async () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
@@ -47,14 +47,16 @@ describe('Teams routes', () => {
       .expect(201)
 
     const cookies = createUserResponse.get('Set-Cookie')
+    const userId = createUserResponse.body.id
 
     await request(app.server)
-      .post('/users/teams/create')
+      .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_TITLE,
         owner: TEAM_OWNER,
         badge_url: TEAM_BADGE_URL,
+        user_id: userId,
       })
       .expect(201)
   })
@@ -69,14 +71,16 @@ describe('Teams routes', () => {
       .expect(201)
 
     const cookies = createUserResponse.get('Set-Cookie')
+    const userId = createUserResponse.body.id
 
     await request(app.server)
-      .post('/users/teams/create')
+      .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_TITLE,
         owner: TEAM_OWNER,
         badge_url: TEAM_BADGE_URL,
+        user_id: userId,
       })
       .expect(201)
 
@@ -90,6 +94,7 @@ describe('Teams routes', () => {
           title: TEAM_TITLE,
           owner: TEAM_OWNER,
           badge_url: TEAM_BADGE_URL,
+          user_id: userId,
         }),
       ]),
     )
@@ -112,14 +117,16 @@ describe('Teams routes', () => {
       })
 
     const cookies = createUserResponse.get('Set-Cookie')
+    const userId = createUserResponse.body.id
 
     const createTeamResponse = await request(app.server)
-      .post('/users/teams/create')
+      .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_TITLE,
         owner: TEAM_OWNER,
         badge_url: TEAM_BADGE_URL,
+        user_id: userId,
       })
       .expect(201)
 
@@ -142,9 +149,10 @@ describe('Teams routes', () => {
       })
 
     const cookies = createUserResponse.get('Set-Cookie')
+    const userId = createUserResponse.body.id
 
     const createTeamResponse = await request(app.server)
-      .post('/users/teams/create')
+      .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_TITLE,
@@ -162,6 +170,7 @@ describe('Teams routes', () => {
         title: TEAM_UPDATED_TITLE,
         owner: TEAM_UPDATED_OWNER,
         badge_url: TEAM_UPDATED_BADGE_URL,
+        user_id: userId,
       })
       .expect(200)
 
@@ -173,5 +182,6 @@ describe('Teams routes', () => {
     expect(getTeamResponse.body.team.title).toBe(TEAM_UPDATED_TITLE)
     expect(getTeamResponse.body.team.owner).toBe(TEAM_UPDATED_OWNER)
     expect(getTeamResponse.body.team.badge_url).toBe(TEAM_UPDATED_BADGE_URL)
+    expect(getTeamResponse.body.team.user_id).toBe(userId)
   })
 })
