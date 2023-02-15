@@ -6,7 +6,10 @@ import { knex } from '../../database'
 import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import { HttpError } from '../../errors/customException'
 
-export async function createTeam(input: z.infer<typeof createTeamBodySchema>) {
+export async function createTeam(
+  id: string,
+  input: z.infer<typeof createTeamBodySchema>,
+) {
   const { title, owner, badge_url } = input
 
   const teamAlreadyExists = await knex
@@ -25,6 +28,7 @@ export async function createTeam(input: z.infer<typeof createTeamBodySchema>) {
       title,
       owner,
       badge_url,
+      user_id: id,
     })
     .returning('id')
 
