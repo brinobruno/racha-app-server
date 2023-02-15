@@ -52,8 +52,6 @@ export async function loginUserHandler(
   let sessionId = request.cookies.sessionId
 
   try {
-    await loginUser(body, sessionId)
-
     if (!sessionId) {
       sessionId = crypto.randomUUID()
 
@@ -62,6 +60,8 @@ export async function loginUserHandler(
         maxAge: getDaysAmountInMS(7), // 7 days in milliseconds
       })
     }
+
+    await loginUser(body, sessionId)
 
     return reply.status(200).send({ message: 'User logged in successfully' })
   } catch (error: any) {
@@ -106,8 +106,9 @@ export async function deleteUserByIdHandler(
 
   try {
     const { id } = getUserParamsSchema.parse(request.params)
+    const sessionId = request.cookies.sessionId
 
-    await deleteUserById(id)
+    await deleteUserById(id, sessionId)
 
     reply.cookie('sessionId', '', {
       path: '/',
@@ -141,6 +142,7 @@ export async function updateUserByIdHandler(
       .status(200)
       .send({ message: 'User updated successfully.', id: updatedUser[0].id })
   } catch (error) {
+    console.log(error)
     return reply.status(400).send({ error: 'Error updating user' })
   }
 }

@@ -62,7 +62,15 @@ export async function loginUser(
     throw new HttpError(401, 'Incorrect email or password')
   }
 
-  return userExists
+  try {
+    await knex('users').where('email', email).update({
+      session_id: sessionId,
+    })
+
+    return userExists
+  } catch (error) {
+    throw new Error()
+  }
 }
 
 export async function findUsers() {
@@ -78,8 +86,13 @@ export async function findUserById(id: string) {
   return user
 }
 
-export async function deleteUserById(id: string) {
-  const userExists = await knex('users').where('id', id)
+export async function deleteUserById(
+  id: string,
+  sessionId: string | undefined,
+) {
+  const userExists = await knex('users')
+    .where('id', id)
+    .andWhere('session_id', sessionId)
 
   if (Object.keys(userExists).length === 0)
     throw new HttpError(404, 'User not found')
@@ -95,6 +108,15 @@ export async function updateUser(
   sessionId: string | undefined,
 ) {
   const { email, password } = input
+
+  const emailAlreadyExists = await knex('users')
+    .select()
+    .where('email', email)
+    .first()
+
+  if (emailAlreadyExists) {
+    throw new Error()
+  }
 
   const userToUpdate = await knex('users')
     .where({ id })
