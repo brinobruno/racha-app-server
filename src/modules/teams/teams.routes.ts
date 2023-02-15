@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 
 import {
-  createTeamHandler,
+  createTeamByIdHandler,
   deleteTeamByIdHandler,
   getTeamByIdHandler,
   getTeamsHandler,
@@ -15,7 +15,7 @@ export async function teamsRoutes(app: FastifyInstance) {
     {
       preHandler: [checkSessionIdExists],
     },
-    createTeamHandler,
+    createTeamByIdHandler,
   )
 
   app.get('/', getTeamsHandler)
