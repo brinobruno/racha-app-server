@@ -11,7 +11,7 @@ import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
 
 export async function teamsRoutes(app: FastifyInstance) {
   app.post(
-    '/create',
+    '/create/:id',
     {
       preHandler: [checkSessionIdExists],
     },
