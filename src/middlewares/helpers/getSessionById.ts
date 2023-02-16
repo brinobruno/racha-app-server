@@ -10,7 +10,7 @@ export async function getSessionById(
 ): Promise<IUserSession | null> {
   const userSession = await knex('users').where('session_id', sessionId).first()
 
-  if (!userSession?.session_id) {
+  if (!userSession?.id || !userSession?.session_id) {
     return null
   }
 
