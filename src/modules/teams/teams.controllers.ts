@@ -9,6 +9,7 @@ import {
   updateTeam,
 } from './teams.services'
 import { setIdParamsSchema } from '../users/users.schemas'
+import { getSessionById } from '../../middlewares/helpers/getSessionById'
 
 export async function createTeamByIdHandler(
   request: FastifyRequest,
@@ -95,12 +96,24 @@ export async function updateTeamByIdHandler(
   try {
     const { id } = getTeamParamsSchema.parse(request.params)
 
-    const updatedTeam = await updateTeam(body, id)
+    const sessionId = request.cookies.sessionId
+
+    if (!sessionId) {
+      return reply.status(401).send({
+        error: 'Unauthorized: No session ID present',
+      })
+    }
+
+    const session = await getSessionById(sessionId)
+    const userId = session?.id
+
+    const updatedTeam = await updateTeam(body, id, userId)
 
     return reply
       .status(200)
       .send({ message: 'Team updated successfully.', id: updatedTeam[0].id })
   } catch (error) {
+    console.log(error)
     return reply.status(400).send({ error: 'Error updating team' })
   }
 }
