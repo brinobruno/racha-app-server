@@ -7,8 +7,8 @@ import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import { HttpError } from '../../errors/customException'
 
 export async function createTeam(
-  userId: string,
   input: z.infer<typeof createTeamBodySchema>,
+  userId: string | undefined,
 ) {
   const { title, owner, badge_url } = input
 
