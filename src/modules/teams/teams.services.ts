@@ -41,8 +41,8 @@ export async function findTeams() {
   return await knex('teams').select('*')
 }
 
-export async function findTeamById(id: string) {
-  const team = await knex('teams').where('id', id).first()
+export async function findTeam(teamId: string) {
+  const team = await teamRepository.getTeamById(teamId)
 
   if (!team) throw new HttpError(404, 'Team not found')
 

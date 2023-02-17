@@ -4,7 +4,7 @@ import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import {
   createTeam,
   deleteTeam,
-  findTeamById,
+  findTeam,
   findTeams,
   updateTeam,
 } from './teams.services'
@@ -55,9 +55,9 @@ export async function getTeamByIdHandler(
   const getUserParamsSchema = setIdParamsSchema()
 
   try {
-    const { id } = getUserParamsSchema.parse(request.params)
+    const { id: teamId } = getUserParamsSchema.parse(request.params)
 
-    const team = await findTeamById(id)
+    const team = await findTeam(teamId)
 
     return reply.status(200).send({ message: 'Team found', team })
   } catch (error: any) {
