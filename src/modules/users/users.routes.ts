@@ -6,6 +6,7 @@ import {
   getUserByIdHandler,
   getUsersHandler,
   loginUserHandler,
+  logoutUserByIdHandler,
   updateUserByIdHandler,
 } from './users.controllers'
 import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
@@ -14,6 +15,14 @@ export async function usersRoutes(app: FastifyInstance) {
   app.post('/create', createUserHandler)
 
   app.post('/login', loginUserHandler)
+
+  app.post(
+    '/logout/:id',
+    {
+      preHandler: [checkSessionIdExists], // Middleware
+    },
+    logoutUserByIdHandler,
+  )
 
   app.get('/', getUsersHandler)
 

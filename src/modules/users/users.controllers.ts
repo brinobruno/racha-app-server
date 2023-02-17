@@ -14,6 +14,7 @@ import {
   findUserById,
   findUsers,
   loginUser,
+  logoutUserById,
   updateUser,
 } from './users.services'
 
@@ -66,6 +67,32 @@ export async function loginUserHandler(
     return reply.status(200).send({ message: 'User logged in successfully' })
   } catch (error: any) {
     reply.status(error.code).send({ error: error.message })
+  }
+}
+
+export async function logoutUserByIdHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const getUserParamsSchema = setIdParamsSchema()
+
+  try {
+    const { id } = getUserParamsSchema.parse(request.params)
+    const sessionId = request.cookies.sessionId
+
+    await logoutUserById(id, sessionId)
+
+    reply.cookie('sessionId', '', {
+      path: '/',
+    })
+
+    return reply.status(200).send({ message: 'User logged out' })
+  } catch (error: any) {
+    if (error.message.includes('Invalid uuid')) {
+      return reply.status(400).send({ error: 'Invalid UUID format' })
+    }
+
+    return reply.status(400).send({ message: 'Could not log out user' })
   }
 }
 

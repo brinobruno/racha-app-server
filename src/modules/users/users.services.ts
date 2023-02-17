@@ -73,6 +73,24 @@ export async function loginUser(
   }
 }
 
+export async function logoutUserById(
+  id: string,
+  sessionId: string | undefined,
+) {
+  const userExists = await knex('users')
+    .where('id', id)
+    .andWhere('session_id', sessionId)
+    .first()
+
+  if (!userExists) throw new HttpError(404, 'User not found')
+
+  await knex('users')
+    .where('id', id)
+    .update({ session_id: knex.raw('null') })
+
+  return {}
+}
+
 export async function findUsers() {
   return await knex('users').select('*')
 }
