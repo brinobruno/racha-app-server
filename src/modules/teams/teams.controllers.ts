@@ -3,7 +3,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import {
   createTeam,
-  deleteTeamById,
+  deleteTeam,
   findTeamById,
   findTeams,
   updateTeam,
@@ -83,7 +83,7 @@ export async function deleteTeamByIdHandler(
     const session = await getSessionById(sessionId)
     const userId = session?.id
 
-    await deleteTeamById(teamId, userId)
+    await deleteTeam(teamId, userId)
 
     return reply.status(200).send({ message: 'Team deleted' })
   } catch (error: any) {
@@ -91,7 +91,7 @@ export async function deleteTeamByIdHandler(
       return reply.status(400).send({ error: 'Invalid UUID format' })
     }
 
-    reply.status(error.code).send({ error: error.message })
+    return reply.status(400).send({ error: 'Error deleting team' })
   }
 }
 
@@ -120,6 +120,6 @@ export async function updateTeamByIdHandler(
       return reply.status(400).send({ error: 'Invalid UUID format' })
     }
 
-    reply.status(error.code).send({ error: error.message })
+    return reply.status(400).send({ error: 'Error updating team' })
   }
 }
