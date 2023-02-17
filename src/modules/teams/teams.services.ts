@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { knex } from '../../database'
 import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import { HttpError } from '../../errors/customException'
+import { teamRepository } from './teams.repository'
 
 export async function createTeam(
   input: z.infer<typeof createTeamBodySchema>,
@@ -47,11 +48,19 @@ export async function findTeamById(id: string) {
   return team
 }
 
-export async function deleteTeamById(id: string) {
-  const teamExists = await knex('teams').where('id', id)
+export async function deleteTeamById(id: string, userId: string | undefined) {
+  const teamExists = await knex('teams').where('id', id).first()
 
   if (Object.keys(teamExists).length === 0)
     throw new HttpError(404, 'Team not found')
+
+  // Check if the team's user_id matches the user's id
+  if (teamExists.user_id !== userId) {
+    throw new HttpError(
+      401,
+      'Permission denied, ID from user does not match team user_id ',
+    )
+  }
 
   await knex('teams').where('id', id).delete()
 
@@ -60,12 +69,13 @@ export async function deleteTeamById(id: string) {
 
 export async function updateTeam(
   input: z.infer<typeof updateTeamBodySchema>,
-  id: string,
+  teamId: string,
   userId: string | undefined,
 ) {
   const { title, owner, badge_url, active } = input
 
-  const teamToUpdate = await knex('teams').where({ id }).first()
+  // const teamToUpdate = await knex('teams').where({ id }).first()
+  const teamToUpdate = await teamRepository.getTeamById(teamId)
 
   // Check if the team's user_id matches the user's id
   if (teamToUpdate.user_id !== userId) {
@@ -75,15 +85,22 @@ export async function updateTeam(
     )
   }
 
-  const updatedTeam = await knex('teams')
-    .where({ id })
-    .update({
-      title,
-      owner,
-      badge_url,
-      active,
-    })
-    .returning('id')
+  // const updatedTeam = await knex('teams')
+  //   .where({ id })
+  //   .update({
+  //     title,
+  //     owner,
+  //     badge_url,
+  //     active,
+  //   })
+  //   .returning('id')
+
+  const updatedTeam = await teamRepository.updateTeamById(teamId, {
+    title,
+    owner,
+    badge_url,
+    active,
+  })
 
   return updatedTeam
 }
