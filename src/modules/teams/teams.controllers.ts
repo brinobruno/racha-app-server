@@ -97,10 +97,9 @@ export async function updateTeamByIdHandler(
   const getTeamParamsSchema = setIdParamsSchema()
   const body = updateTeamBodySchema.parse(request.body)
   const sessionId = request.cookies.sessionId
+  const { id } = getTeamParamsSchema.parse(request.params)
 
   try {
-    const { id } = getTeamParamsSchema.parse(request.params)
-
     verifySessionId(sessionId)
 
     const session = await getSessionById(sessionId)
