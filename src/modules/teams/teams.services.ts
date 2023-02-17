@@ -14,11 +14,7 @@ export async function createTeam(
 ) {
   const { title, owner, badge_url } = input
 
-  const teamAlreadyExists = await knex
-    .select('title')
-    .from('teams')
-    .where('title', title)
-    .first()
+  const teamAlreadyExists = await teamRepository.checkTeamAlreadyExists(title)
 
   if (teamAlreadyExists) {
     throw new Error()

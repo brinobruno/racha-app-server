@@ -9,6 +9,7 @@ interface IUpdateOutput {
 export interface ITeamRepository {
   findTeams(): Promise<object[]>
   getTeamById(id: string): Promise<any>
+  checkTeamAlreadyExists(title: string): Promise<object>
   updateTeamById(
     id: string,
     data: z.infer<typeof updateTeamBodySchema>,
@@ -23,6 +24,14 @@ export const teamRepository: ITeamRepository = {
 
   async getTeamById(id: string) {
     return await knex('teams').where({ id }).first()
+  },
+
+  async checkTeamAlreadyExists(title: string) {
+    return await knex
+      .select('title')
+      .from('teams')
+      .where('title', title)
+      .first()
   },
 
   async updateTeamById(id: string, teamToCreateData: any) {
