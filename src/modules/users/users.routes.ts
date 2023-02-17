@@ -40,4 +40,8 @@ export async function usersRoutes(app: FastifyInstance) {
     },
     updateUserByIdHandler,
   )
+
+  // app.delete('/', async () => {
+  //   return await knex.select('*').from('users').delete()
+  // })
 }
