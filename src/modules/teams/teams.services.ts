@@ -49,10 +49,7 @@ export async function findTeamById(id: string) {
   return team
 }
 
-export async function deleteTeamById(
-  teamId: string,
-  userId: string | undefined,
-) {
+export async function deleteTeam(teamId: string, userId: string | undefined) {
   const teamExists = await teamRepository.getTeamById(teamId)
 
   if (Object.keys(teamExists).length === 0)
@@ -61,9 +58,7 @@ export async function deleteTeamById(
   // Check if the team's user_id matches the user's id
   compareIdsToBeEqual({ firstId: teamExists.user_id, secondId: userId })
 
-  await knex('teams').where('id', teamId).delete()
-
-  return {}
+  await teamRepository.deleteTeamById(teamId)
 }
 
 export async function updateTeam(
