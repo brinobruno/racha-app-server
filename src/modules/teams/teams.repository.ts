@@ -12,6 +12,7 @@ export interface ITeamRepository {
     id: string,
     data: z.infer<typeof updateTeamBodySchema>,
   ): Promise<IUpdateOutput>
+  deleteTeamById(id: string): Promise<void>
 }
 
 export const teamRepository: ITeamRepository = {
@@ -27,5 +28,9 @@ export const teamRepository: ITeamRepository = {
       .where({ id })
       .update(teamToCreateData)
       .returning('id')
+  },
+
+  async deleteTeamById(id: string) {
+    return await knex('teams').where('id', id).delete()
   },
 }
