@@ -74,7 +74,6 @@ export async function updateTeam(
 ) {
   const { title, owner, badge_url, active } = input
 
-  // const teamToUpdate = await knex('teams').where({ id }).first()
   const teamToUpdate = await teamRepository.getTeamById(teamId)
 
   // Check if the team's user_id matches the user's id
@@ -84,16 +83,6 @@ export async function updateTeam(
       'Permission denied, ID from user does not match team user_id ',
     )
   }
-
-  // const updatedTeam = await knex('teams')
-  //   .where({ id })
-  //   .update({
-  //     title,
-  //     owner,
-  //     badge_url,
-  //     active,
-  //   })
-  //   .returning('id')
 
   const updatedTeam = await teamRepository.updateTeamById(teamId, {
     title,
