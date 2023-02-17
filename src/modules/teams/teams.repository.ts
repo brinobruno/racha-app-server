@@ -1,3 +1,4 @@
+import crypto from 'node:crypto'
 import { z } from 'zod'
 import { knex } from '../../database'
 import { updateTeamBodySchema } from './teams.schemas'
@@ -10,6 +11,12 @@ export interface ITeamRepository {
   findTeams(): Promise<object[]>
   getTeamById(id: string): Promise<any>
   checkTeamAlreadyExists(title: string): Promise<object>
+  createTeamAfterCheck(
+    userId: string | undefined,
+    title: string,
+    owner: string,
+    badge_url: string | undefined,
+  ): Promise<Array<{ id: string }>>
   updateTeamById(
     id: string,
     data: z.infer<typeof updateTeamBodySchema>,
@@ -32,6 +39,23 @@ export const teamRepository: ITeamRepository = {
       .from('teams')
       .where('title', title)
       .first()
+  },
+
+  async createTeamAfterCheck(
+    userId: string | undefined,
+    title: string,
+    owner: string,
+    badgeUrl: string | undefined,
+  ) {
+    return await knex('teams')
+      .insert({
+        id: crypto.randomUUID(),
+        title,
+        owner,
+        badge_url: badgeUrl,
+        user_id: userId,
+      })
+      .returning('id')
   },
 
   async updateTeamById(id: string, teamToCreateData: any) {

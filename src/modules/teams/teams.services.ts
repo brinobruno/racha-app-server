@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
-import crypto from 'node:crypto'
 import { z } from 'zod'
 
-import { knex } from '../../database'
 import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import { HttpError } from '../../errors/customException'
 import { teamRepository } from './teams.repository'
@@ -20,15 +18,12 @@ export async function createTeam(
     throw new Error()
   }
 
-  const teamToCreate = await knex('teams')
-    .insert({
-      id: crypto.randomUUID(),
-      title,
-      owner,
-      badge_url,
-      user_id: userId,
-    })
-    .returning('id')
+  const teamToCreate = await teamRepository.createTeamAfterCheck(
+    userId,
+    title,
+    owner,
+    badge_url,
+  )
 
   return teamToCreate
 }

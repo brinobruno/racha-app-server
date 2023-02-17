@@ -26,7 +26,7 @@ export async function createTeamByIdHandler(
       .status(201)
       .send({ message: 'Team created successfully.', id: createdTeam[0].id })
   } catch (error) {
-    return reply.status(403).send({ error: 'Team already exists' })
+    return reply.status(403).send({ error: 'Error creating team' })
   }
 }
 
