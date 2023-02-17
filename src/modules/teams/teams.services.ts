@@ -52,8 +52,7 @@ export async function findTeamById(id: string) {
 export async function deleteTeam(teamId: string, userId: string | undefined) {
   const teamExists = await teamRepository.getTeamById(teamId)
 
-  if (Object.keys(teamExists).length === 0)
-    throw new HttpError(404, 'Team not found')
+  if (!teamExists) throw new HttpError(404, 'Team not found')
 
   // Check if the team's user_id matches the user's id
   compareIdsToBeEqual({ firstId: teamExists.user_id, secondId: userId })
