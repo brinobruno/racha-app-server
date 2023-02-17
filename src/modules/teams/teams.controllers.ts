@@ -75,7 +75,7 @@ export async function deleteTeamByIdHandler(
 ) {
   const getUserParamsSchema = setIdParamsSchema()
   const sessionId = request.cookies.sessionId
-  const { id } = getUserParamsSchema.parse(request.params)
+  const { id: teamId } = getUserParamsSchema.parse(request.params)
 
   try {
     verifySessionId(sessionId)
@@ -83,7 +83,7 @@ export async function deleteTeamByIdHandler(
     const session = await getSessionById(sessionId)
     const userId = session?.id
 
-    await deleteTeamById(id, userId)
+    await deleteTeamById(teamId, userId)
 
     return reply.status(200).send({ message: 'Team deleted' })
   } catch (error: any) {
