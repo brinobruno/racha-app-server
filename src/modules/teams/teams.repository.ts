@@ -1,5 +1,6 @@
 import crypto from 'node:crypto'
 import { z } from 'zod'
+
 import { knex } from '../../database'
 import { updateTeamBodySchema } from './teams.schemas'
 
