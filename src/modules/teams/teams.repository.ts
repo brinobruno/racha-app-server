@@ -7,6 +7,7 @@ interface IUpdateOutput {
 }
 
 export interface ITeamRepository {
+  findTeams(): Promise<object[]>
   getTeamById(id: string): Promise<any>
   updateTeamById(
     id: string,
@@ -16,6 +17,10 @@ export interface ITeamRepository {
 }
 
 export const teamRepository: ITeamRepository = {
+  async findTeams() {
+    return await knex('teams').select('*')
+  },
+
   async getTeamById(id: string) {
     return await knex('teams').where({ id }).first()
   },

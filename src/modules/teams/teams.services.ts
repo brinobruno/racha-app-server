@@ -37,10 +37,6 @@ export async function createTeam(
   return teamToCreate
 }
 
-export async function findTeams() {
-  return await knex('teams').select('*')
-}
-
 export async function findTeam(teamId: string) {
   const team = await teamRepository.getTeamById(teamId)
 

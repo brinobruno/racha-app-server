@@ -1,13 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
-import {
-  createTeam,
-  deleteTeam,
-  findTeam,
-  findTeams,
-  updateTeam,
-} from './teams.services'
+import { createTeam, deleteTeam, findTeam, updateTeam } from './teams.services'
+import { teamRepository } from './teams.repository'
 import { setIdParamsSchema } from '../users/users.schemas'
 import { getSessionById } from '../../middlewares/helpers/getSessionById'
 import { verifySessionId } from '../../middlewares/helpers/verifySessionId'
@@ -40,7 +35,7 @@ export async function getTeamsHandler(
   reply: FastifyReply,
 ) {
   try {
-    const teams = await findTeams()
+    const teams = await teamRepository.findTeams()
 
     return reply.status(200).send({ teams })
   } catch (error) {
