@@ -16,14 +16,11 @@ export interface ITeamRepository {
 }
 
 export const teamRepository: ITeamRepository = {
-  async getTeamById(id: string): Promise<any> {
+  async getTeamById(id: string) {
     return await knex('teams').where({ id }).first()
   },
 
-  async updateTeamById(
-    id: string,
-    teamToCreateData: any,
-  ): Promise<IUpdateOutput> {
+  async updateTeamById(id: string, teamToCreateData: any) {
     return await knex('teams')
       .where({ id })
       .update(teamToCreateData)
