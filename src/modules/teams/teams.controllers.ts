@@ -74,11 +74,16 @@ export async function deleteTeamByIdHandler(
   reply: FastifyReply,
 ) {
   const getUserParamsSchema = setIdParamsSchema()
+  const sessionId = request.cookies.sessionId
+  const { id } = getUserParamsSchema.parse(request.params)
 
   try {
-    const { id } = getUserParamsSchema.parse(request.params)
+    verifySessionId(sessionId)
 
-    await deleteTeamById(id)
+    const session = await getSessionById(sessionId)
+    const userId = session?.id
+
+    await deleteTeamById(id, userId)
 
     return reply.status(200).send({ message: 'Team deleted' })
   } catch (error: any) {
@@ -97,7 +102,7 @@ export async function updateTeamByIdHandler(
   const getTeamParamsSchema = setIdParamsSchema()
   const body = updateTeamBodySchema.parse(request.body)
   const sessionId = request.cookies.sessionId
-  const { id } = getTeamParamsSchema.parse(request.params)
+  const { id: teamId } = getTeamParamsSchema.parse(request.params)
 
   try {
     verifySessionId(sessionId)
@@ -105,11 +110,11 @@ export async function updateTeamByIdHandler(
     const session = await getSessionById(sessionId)
     const userId = session?.id
 
-    const updatedTeam = await updateTeam(body, id, userId)
+    await updateTeam(body, teamId, userId)
 
     return reply
       .status(200)
-      .send({ message: 'Team updated successfully.', id: updatedTeam[0].id })
+      .send({ message: 'Team updated successfully.', teamId })
   } catch (error) {
     return reply.status(400).send({ error: 'Error updating team' })
   }
