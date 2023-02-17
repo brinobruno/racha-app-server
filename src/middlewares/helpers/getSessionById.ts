@@ -6,7 +6,7 @@ interface IUserSession {
 }
 
 export async function getSessionById(
-  sessionId: string,
+  sessionId: string | undefined,
 ): Promise<IUserSession | null> {
   const userSession = await knex('users').where('session_id', sessionId).first()
 

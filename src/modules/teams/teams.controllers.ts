@@ -10,21 +10,17 @@ import {
 } from './teams.services'
 import { setIdParamsSchema } from '../users/users.schemas'
 import { getSessionById } from '../../middlewares/helpers/getSessionById'
+import { verifySessionId } from '../../middlewares/helpers/verifySessionId'
 
 export async function createTeamByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
   const body = createTeamBodySchema.parse(request.body)
+  const sessionId = request.cookies.sessionId
 
   try {
-    const sessionId = request.cookies.sessionId
-
-    if (!sessionId) {
-      return reply.status(401).send({
-        error: 'Unauthorized: No session ID present',
-      })
-    }
+    verifySessionId(sessionId)
 
     const session = await getSessionById(sessionId)
     const userId = session?.id
@@ -99,19 +95,13 @@ export async function updateTeamByIdHandler(
   reply: FastifyReply,
 ) {
   const getTeamParamsSchema = setIdParamsSchema()
-
   const body = updateTeamBodySchema.parse(request.body)
+  const sessionId = request.cookies.sessionId
 
   try {
     const { id } = getTeamParamsSchema.parse(request.params)
 
-    const sessionId = request.cookies.sessionId
-
-    if (!sessionId) {
-      return reply.status(401).send({
-        error: 'Unauthorized: No session ID present',
-      })
-    }
+    verifySessionId(sessionId)
 
     const session = await getSessionById(sessionId)
     const userId = session?.id
