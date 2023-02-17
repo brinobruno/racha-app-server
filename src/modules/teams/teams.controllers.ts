@@ -15,16 +15,25 @@ export async function createTeamByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const getUserParamsSchema = setIdParamsSchema()
   const body = createTeamBodySchema.parse(request.body)
 
   try {
-    const { id } = getUserParamsSchema.parse(request.params)
-    const team = await createTeam(id, body)
+    const sessionId = request.cookies.sessionId
+
+    if (!sessionId) {
+      return reply.status(401).send({
+        error: 'Unauthorized: No session ID present',
+      })
+    }
+
+    const session = await getSessionById(sessionId)
+    const userId = session?.id
+
+    const createdTeam = await createTeam(body, userId)
 
     return reply
       .status(201)
-      .send({ message: 'Team created successfully.', id: team[0].id })
+      .send({ message: 'Team created successfully.', id: createdTeam[0].id })
   } catch (error) {
     return reply.status(403).send({ error: 'Team already exists' })
   }
@@ -113,7 +122,6 @@ export async function updateTeamByIdHandler(
       .status(200)
       .send({ message: 'Team updated successfully.', id: updatedTeam[0].id })
   } catch (error) {
-    console.log(error)
     return reply.status(400).send({ error: 'Error updating team' })
   }
 }
