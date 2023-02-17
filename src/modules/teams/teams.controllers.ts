@@ -115,7 +115,11 @@ export async function updateTeamByIdHandler(
     return reply
       .status(200)
       .send({ message: 'Team updated successfully.', teamId })
-  } catch (error) {
-    return reply.status(400).send({ error: 'Error updating team' })
+  } catch (error: any) {
+    if (error.message.includes('Invalid uuid')) {
+      return reply.status(400).send({ error: 'Invalid UUID format' })
+    }
+
+    reply.status(error.code).send({ error: error.message })
   }
 }
