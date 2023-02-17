@@ -6,6 +6,7 @@ import { knex } from '../../database'
 import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import { HttpError } from '../../errors/customException'
 import { teamRepository } from './teams.repository'
+import { compareIdsToBeEqual } from '../../middlewares/helpers/compareIdsToBeEqual'
 
 export async function createTeam(
   input: z.infer<typeof createTeamBodySchema>,
@@ -55,12 +56,7 @@ export async function deleteTeamById(id: string, userId: string | undefined) {
     throw new HttpError(404, 'Team not found')
 
   // Check if the team's user_id matches the user's id
-  if (teamExists.user_id !== userId) {
-    throw new HttpError(
-      401,
-      'Permission denied, ID from user does not match team user_id ',
-    )
-  }
+  compareIdsToBeEqual({ firstId: teamExists.user_id, secondId: userId })
 
   await knex('teams').where('id', id).delete()
 
@@ -77,12 +73,7 @@ export async function updateTeam(
   const teamToUpdate = await teamRepository.getTeamById(teamId)
 
   // Check if the team's user_id matches the user's id
-  if (teamToUpdate.user_id !== userId) {
-    throw new HttpError(
-      401,
-      'Permission denied, ID from user does not match team user_id ',
-    )
-  }
+  compareIdsToBeEqual({ firstId: teamToUpdate.user_id, secondId: userId })
 
   const updatedTeam = await teamRepository.updateTeamById(teamId, {
     title,
