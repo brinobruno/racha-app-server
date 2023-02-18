@@ -17,11 +17,7 @@ export async function createUser(
 ) {
   const { email, password } = input
 
-  const userAlreadyExists = await knex
-    .select('email')
-    .from('users')
-    .where('email', email)
-    .first()
+  const userAlreadyExists = await userRepository.checkUserAlreadyExists(email)
 
   if (userAlreadyExists) {
     throw new Error()
