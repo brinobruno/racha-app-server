@@ -9,6 +9,7 @@ import {
   updateUserBodySchema,
 } from './users.schemas'
 import { HttpError } from '../../errors/customException'
+import { userRepository } from './users.repository'
 
 export async function createUser(
   input: z.infer<typeof createUserBodySchema>,
@@ -91,9 +92,8 @@ export async function logoutUserById(
   return {}
 }
 
-export async function findUserById(id: string) {
-  /* Use first() to avoid returning an array when only one item is expected */
-  const user = await knex('users').where('id', id).first()
+export async function findUser(id: string) {
+  const user = await userRepository.findUserById(id)
 
   if (!user) throw new HttpError(404, 'User not found')
 
