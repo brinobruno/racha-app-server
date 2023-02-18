@@ -12,11 +12,12 @@ import {
   createUser,
   deleteUserById,
   findUserById,
-  findUsers,
   loginUser,
   logoutUserById,
   updateUser,
 } from './users.services'
+
+import { userRepository } from './users.repository'
 
 export async function createUserHandler(
   request: FastifyRequest,
@@ -97,7 +98,7 @@ export async function logoutUserByIdHandler(
 }
 
 export async function getUsersHandler() {
-  const users = await findUsers()
+  const users = await userRepository.findUsers()
 
   return {
     users,
