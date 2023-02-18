@@ -1,9 +1,15 @@
 import { knex } from '../../database'
+import crypto from 'node:crypto'
 
 export interface IUserRepository {
   findUsers(): Promise<object[]>
   findUserById(id: string): Promise<unknown>
   checkUserAlreadyExists(email: string): Promise<object | undefined>
+  createUserAfterCheck(
+    email: string,
+    passwordHash: string,
+    sessionId: string | undefined,
+  ): Promise<Array<{ id: string }>>
 }
 
 export const userRepository: IUserRepository = {
@@ -21,5 +27,20 @@ export const userRepository: IUserRepository = {
       .from('users')
       .where('email', email)
       .first()
+  },
+
+  async createUserAfterCheck(
+    email: string,
+    passwordHash: string,
+    sessionId: string | undefined,
+  ) {
+    return await knex('users')
+      .insert({
+        id: crypto.randomUUID(),
+        email,
+        password: passwordHash,
+        session_id: sessionId,
+      })
+      .returning('id')
   },
 }
