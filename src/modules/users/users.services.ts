@@ -91,10 +91,6 @@ export async function logoutUserById(
   return {}
 }
 
-export async function findUsers() {
-  return await knex('users').select('*')
-}
-
 export async function findUserById(id: string) {
   /* Use first() to avoid returning an array when only one item is expected */
   const user = await knex('users').where('id', id).first()
