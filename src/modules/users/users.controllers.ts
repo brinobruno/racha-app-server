@@ -11,7 +11,7 @@ import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
 import {
   createUser,
   deleteUserById,
-  findUserById,
+  findUser,
   loginUser,
   logoutUserById,
   updateUser,
@@ -114,7 +114,7 @@ export async function getUserByIdHandler(
   try {
     const { id } = getUserParamsSchema.parse(request.params)
 
-    const user = await findUserById(id)
+    const user = await findUser(id)
 
     return reply.status(200).send({ message: 'User found', user })
   } catch (error: any) {
