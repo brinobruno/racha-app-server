@@ -1,6 +1,5 @@
 import { z } from 'zod'
 import { compare, hash } from 'bcryptjs'
-import crypto from 'node:crypto'
 
 import { knex } from '../../database'
 import {
@@ -25,14 +24,11 @@ export async function createUser(
 
   const passwordHash = await hash(password, 8)
 
-  const userToCreate = await knex('users')
-    .insert({
-      id: crypto.randomUUID(),
-      email,
-      password: passwordHash,
-      session_id: sessionId,
-    })
-    .returning('id')
+  const userToCreate = await userRepository.createUserAfterCheck(
+    email,
+    passwordHash,
+    sessionId,
+  )
 
   return userToCreate
 }
