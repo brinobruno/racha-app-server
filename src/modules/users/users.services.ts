@@ -1,7 +1,6 @@
 import { z } from 'zod'
 import { compare, hash } from 'bcryptjs'
 
-import { knex } from '../../database'
 import {
   createUserBodySchema,
   loginUserBodySchema,
@@ -65,9 +64,7 @@ export async function logoutUser(id: string, sessionId: string | undefined) {
 
   if (!userExists) throw new HttpError(404, 'User not found')
 
-  return await knex('users')
-    .where('id', id)
-    .update({ session_id: knex.raw('null') })
+  return await userRepository.logoutUserById(id)
 }
 
 export async function findUser(id: string) {
