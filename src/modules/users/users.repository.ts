@@ -10,6 +10,7 @@ export interface IUserRepository {
     passwordHash: string,
     sessionId: string | undefined,
   ): Promise<Array<{ id: string }>>
+  deleteUserById(id: string): Promise<void>
 }
 
 export const userRepository: IUserRepository = {
@@ -42,5 +43,9 @@ export const userRepository: IUserRepository = {
         session_id: sessionId,
       })
       .returning('id')
+  },
+
+  async deleteUserById(id: string) {
+    return await knex('users').where('id', id).delete()
   },
 }
