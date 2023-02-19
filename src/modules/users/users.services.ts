@@ -39,11 +39,7 @@ export async function loginUser(
 ) {
   const { email, password } = input
 
-  const userExists = await knex
-    .select('email', 'password')
-    .from('users')
-    .where('email', email)
-    .first()
+  const userExists = await userRepository.checkUserAlreadyExistsForLogin(email)
 
   if (!userExists) {
     throw new HttpError(422, 'User does not exist')
@@ -56,9 +52,7 @@ export async function loginUser(
   }
 
   try {
-    await knex('users').where('email', email).update({
-      session_id: sessionId,
-    })
+    await userRepository.loginUserWithSessionId(email, sessionId)
 
     return userExists
   } catch (error) {
