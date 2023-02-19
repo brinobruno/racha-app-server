@@ -59,10 +59,13 @@ export const teamRepository: ITeamRepository = {
       .returning('id')
   },
 
-  async updateTeamById(id: string, teamToCreateData: any) {
+  async updateTeamById(
+    id: string,
+    teamToUpdateData: z.infer<typeof updateTeamBodySchema>,
+  ) {
     return await knex('teams')
       .where({ id })
-      .update(teamToCreateData)
+      .update(teamToUpdateData)
       .returning('id')
   },
 
