@@ -13,7 +13,7 @@ import {
   deleteUser,
   findUser,
   loginUser,
-  logoutUserById,
+  logoutUser,
   updateUser,
 } from './users.services'
 
@@ -82,7 +82,7 @@ export async function logoutUserByIdHandler(
     const { id } = getUserParamsSchema.parse(request.params)
     const sessionId = request.cookies.sessionId
 
-    await logoutUserById(id, sessionId)
+    await logoutUser(id, sessionId)
 
     reply.cookie('sessionId', '', {
       path: '/',
