@@ -1,5 +1,11 @@
 import { knex } from '../../database'
 import crypto from 'node:crypto'
+import { updateUserBodySchema } from './users.schemas'
+import { z } from 'zod'
+
+interface IUpdateOutput {
+  id: string
+}
 
 export interface IUserRepository {
   findUsers(): Promise<object[]>
@@ -14,6 +20,10 @@ export interface IUserRepository {
     passwordHash: string,
     sessionId: string | undefined,
   ): Promise<Array<{ id: string }>>
+  updateUserById(
+    id: string,
+    data: z.infer<typeof updateUserBodySchema>,
+  ): Promise<Array<IUpdateOutput>>
   deleteUserById(id: string): Promise<void>
 }
 
@@ -53,6 +63,16 @@ export const userRepository: IUserRepository = {
         password: passwordHash,
         session_id: sessionId,
       })
+      .returning('id')
+  },
+
+  async updateUserById(
+    id: string,
+    { email, password, sessionId }: z.infer<typeof updateUserBodySchema>,
+  ) {
+    return await knex('users')
+      .where({ id })
+      .update({ email, password, session_id: sessionId })
       .returning('id')
   },
 
