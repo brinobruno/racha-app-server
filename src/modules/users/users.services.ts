@@ -107,23 +107,19 @@ export async function updateUser(
 ) {
   const { email, password } = input
 
-  const emailAlreadyExists = await knex('users')
-    .select()
-    .where('email', email)
-    .first()
+  const emailAlreadyExists = await userRepository.checkUserAlreadyExists(email)
 
   if (emailAlreadyExists) {
-    throw new Error()
+    throw new HttpError(400, 'Email already exists')
   }
 
-  const userToUpdate = await knex('users')
-    .where({ id })
-    .update({
-      email,
-      password: password ? await hash(password, 8) : undefined,
-      session_id: sessionId,
-    })
-    .returning('id')
+  const passwordHash = await hash(password, 8)
 
-  return userToUpdate
+  const updatedUser = await userRepository.updateUserById(id, {
+    email,
+    password: passwordHash,
+    sessionId,
+  })
+
+  return updatedUser
 }
