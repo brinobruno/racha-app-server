@@ -4,6 +4,10 @@ import crypto from 'node:crypto'
 export interface IUserRepository {
   findUsers(): Promise<object[]>
   findUserById(id: string): Promise<unknown>
+  findUserByIdAndSession(
+    id: string,
+    sessionId: string | undefined,
+  ): Promise<unknown>
   checkUserAlreadyExists(email: string): Promise<object | undefined>
   createUserAfterCheck(
     email: string,
@@ -20,6 +24,13 @@ export const userRepository: IUserRepository = {
 
   async findUserById(id: string) {
     return await knex('users').where({ id }).first()
+  },
+
+  async findUserByIdAndSession(id: string, sessionId: string | undefined) {
+    return await knex('users')
+      .where('id', id)
+      .andWhere('session_id', sessionId)
+      .first()
   },
 
   async checkUserAlreadyExists(email: string) {
