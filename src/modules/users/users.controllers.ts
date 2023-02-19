@@ -10,7 +10,7 @@ import {
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
 import {
   createUser,
-  deleteUserById,
+  deleteUser,
   findUser,
   loginUser,
   logoutUserById,
@@ -18,6 +18,7 @@ import {
 } from './users.services'
 
 import { userRepository } from './users.repository'
+import { verifySessionId } from '../../middlewares/helpers/verifySessionId'
 
 export async function createUserHandler(
   request: FastifyRequest,
@@ -131,12 +132,13 @@ export async function deleteUserByIdHandler(
   reply: FastifyReply,
 ) {
   const getUserParamsSchema = setIdParamsSchema()
+  const sessionId = request.cookies.sessionId
+  const { id } = getUserParamsSchema.parse(request.params)
 
   try {
-    const { id } = getUserParamsSchema.parse(request.params)
-    const sessionId = request.cookies.sessionId
+    verifySessionId(sessionId)
 
-    await deleteUserById(id, sessionId)
+    await deleteUser(id, sessionId)
 
     reply.cookie('sessionId', '', {
       path: '/',
