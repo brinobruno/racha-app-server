@@ -4,8 +4,8 @@ import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import { createTeam, deleteTeam, findTeam, updateTeam } from './teams.services'
 import { teamRepository } from './teams.repository'
 import { setIdParamsSchema } from '../users/users.schemas'
-import { getSessionById } from '../../middlewares/helpers/getSessionById'
-import { verifySessionId } from '../../middlewares/helpers/verifySessionId'
+import { getSessionById } from '../../helpers/getSessionById'
+import { verifySessionId } from '../../helpers/verifySessionId'
 
 export async function createTeamByIdHandler(
   request: FastifyRequest,

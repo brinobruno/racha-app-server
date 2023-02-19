@@ -18,7 +18,7 @@ import {
 } from './users.services'
 
 import { userRepository } from './users.repository'
-import { verifySessionId } from '../../middlewares/helpers/verifySessionId'
+import { verifySessionId } from '../../helpers/verifySessionId'
 
 export async function createUserHandler(
   request: FastifyRequest,

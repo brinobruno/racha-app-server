@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import { HttpError } from '../../errors/customException'
 import { teamRepository } from './teams.repository'
-import { compareIdsToBeEqual } from '../../middlewares/helpers/compareIdsToBeEqual'
+import { compareIdsToBeEqual } from '../../helpers/compareIdsToBeEqual'
 
 export async function createTeam(
   input: z.infer<typeof createTeamBodySchema>,
