@@ -93,10 +93,7 @@ export async function findUser(id: string) {
 }
 
 export async function deleteUser(id: string, sessionId: string | undefined) {
-  const userExists = await knex('users')
-    .where('id', id)
-    .andWhere('session_id', sessionId)
-    .first()
+  const userExists = await userRepository.findUserByIdAndSession(id, sessionId)
 
   if (!userExists) throw new HttpError(404, 'User not found')
 
