@@ -7,6 +7,11 @@ interface IUpdateOutput {
   id: string
 }
 
+interface ICheckUserForLoginOutput {
+  email: string
+  password: string
+}
+
 export interface IUserRepository {
   findUsers(): Promise<object[]>
   findUserById(id: string): Promise<unknown>
@@ -15,11 +20,18 @@ export interface IUserRepository {
     sessionId: string | undefined,
   ): Promise<unknown>
   checkUserAlreadyExists(email: string): Promise<object | undefined>
+  checkUserAlreadyExistsForLogin(
+    email: string,
+  ): Promise<ICheckUserForLoginOutput | undefined>
   createUserAfterCheck(
     email: string,
     passwordHash: string,
     sessionId: string | undefined,
   ): Promise<Array<{ id: string }>>
+  loginUserWithSessionId(
+    email: string,
+    sessionId: string | undefined,
+  ): Promise<any>
   updateUserById(
     id: string,
     data: z.infer<typeof updateUserBodySchema>,
@@ -51,6 +63,14 @@ export const userRepository: IUserRepository = {
       .first()
   },
 
+  async checkUserAlreadyExistsForLogin(email: string) {
+    return await knex
+      .select('email', 'password')
+      .from('users')
+      .where('email', email)
+      .first()
+  },
+
   async createUserAfterCheck(
     email: string,
     passwordHash: string,
@@ -64,6 +84,12 @@ export const userRepository: IUserRepository = {
         session_id: sessionId,
       })
       .returning('id')
+  },
+
+  async loginUserWithSessionId(email: string, sessionId: string | undefined) {
+    return knex('users').where('email', email).update({
+      session_id: sessionId,
+    })
   },
 
   async updateUserById(
