@@ -172,7 +172,6 @@ export async function updateUserByIdHandler(
       .status(200)
       .send({ message: 'User updated successfully.', id: updatedUser[0].id })
   } catch (error) {
-    console.log(error)
     return reply.status(400).send({ error: 'Error updating user' })
   }
 }
