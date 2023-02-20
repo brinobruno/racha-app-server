@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 import crypto from 'node:crypto'
+import { z } from 'zod'
 
 import { knex } from '../../database'
-import { z } from 'zod'
 import { createPlayerBodySchema } from './players.schemas'
 
 export interface IPlayerRepository {
