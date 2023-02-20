@@ -22,3 +22,11 @@ export async function findPlayers(teamId: string) {
 
   return await playerRepository.findPlayersFromTeamId(teamId)
 }
+
+export async function getAllPlayers() {
+  try {
+    return await playerRepository.findAllPlayers()
+  } catch (error) {
+    throw new Error()
+  }
+}
