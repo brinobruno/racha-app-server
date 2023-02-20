@@ -10,6 +10,7 @@ export interface IPlayerRepository {
     data: z.infer<typeof createPlayerBodySchema>,
     teamId: string | undefined,
   ): Promise<Array<{ id: string }>>
+  findPlayersFromTeamId(teamId: string | undefined): Promise<any>
 }
 
 export const playerRepository: IPlayerRepository = {
@@ -24,5 +25,9 @@ export const playerRepository: IPlayerRepository = {
         ...data,
       })
       .returning('id')
+  },
+
+  async findPlayersFromTeamId(teamId: string) {
+    return await knex('players').where({ team_id: teamId })
   },
 }
