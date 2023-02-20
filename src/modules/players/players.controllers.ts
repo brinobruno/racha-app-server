@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { createPlayer, findPlayers } from './players.services'
+import { createPlayer, findPlayers, getAllPlayers } from './players.services'
 import { verifySessionId } from '../../helpers/verifySessionId'
 import { createPlayerBodySchema } from './players.schemas'
 import { setIdParamsSchema } from '../users/users.schemas'
@@ -46,5 +46,18 @@ export async function getPlayersByIdHandler(
     return reply.status(200).send({ players })
   } catch (error) {
     return reply.status(404).send({ message: 'No players or team found.' })
+  }
+}
+
+export async function getAllPlayersHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  try {
+    const players = await getAllPlayers()
+
+    return reply.status(200).send({ players })
+  } catch (error) {
+    return reply.status(404).send({ message: 'No players found.' })
   }
 }
