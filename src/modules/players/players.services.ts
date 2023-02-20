@@ -16,11 +16,15 @@ export async function createPlayer(
 }
 
 export async function findPlayers(teamId: string) {
-  const team = await teamRepository.getTeamById(teamId)
+  try {
+    const team = await teamRepository.getTeamById(teamId)
 
-  if (!team) throw new HttpError(404, 'Team not found')
+    if (!team) throw new HttpError(404, 'Team not found')
 
-  return await playerRepository.findPlayersFromTeamId(teamId)
+    return await playerRepository.findPlayersFromTeamId(teamId)
+  } catch (error) {
+    throw new Error()
+  }
 }
 
 export async function getAllPlayers() {
