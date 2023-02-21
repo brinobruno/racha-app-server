@@ -22,7 +22,7 @@ export async function createPlayerByIdHandler(
 
     return reply.status(201).send({
       message: 'Player created successfully.',
-      id: createdPlayer[0].id,
+      createdPlayer,
     })
   } catch (error) {
     return reply.status(403).send({ error: 'Error creating player' })
