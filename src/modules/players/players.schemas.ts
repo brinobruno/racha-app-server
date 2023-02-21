@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { z } from 'zod'
 
 export const createPlayerBodySchema = z.object({
@@ -18,11 +19,20 @@ export const createPlayerBodySchema = z.object({
     'RW',
     'ST',
   ]),
-  overall: z.number().int(),
-  pace: z.number().int(),
-  shooting: z.number().int(),
-  passing: z.number().int(),
-  dribbling: z.number().int(),
-  defending: z.number().int(),
-  physical: z.number().int(),
+  overall: z.number().int().optional(),
+  pace: z.number().int().optional(),
+  shooting: z.number().int().optional(),
+  passing: z.number().int().optional(),
+  dribbling: z.number().int().optional(),
+  defending: z.number().int().optional(),
+  physical: z.number().int().optional(),
 })
+
+export enum DEFENDER_OR_ATTACKER_POSITIONS {
+  CB = 'CB',
+  LW = 'LW',
+  RW = 'RW',
+  ST = 'ST',
+}
+
+export type PlayerStats = Record<string, number | undefined>
