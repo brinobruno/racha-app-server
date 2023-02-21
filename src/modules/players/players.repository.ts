@@ -25,7 +25,7 @@ export const playerRepository: IPlayerRepository = {
         team_id: teamId,
         ...data,
       })
-      .returning('id')
+      .returning('*')
   },
 
   async findPlayersFromTeamId(teamId: string) {
