@@ -1,15 +1,53 @@
-/* eslint-disable camelcase */
 import { z } from 'zod'
 
-import { createPlayerBodySchema } from './players.schemas'
+import {
+  DEFENDER_OR_ATTACKER_POSITIONS,
+  PlayerStats,
+  createPlayerBodySchema,
+} from './players.schemas'
 import { playerRepository } from './players.repository'
-import { HttpError } from '../../errors/customException'
 import { teamRepository } from '../teams/teams.repository'
+import { transformPlayerStats } from '../../helpers/transformPlayerStats'
+import { HttpError } from '../../errors/customException'
 
 export async function createPlayer(
-  input: z.infer<typeof createPlayerBodySchema>,
+  {
+    overall,
+    position,
+    pace,
+    shooting,
+    passing,
+    dribbling,
+    defending,
+    physical,
+    ...rest
+  }: z.infer<typeof createPlayerBodySchema>,
   teamId: string | undefined,
 ) {
+  const playerStats: PlayerStats = {
+    pace,
+    shooting,
+    passing,
+    dribbling,
+    defending,
+    physical,
+  }
+
+  const isDefenderOrAttacker = position in DEFENDER_OR_ATTACKER_POSITIONS
+
+  const transformedStats = transformPlayerStats(
+    playerStats,
+    overall,
+    isDefenderOrAttacker,
+  )
+
+  const input = {
+    ...rest,
+    overall,
+    position,
+    ...transformedStats,
+  }
+
   const playerToCreate = await playerRepository.createPlayerById(input, teamId)
 
   return playerToCreate
