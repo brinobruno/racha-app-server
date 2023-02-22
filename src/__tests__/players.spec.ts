@@ -12,9 +12,7 @@ import {
 import { app } from '../app'
 import {
   PLAYER_REPOSITORY,
-  TEAM_BADGE_URL,
-  TEAM_OWNER,
-  TEAM_TITLE,
+  TEAM_REPOSITORY,
   USER_EMAIL,
   USER_PASSWORD,
 } from '../mockup-repository'
@@ -51,9 +49,9 @@ describe('Players routes', () => {
       .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
-        title: TEAM_TITLE,
-        owner: TEAM_OWNER,
-        badge_url: TEAM_BADGE_URL,
+        title: TEAM_REPOSITORY.TEAM_TITLE,
+        owner: TEAM_REPOSITORY.TEAM_OWNER,
+        badge_url: TEAM_REPOSITORY.TEAM_BADGE_URL,
         user_id: userId,
       })
       .expect(201)
@@ -90,9 +88,9 @@ describe('Players routes', () => {
       .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
-        title: TEAM_TITLE,
-        owner: TEAM_OWNER,
-        badge_url: TEAM_BADGE_URL,
+        title: TEAM_REPOSITORY.TEAM_TITLE,
+        owner: TEAM_REPOSITORY.TEAM_OWNER,
+        badge_url: TEAM_REPOSITORY.TEAM_BADGE_URL,
         user_id: userId,
       })
       .expect(201)
@@ -146,9 +144,9 @@ describe('Players routes', () => {
       .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
-        title: TEAM_TITLE,
-        owner: TEAM_OWNER,
-        badge_url: TEAM_BADGE_URL,
+        title: TEAM_REPOSITORY.TEAM_TITLE,
+        owner: TEAM_REPOSITORY.TEAM_OWNER,
+        badge_url: TEAM_REPOSITORY.TEAM_BADGE_URL,
         user_id: userId,
       })
       .expect(201)

@@ -11,12 +11,7 @@ import {
 
 import { app } from '../app'
 import {
-  TEAM_BADGE_URL,
-  TEAM_OWNER,
-  TEAM_TITLE,
-  TEAM_UPDATED_BADGE_URL,
-  TEAM_UPDATED_OWNER,
-  TEAM_UPDATED_TITLE,
+  TEAM_REPOSITORY,
   USER_EMAIL,
   USER_PASSWORD,
 } from '../mockup-repository'
@@ -53,9 +48,9 @@ describe('Teams routes', () => {
       .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
-        title: TEAM_TITLE,
-        owner: TEAM_OWNER,
-        badge_url: TEAM_BADGE_URL,
+        title: TEAM_REPOSITORY.TEAM_TITLE,
+        owner: TEAM_REPOSITORY.TEAM_OWNER,
+        badge_url: TEAM_REPOSITORY.TEAM_BADGE_URL,
         user_id: userId,
       })
       .expect(201)
@@ -77,9 +72,9 @@ describe('Teams routes', () => {
       .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
-        title: TEAM_TITLE,
-        owner: TEAM_OWNER,
-        badge_url: TEAM_BADGE_URL,
+        title: TEAM_REPOSITORY.TEAM_TITLE,
+        owner: TEAM_REPOSITORY.TEAM_OWNER,
+        badge_url: TEAM_REPOSITORY.TEAM_BADGE_URL,
         user_id: userId,
       })
       .expect(201)
@@ -91,9 +86,9 @@ describe('Teams routes', () => {
     expect(getTeamsresponse.body.teams).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          title: TEAM_TITLE,
-          owner: TEAM_OWNER,
-          badge_url: TEAM_BADGE_URL,
+          title: TEAM_REPOSITORY.TEAM_TITLE,
+          owner: TEAM_REPOSITORY.TEAM_OWNER,
+          badge_url: TEAM_REPOSITORY.TEAM_BADGE_URL,
           user_id: userId,
         }),
       ]),
@@ -123,9 +118,9 @@ describe('Teams routes', () => {
       .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
-        title: TEAM_TITLE,
-        owner: TEAM_OWNER,
-        badge_url: TEAM_BADGE_URL,
+        title: TEAM_REPOSITORY.TEAM_TITLE,
+        owner: TEAM_REPOSITORY.TEAM_OWNER,
+        badge_url: TEAM_REPOSITORY.TEAM_BADGE_URL,
         user_id: userId,
       })
       .expect(201)
@@ -155,9 +150,9 @@ describe('Teams routes', () => {
       .post(`/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
-        title: TEAM_TITLE,
-        owner: TEAM_OWNER,
-        badge_url: TEAM_BADGE_URL,
+        title: TEAM_REPOSITORY.TEAM_TITLE,
+        owner: TEAM_REPOSITORY.TEAM_OWNER,
+        badge_url: TEAM_REPOSITORY.TEAM_BADGE_URL,
       })
       .expect(201)
 
@@ -167,9 +162,9 @@ describe('Teams routes', () => {
       .put(`/users/teams/${teamId}`)
       .set('Cookie', cookies)
       .send({
-        title: TEAM_UPDATED_TITLE,
-        owner: TEAM_UPDATED_OWNER,
-        badge_url: TEAM_UPDATED_BADGE_URL,
+        title: TEAM_REPOSITORY.UPDATED_TEAM_TITLE,
+        owner: TEAM_REPOSITORY.UPDATED_TEAM_OWNER,
+        badge_url: TEAM_REPOSITORY.UPDATED_TEAM_BADGE_URL,
         user_id: userId,
       })
       .expect(200)
@@ -179,9 +174,15 @@ describe('Teams routes', () => {
       .set('Cookie', cookies)
       .expect(200)
 
-    expect(getTeamResponse.body.team.title).toBe(TEAM_UPDATED_TITLE)
-    expect(getTeamResponse.body.team.owner).toBe(TEAM_UPDATED_OWNER)
-    expect(getTeamResponse.body.team.badge_url).toBe(TEAM_UPDATED_BADGE_URL)
+    expect(getTeamResponse.body.team.title).toBe(
+      TEAM_REPOSITORY.UPDATED_TEAM_TITLE,
+    )
+    expect(getTeamResponse.body.team.owner).toBe(
+      TEAM_REPOSITORY.UPDATED_TEAM_OWNER,
+    )
+    expect(getTeamResponse.body.team.badge_url).toBe(
+      TEAM_REPOSITORY.UPDATED_TEAM_BADGE_URL,
+    )
     expect(getTeamResponse.body.team.user_id).toBe(userId)
   })
 })
