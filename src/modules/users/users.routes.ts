@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify'
 
+import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
 import {
   createUserHandler,
   deleteUserByIdHandler,
@@ -9,7 +10,6 @@ import {
   logoutUserByIdHandler,
   updateUserByIdHandler,
 } from './users.controllers'
-import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/create', createUserHandler)

@@ -1,16 +1,16 @@
 import { z } from 'zod'
 
+import { playerRepository } from './players.repository'
+import { teamRepository } from '../teams/teams.repository'
+import { compareIdsToBeEqual } from '../../helpers/compareIdsToBeEqual'
+import { transformPlayerStats } from '../../helpers/transformPlayerStats'
+import { HttpError } from '../../errors/customException'
 import {
   DEFENDER_OR_ATTACKER_POSITIONS,
   PlayerStats,
   createPlayerBodySchema,
   updatePlayerBodySchema,
 } from './players.schemas'
-import { playerRepository } from './players.repository'
-import { teamRepository } from '../teams/teams.repository'
-import { transformPlayerStats } from '../../helpers/transformPlayerStats'
-import { HttpError } from '../../errors/customException'
-import { compareIdsToBeEqual } from '../../helpers/compareIdsToBeEqual'
 
 export async function createPlayer(
   {

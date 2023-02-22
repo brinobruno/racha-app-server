@@ -1,13 +1,15 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import crypto from 'node:crypto'
 
+import { userRepository } from './users.repository'
+import { verifySessionId } from '../../helpers/verifySessionId'
+import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
 import {
   setIdParamsSchema,
   createUserBodySchema,
   loginUserBodySchema,
   updateUserBodySchema,
 } from './users.schemas'
-import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
 import {
   createUser,
   deleteUser,
@@ -16,9 +18,6 @@ import {
   logoutUser,
   updateUser,
 } from './users.services'
-
-import { userRepository } from './users.repository'
-import { verifySessionId } from '../../helpers/verifySessionId'
 
 export async function createUserHandler(
   request: FastifyRequest,

@@ -1,11 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
-import { createTeam, deleteTeam, findTeam, updateTeam } from './teams.services'
 import { teamRepository } from './teams.repository'
 import { setIdParamsSchema } from '../users/users.schemas'
-import { getSessionById } from '../../helpers/getSessionById'
 import { verifySessionId } from '../../helpers/verifySessionId'
+import { getSessionById } from '../../helpers/getSessionById'
+import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
+import { createTeam, deleteTeam, findTeam, updateTeam } from './teams.services'
 
 export async function createTeamByIdHandler(
   request: FastifyRequest,

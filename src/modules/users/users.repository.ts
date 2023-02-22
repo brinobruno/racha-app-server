@@ -1,7 +1,8 @@
-import { knex } from '../../database'
 import crypto from 'node:crypto'
-import { updateUserBodySchema } from './users.schemas'
 import { z } from 'zod'
+
+import { knex } from '../../database'
+import { updateUserBodySchema } from './users.schemas'
 
 interface IUpdateOutput {
   id: string

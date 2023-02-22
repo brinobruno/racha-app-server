@@ -1,5 +1,10 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
+import { verifySessionId } from '../../helpers/verifySessionId'
+import { setIdParamsSchema } from '../users/users.schemas'
+import { getSessionById } from '../../helpers/getSessionById'
+import { playerRepository } from './players.repository'
+import { HttpError } from '../../errors/customException'
 import {
   createPlayer,
   deletePlayer,
@@ -7,15 +12,10 @@ import {
   getAllPlayers,
   updatePlayer,
 } from './players.services'
-import { verifySessionId } from '../../helpers/verifySessionId'
 import {
   createPlayerBodySchema,
   updatePlayerBodySchema,
 } from './players.schemas'
-import { setIdParamsSchema } from '../users/users.schemas'
-import { getSessionById } from '../../helpers/getSessionById'
-import { playerRepository } from './players.repository'
-import { HttpError } from '../../errors/customException'
 
 export async function createPlayerByIdHandler(
   request: FastifyRequest,

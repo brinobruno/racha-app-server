@@ -1,13 +1,13 @@
 import { z } from 'zod'
 import { compare, hash } from 'bcryptjs'
 
+import { HttpError } from '../../errors/customException'
+import { userRepository } from './users.repository'
 import {
   createUserBodySchema,
   loginUserBodySchema,
   updateUserBodySchema,
 } from './users.schemas'
-import { HttpError } from '../../errors/customException'
-import { userRepository } from './users.repository'
 
 export async function createUser(
   input: z.infer<typeof createUserBodySchema>,

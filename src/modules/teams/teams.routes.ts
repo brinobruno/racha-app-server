@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify'
 
+import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
 import {
   createTeamByIdHandler,
   deleteTeamByIdHandler,
@@ -7,7 +8,6 @@ import {
   getTeamsHandler,
   updateTeamByIdHandler,
 } from './teams.controllers'
-import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
 
 export async function teamsRoutes(app: FastifyInstance) {
   app.post(

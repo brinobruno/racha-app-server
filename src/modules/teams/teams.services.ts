@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 import { z } from 'zod'
 
-import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
+import { compareIdsToBeEqual } from '../../helpers/compareIdsToBeEqual'
 import { HttpError } from '../../errors/customException'
 import { teamRepository } from './teams.repository'
-import { compareIdsToBeEqual } from '../../helpers/compareIdsToBeEqual'
+import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 
 export async function createTeam(
   input: z.infer<typeof createTeamBodySchema>,
