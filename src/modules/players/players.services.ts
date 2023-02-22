@@ -9,6 +9,7 @@ import { playerRepository } from './players.repository'
 import { teamRepository } from '../teams/teams.repository'
 import { transformPlayerStats } from '../../helpers/transformPlayerStats'
 import { HttpError } from '../../errors/customException'
+import { compareIdsToBeEqual } from '../../helpers/compareIdsToBeEqual'
 
 export async function createPlayer(
   {
@@ -71,4 +72,28 @@ export async function getAllPlayers() {
   } catch (error) {
     throw new Error()
   }
+}
+
+export async function deletePlayer(
+  playerId: string,
+  userId: string | undefined,
+) {
+  const playerExists = await playerRepository.getPlayerById(playerId)
+  const teamId = playerExists.team_id
+  const teamExists = await teamRepository.getTeamById(teamId)
+
+  if (!teamExists) throw new HttpError(404, 'Team not found')
+  if (!playerExists) throw new HttpError(404, 'Player not found')
+
+  try {
+    // Check if the team's user_id matches the user's id
+    compareIdsToBeEqual({ firstId: teamExists.user_id, secondId: userId })
+
+    // Check if the player's team_id matches the team's id
+    compareIdsToBeEqual({ firstId: teamExists.id, secondId: teamId })
+  } catch (error) {
+    throw new Error()
+  }
+
+  await playerRepository.deletePlayerById(playerId)
 }
