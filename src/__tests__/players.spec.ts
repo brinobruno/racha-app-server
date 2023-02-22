@@ -241,7 +241,7 @@ describe('Players routes', () => {
     )
   })
 
-  it('Should be able to delete a player by id', async () => {
+  it('Should be able to delete a player by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
