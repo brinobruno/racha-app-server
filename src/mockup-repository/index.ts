@@ -1,10 +1,12 @@
-/* Users */
-const USER_EMAIL = 'test@jest.com'
-const USER_PASSWORD = 'weakpassword123'
-const USER_UPDATED_EMAIL = 'updated@jest.com'
-const USER_UPDATED_PASSWORD = 'strongpassword456'
+export const USER_REPOSITORY = {
+  /* User */
+  USER_EMAIL: 'test@jest.com',
+  USER_PASSWORD: 'weakpassword123',
 
-export { USER_EMAIL, USER_PASSWORD, USER_UPDATED_EMAIL, USER_UPDATED_PASSWORD }
+  /* Updated user */
+  UPDATED_USER_EMAIL: 'updated@jest.com',
+  UPDATED_USER_PASSWORD: 'strongpassword456',
+}
 
 export const TEAM_REPOSITORY = {
   /* Team */
