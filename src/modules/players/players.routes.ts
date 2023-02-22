@@ -5,6 +5,7 @@ import {
   createPlayerByIdHandler,
   deletePlayerByIdHandler,
   getAllPlayersHandler,
+  getPlayerByIdHandler,
   getPlayersByIdHandler,
 } from './players.controllers'
 
@@ -18,6 +19,8 @@ export async function playersRoutes(app: FastifyInstance) {
   )
 
   app.get('/:id', getPlayersByIdHandler)
+
+  app.get('/one/:id', getPlayerByIdHandler)
 
   app.get('/all', getAllPlayersHandler)
 
