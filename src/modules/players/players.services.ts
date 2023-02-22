@@ -4,6 +4,7 @@ import {
   DEFENDER_OR_ATTACKER_POSITIONS,
   PlayerStats,
   createPlayerBodySchema,
+  updatePlayerBodySchema,
 } from './players.schemas'
 import { playerRepository } from './players.repository'
 import { teamRepository } from '../teams/teams.repository'
@@ -96,4 +97,65 @@ export async function deletePlayer(
   }
 
   await playerRepository.deletePlayerById(playerId)
+}
+
+export async function updatePlayer(
+  {
+    overall,
+    position,
+    pace,
+    shooting,
+    passing,
+    dribbling,
+    defending,
+    physical,
+    ...rest
+  }: z.infer<typeof updatePlayerBodySchema>,
+  playerId: string,
+  userId: string | undefined,
+) {
+  const playerExists = await playerRepository.getPlayerById(playerId)
+  const teamId = playerExists.team_id
+  const teamExists = await teamRepository.getTeamById(teamId)
+
+  try {
+    if (!teamExists) throw new HttpError(404, 'Team not found')
+    if (!playerExists) throw new HttpError(404, 'Player not found')
+
+    // Check if the team's user_id matches the user's id
+    compareIdsToBeEqual({ firstId: teamExists.user_id, secondId: userId })
+
+    // Check if the player's team_id matches the team's id
+    compareIdsToBeEqual({ firstId: teamExists.id, secondId: teamId })
+
+    const playerStats: PlayerStats = {
+      pace,
+      shooting,
+      passing,
+      dribbling,
+      defending,
+      physical,
+    }
+
+    const isDefenderOrAttacker = position in DEFENDER_OR_ATTACKER_POSITIONS
+
+    const transformedStats = transformPlayerStats(
+      playerStats,
+      overall,
+      isDefenderOrAttacker,
+    )
+
+    const input = {
+      ...rest,
+      overall,
+      position,
+      ...transformedStats,
+    }
+
+    const updatedUser = playerRepository.updateUserById(input, playerId)
+
+    return updatedUser
+  } catch (error) {
+    throw new Error()
+  }
 }
