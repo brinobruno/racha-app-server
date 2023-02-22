@@ -4,6 +4,7 @@ import crypto from 'node:crypto'
 import { userRepository } from './users.repository'
 import { verifySessionId } from '../../helpers/verifySessionId'
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
+import { Constants } from '../../constants'
 import {
   setIdParamsSchema,
   createUserBodySchema,
@@ -32,7 +33,7 @@ export async function createUserHandler(
 
       reply.cookie('sessionId', sessionId, {
         path: '/',
-        maxAge: getDaysAmountInMS(7), // 7 days in milliseconds
+        maxAge: getDaysAmountInMS(Constants.SESSION_ID_MAX_AGE_DAYS_AMOUNT),
       })
     }
 
@@ -59,7 +60,7 @@ export async function loginUserHandler(
 
       reply.cookie('sessionId', sessionId, {
         path: '/',
-        maxAge: getDaysAmountInMS(7), // 7 days in milliseconds
+        maxAge: getDaysAmountInMS(Constants.SESSION_ID_MAX_AGE_DAYS_AMOUNT),
       })
     }
 
