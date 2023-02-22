@@ -5,9 +5,13 @@ import {
   deletePlayer,
   findPlayers,
   getAllPlayers,
+  updatePlayer,
 } from './players.services'
 import { verifySessionId } from '../../helpers/verifySessionId'
-import { createPlayerBodySchema } from './players.schemas'
+import {
+  createPlayerBodySchema,
+  updatePlayerBodySchema,
+} from './players.schemas'
 import { setIdParamsSchema } from '../users/users.schemas'
 import { getSessionById } from '../../helpers/getSessionById'
 import { playerRepository } from './players.repository'
@@ -115,5 +119,34 @@ export async function deletePlayerByIdHandler(
     }
 
     return reply.status(400).send({ error: 'Error deleting player' })
+  }
+}
+
+export async function updatePlayerByIdHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const getTeamParamsSchema = setIdParamsSchema()
+  const body = updatePlayerBodySchema.parse(request.body)
+  const sessionId = request.cookies.sessionId
+  const { id: playerId } = getTeamParamsSchema.parse(request.params)
+
+  try {
+    verifySessionId(sessionId)
+
+    const session = await getSessionById(sessionId)
+    const userId = session?.id
+
+    const updatedPlayer = await updatePlayer(body, playerId, userId)
+
+    return reply
+      .status(200)
+      .send({ message: 'Player updated successfully.', updatedPlayer })
+  } catch (error: any) {
+    if (error.message.includes('Invalid uuid')) {
+      return reply.status(400).send({ error: 'Invalid UUID format' })
+    }
+
+    return reply.status(400).send({ error: 'Error updating player' })
   }
 }
