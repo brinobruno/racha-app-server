@@ -83,6 +83,37 @@ describe('Users routes', () => {
     expect(authenticatedUser.statusCode).toBe(200)
   })
 
+  it('Should be able to logout a user by id', async () => {
+    const userCreated = await request(app.server).post('/users/create').send({
+      email: USER_EMAIL,
+      password: USER_PASSWORD,
+    })
+
+    expect(userCreated.statusCode).toBe(201)
+
+    const newUserId = userCreated.body.id
+    const cookies = userCreated.get('Set-Cookie')
+
+    const authenticatedUser = await request(app.server)
+      .post('/users/login')
+      .set('Cookie', cookies)
+      .send({
+        email: USER_EMAIL,
+        password: USER_PASSWORD,
+      })
+
+    expect(authenticatedUser.statusCode).toBe(200)
+
+    const userToLogout = await request(app.server)
+      .post(`/users/logout/${newUserId}`)
+      .set('Cookie', cookies)
+      .expect(200)
+
+    const updatedCookies = userToLogout.get('Set-Cookie')
+
+    expect(updatedCookies).toEqual(['sessionId=; Path=/'])
+  })
+
   it('Should be able to list all users', async () => {
     const response = await request(app.server).get('/users').expect(200)
 
