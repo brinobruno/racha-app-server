@@ -34,6 +34,7 @@ declare module 'knex/types/tables' {
       deleted_at: string
       name: string
       known_as: string
+      picture_url: string
       position: string
       nationality: string
       overall: number
