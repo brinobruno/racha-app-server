@@ -43,4 +43,8 @@ export async function teamsRoutes(app: FastifyInstance) {
     },
     updateTeamByIdHandler,
   )
+
+  // app.delete('/', async () => {
+  //   return await knex.select('*').from('teams').delete()
+  // })
 }
