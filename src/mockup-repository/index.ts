@@ -1,32 +1,22 @@
 /* Users */
 const USER_EMAIL = 'test@jest.com'
-
 const USER_PASSWORD = 'weakpassword123'
-
 const USER_UPDATED_EMAIL = 'updated@jest.com'
-
 const USER_UPDATED_PASSWORD = 'strongpassword456'
 
 /* Teams */
 const TEAM_TITLE = 'Blackburn Bosque'
-
 const TEAM_OWNER = '777 Partners'
-
 const TEAM_BADGE_URL = 'https://github.com/brinobruno.png'
-
 const TEAM_UPDATED_TITLE = 'Queens Bosque Rangers'
-
 const TEAM_UPDATED_OWNER = 'John Textor'
-
 const TEAM_UPDATED_BADGE_URL =
   'https://github.githubassets.com/images/modules/profile/achievements/quickdraw-default.png'
 
+/* Players */
 const PLAYER_NAME = 'Lionel Messi'
-
 const PLAYER_KNOWN_AS = 'Messi'
-
 const PLAYER_NATIONALITY = 'Argentina'
-
 const PLAYER_POSITION = 'ST'
 
 const PLAYER_OVERALL = 94
