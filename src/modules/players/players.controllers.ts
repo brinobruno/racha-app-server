@@ -57,6 +57,28 @@ export async function getPlayersByIdHandler(
   }
 }
 
+export async function getPlayerByIdHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const sessionId = request.cookies.sessionId
+  const getTeamParamsSchema = setIdParamsSchema()
+
+  try {
+    verifySessionId(sessionId)
+
+    const { id: playerId } = getTeamParamsSchema.parse(request.params)
+
+    const player = await playerRepository.getPlayerById(playerId)
+
+    if (!player) throw new HttpError(404, 'Player not found')
+
+    return reply.status(200).send({ player })
+  } catch (error) {
+    return reply.status(400).send({ message: 'Could not get player' })
+  }
+}
+
 export async function getAllPlayersHandler(
   request: FastifyRequest,
   reply: FastifyReply,
@@ -93,27 +115,5 @@ export async function deletePlayerByIdHandler(
     }
 
     return reply.status(400).send({ error: 'Error deleting player' })
-  }
-}
-
-export async function getPlayerByIdHandler(
-  request: FastifyRequest,
-  reply: FastifyReply,
-) {
-  const sessionId = request.cookies.sessionId
-  const getTeamParamsSchema = setIdParamsSchema()
-
-  try {
-    verifySessionId(sessionId)
-
-    const { id: playerId } = getTeamParamsSchema.parse(request.params)
-
-    const player = await playerRepository.getPlayerById(playerId)
-
-    if (!player) throw new HttpError(404, 'Player not found')
-
-    return reply.status(200).send({ player })
-  } catch (error) {
-    return reply.status(400).send({ message: 'Could not get player' })
   }
 }
