@@ -84,10 +84,7 @@ export async function deletePlayer(
 
   try {
     if (!teamExists) throw new HttpError(404, 'Team not found')
-    if (!playerExists) {
-      console.log(playerExists)
-      throw new HttpError(404, 'Player not found')
-    }
+    if (!playerExists) throw new HttpError(404, 'Player not found')
 
     // Check if the team's user_id matches the user's id
     compareIdsToBeEqual({ firstId: teamExists.user_id, secondId: userId })
