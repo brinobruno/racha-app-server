@@ -13,5 +13,37 @@ declare module 'knex/types/tables' {
       password: string
       active: boolean
     }
+
+    teams: {
+      id: string
+      user_id: string
+      created_at: string
+      updated_at: string
+      deleted_at: string
+      title: string
+      owner: string
+      badge_url: string
+      active: boolean
+    }
+
+    players: {
+      id: string
+      team_id: string
+      created_at: string
+      updated_at: string
+      deleted_at: string
+      name: string
+      known_as: string
+      position: string
+      nationality: string
+      overall: number
+      pace: number
+      shooting: number
+      passing: number
+      dribbling: number
+      defending: number
+      physical: number
+      active: boolean
+    }
   }
 }
