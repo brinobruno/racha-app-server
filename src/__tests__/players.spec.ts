@@ -11,11 +11,7 @@ import {
 
 import { app } from '../app'
 import {
-  PLAYER_KNOWN_AS,
-  PLAYER_NAME,
-  PLAYER_NATIONALITY,
-  PLAYER_OVERALL,
-  PLAYER_POSITION,
+  PLAYER_REPOSITORY,
   TEAM_BADGE_URL,
   TEAM_OWNER,
   TEAM_TITLE,
@@ -68,11 +64,11 @@ describe('Players routes', () => {
       .post(`/users/teams/players/create/${teamId}`)
       .set('Cookie', cookies)
       .send({
-        name: PLAYER_NAME,
-        known_as: PLAYER_KNOWN_AS,
-        nationality: PLAYER_NATIONALITY,
-        position: PLAYER_POSITION,
-        overall: PLAYER_OVERALL,
+        name: PLAYER_REPOSITORY.PLAYER_NAME,
+        known_as: PLAYER_REPOSITORY.PLAYER_KNOWN_AS,
+        nationality: PLAYER_REPOSITORY.PLAYER_NATIONALITY,
+        position: PLAYER_REPOSITORY.PLAYER_POSITION,
+        overall: PLAYER_REPOSITORY.PLAYER_OVERALL,
         team_id: teamId,
       })
       .expect(201)
@@ -107,11 +103,11 @@ describe('Players routes', () => {
       .post(`/users/teams/players/create/${teamId}`)
       .set('Cookie', cookies)
       .send({
-        name: PLAYER_NAME,
-        known_as: PLAYER_KNOWN_AS,
-        nationality: PLAYER_NATIONALITY,
-        position: PLAYER_POSITION,
-        overall: PLAYER_OVERALL,
+        name: PLAYER_REPOSITORY.PLAYER_NAME,
+        known_as: PLAYER_REPOSITORY.PLAYER_KNOWN_AS,
+        nationality: PLAYER_REPOSITORY.PLAYER_NATIONALITY,
+        position: PLAYER_REPOSITORY.PLAYER_POSITION,
+        overall: PLAYER_REPOSITORY.PLAYER_OVERALL,
         team_id: teamId,
       })
       .expect(201)
@@ -123,11 +119,11 @@ describe('Players routes', () => {
     expect(getPlayersResponse.body.players).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          name: PLAYER_NAME,
-          known_as: PLAYER_KNOWN_AS,
-          nationality: PLAYER_NATIONALITY,
-          position: PLAYER_POSITION,
-          overall: PLAYER_OVERALL,
+          name: PLAYER_REPOSITORY.PLAYER_NAME,
+          known_as: PLAYER_REPOSITORY.PLAYER_KNOWN_AS,
+          nationality: PLAYER_REPOSITORY.PLAYER_NATIONALITY,
+          position: PLAYER_REPOSITORY.PLAYER_POSITION,
+          overall: PLAYER_REPOSITORY.PLAYER_OVERALL,
           team_id: teamId,
         }),
       ]),
@@ -163,11 +159,11 @@ describe('Players routes', () => {
       .post(`/users/teams/players/create/${teamId}`)
       .set('Cookie', cookies)
       .send({
-        name: PLAYER_NAME,
-        known_as: PLAYER_KNOWN_AS,
-        nationality: PLAYER_NATIONALITY,
-        position: PLAYER_POSITION,
-        overall: PLAYER_OVERALL,
+        name: PLAYER_REPOSITORY.PLAYER_NAME,
+        known_as: PLAYER_REPOSITORY.PLAYER_KNOWN_AS,
+        nationality: PLAYER_REPOSITORY.PLAYER_NATIONALITY,
+        position: PLAYER_REPOSITORY.PLAYER_POSITION,
+        overall: PLAYER_REPOSITORY.PLAYER_OVERALL,
         team_id: teamId,
       })
       .expect(201)
@@ -180,11 +176,11 @@ describe('Players routes', () => {
     expect(getPlayersFromOneTeamResponse.body.players).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          name: PLAYER_NAME,
-          known_as: PLAYER_KNOWN_AS,
-          nationality: PLAYER_NATIONALITY,
-          position: PLAYER_POSITION,
-          overall: PLAYER_OVERALL,
+          name: PLAYER_REPOSITORY.PLAYER_NAME,
+          known_as: PLAYER_REPOSITORY.PLAYER_KNOWN_AS,
+          nationality: PLAYER_REPOSITORY.PLAYER_NATIONALITY,
+          position: PLAYER_REPOSITORY.PLAYER_POSITION,
+          overall: PLAYER_REPOSITORY.PLAYER_OVERALL,
           team_id: teamId,
         }),
       ]),
