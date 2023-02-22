@@ -10,11 +10,7 @@ import {
 } from '@jest/globals'
 
 import { app } from '../app'
-import {
-  TEAM_REPOSITORY,
-  USER_EMAIL,
-  USER_PASSWORD,
-} from '../mockup-repository'
+import { USER_REPOSITORY, TEAM_REPOSITORY } from '../mockup-repository'
 
 describe('Teams routes', () => {
   /* Make sure app (and thefore its routes) are done loading before testing */
@@ -36,8 +32,8 @@ describe('Teams routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
       .expect(201)
 
@@ -60,8 +56,8 @@ describe('Teams routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
       .expect(201)
 
@@ -107,8 +103,8 @@ describe('Teams routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
 
     const cookies = createUserResponse.get('Set-Cookie')
@@ -139,8 +135,8 @@ describe('Teams routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
 
     const cookies = createUserResponse.get('Set-Cookie')

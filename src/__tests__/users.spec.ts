@@ -11,12 +11,7 @@ import {
 } from '@jest/globals'
 
 import { app } from '../app'
-import {
-  USER_EMAIL,
-  USER_PASSWORD,
-  USER_UPDATED_EMAIL,
-  USER_UPDATED_PASSWORD,
-} from '../mockup-repository'
+import { USER_REPOSITORY } from '../mockup-repository'
 
 describe('Users routes', () => {
   /* Make sure app (and thefore its routes) are done loading before testing */
@@ -38,8 +33,8 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
       .expect(201)
 
@@ -52,7 +47,7 @@ describe('Users routes', () => {
       .expect(200)
 
     const isPasswordCorrect = await compare(
-      USER_PASSWORD,
+      USER_REPOSITORY.USER_PASSWORD,
       getUserResponse.body.user.password,
     )
 
@@ -60,15 +55,15 @@ describe('Users routes', () => {
 
     expect(getUserResponse.body.user).toEqual(
       expect.objectContaining({
-        email: USER_EMAIL,
+        email: USER_REPOSITORY.USER_EMAIL,
       }),
     )
   })
 
   it('Should be able to login a user', async () => {
     const userCreated = await request(app.server).post('/users/create').send({
-      email: USER_EMAIL,
-      password: USER_PASSWORD,
+      email: USER_REPOSITORY.USER_EMAIL,
+      password: USER_REPOSITORY.USER_PASSWORD,
     })
 
     expect(userCreated.statusCode).toBe(201)
@@ -76,8 +71,8 @@ describe('Users routes', () => {
     const authenticatedUser = await request(app.server)
       .post('/users/login')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
 
     expect(authenticatedUser.statusCode).toBe(200)
@@ -85,8 +80,8 @@ describe('Users routes', () => {
 
   it('Should be able to logout a user by id', async () => {
     const userCreated = await request(app.server).post('/users/create').send({
-      email: USER_EMAIL,
-      password: USER_PASSWORD,
+      email: USER_REPOSITORY.USER_EMAIL,
+      password: USER_REPOSITORY.USER_PASSWORD,
     })
 
     expect(userCreated.statusCode).toBe(201)
@@ -98,8 +93,8 @@ describe('Users routes', () => {
       .post('/users/login')
       .set('Cookie', cookies)
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
 
     expect(authenticatedUser.statusCode).toBe(200)
@@ -124,8 +119,8 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
 
     const cookies = createUserResponse.get('Set-Cookie')
@@ -137,7 +132,7 @@ describe('Users routes', () => {
       .expect(200)
 
     const isPasswordCorrect = await compare(
-      USER_PASSWORD,
+      USER_REPOSITORY.USER_PASSWORD,
       getUserResponse.body.user.password,
     )
 
@@ -145,7 +140,7 @@ describe('Users routes', () => {
 
     expect(getUserResponse.body.user).toEqual(
       expect.objectContaining({
-        email: USER_EMAIL,
+        email: USER_REPOSITORY.USER_EMAIL,
       }),
     )
   })
@@ -154,8 +149,8 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
 
     const cookies = createUserResponse.get('Set-Cookie')
@@ -173,8 +168,8 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
 
     const cookies = createUserResponse.get('Set-Cookie')
@@ -184,8 +179,8 @@ describe('Users routes', () => {
       .put(`/users/${userId}`)
       .set('Cookie', cookies)
       .send({
-        email: USER_UPDATED_EMAIL,
-        password: USER_UPDATED_PASSWORD,
+        email: USER_REPOSITORY.UPDATED_USER_EMAIL,
+        password: USER_REPOSITORY.UPDATED_USER_PASSWORD,
       })
       .expect(200)
 
@@ -195,11 +190,13 @@ describe('Users routes', () => {
       .expect(200)
 
     const isPasswordCorrect = await compare(
-      USER_UPDATED_PASSWORD,
+      USER_REPOSITORY.UPDATED_USER_PASSWORD,
       getUserResponse.body.user.password,
     )
 
-    expect(getUserResponse.body.user.email).toBe(USER_UPDATED_EMAIL)
+    expect(getUserResponse.body.user.email).toBe(
+      USER_REPOSITORY.UPDATED_USER_EMAIL,
+    )
     expect(isPasswordCorrect).toBe(true)
   })
 })

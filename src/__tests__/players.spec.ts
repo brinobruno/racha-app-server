@@ -11,10 +11,9 @@ import {
 
 import { app } from '../app'
 import {
-  PLAYER_REPOSITORY,
+  USER_REPOSITORY,
   TEAM_REPOSITORY,
-  USER_EMAIL,
-  USER_PASSWORD,
+  PLAYER_REPOSITORY,
 } from '../mockup-repository'
 
 describe('Players routes', () => {
@@ -37,8 +36,8 @@ describe('Players routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
       .expect(201)
 
@@ -76,8 +75,8 @@ describe('Players routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
       .expect(201)
 
@@ -132,8 +131,8 @@ describe('Players routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
       })
       .expect(201)
 
