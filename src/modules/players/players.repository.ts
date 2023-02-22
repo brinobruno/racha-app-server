@@ -43,6 +43,6 @@ export const playerRepository: IPlayerRepository = {
   },
 
   async deletePlayerById(id: string) {
-    return await knex('teams').where('id', id).delete()
+    return await knex('players').where('id', id).delete()
   },
 }
