@@ -19,4 +19,8 @@ export async function playersRoutes(app: FastifyInstance) {
   app.get('/:id', getPlayersByIdHandler)
 
   app.get('/all', getAllPlayersHandler)
+
+  // app.delete('/', async () => {
+  //   return await knex.select('*').from('players').delete()
+  // })
 }
