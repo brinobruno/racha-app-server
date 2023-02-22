@@ -12,6 +12,8 @@ export interface IPlayerRepository {
   ): Promise<Array<{ id: string }>>
   findPlayersFromTeamId(teamId: string | undefined): Promise<any>
   findAllPlayers(): Promise<object[]>
+  getPlayerById(id: string): Promise<any>
+  deletePlayerById(id: string): Promise<void>
 }
 
 export const playerRepository: IPlayerRepository = {
@@ -34,5 +36,13 @@ export const playerRepository: IPlayerRepository = {
 
   async findAllPlayers() {
     return await knex('players').select('*')
+  },
+
+  async getPlayerById(id: string) {
+    return await knex('players').where({ id }).first()
+  },
+
+  async deletePlayerById(id: string) {
+    return await knex('teams').where('id', id).delete()
   },
 }
