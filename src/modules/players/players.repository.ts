@@ -3,7 +3,10 @@ import crypto from 'node:crypto'
 import { z } from 'zod'
 
 import { knex } from '../../database'
-import { createPlayerBodySchema } from './players.schemas'
+import {
+  createPlayerBodySchema,
+  updatePlayerBodySchema,
+} from './players.schemas'
 
 export interface IPlayerRepository {
   createPlayerById(
@@ -14,6 +17,10 @@ export interface IPlayerRepository {
   findAllPlayers(): Promise<object[]>
   getPlayerById(id: string): Promise<any>
   deletePlayerById(id: string): Promise<void>
+  updateUserById(
+    data: z.infer<typeof updatePlayerBodySchema>,
+    playerId: string | undefined,
+  ): Promise<any>
 }
 
 export const playerRepository: IPlayerRepository = {
@@ -44,5 +51,15 @@ export const playerRepository: IPlayerRepository = {
 
   async deletePlayerById(id: string) {
     return await knex('players').where('id', id).delete()
+  },
+
+  async updateUserById(
+    data: z.infer<typeof updatePlayerBodySchema>,
+    playerId: string | undefined,
+  ) {
+    return await knex('players')
+      .where({ id: playerId })
+      .update(data)
+      .returning('*')
   },
 }
