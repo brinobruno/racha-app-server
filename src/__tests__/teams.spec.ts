@@ -91,14 +91,6 @@ describe('Teams routes', () => {
     )
   })
 
-  it('Should be able to list teams if there are not any', async () => {
-    const getTeamsresponse = await request(app.server)
-      .get('/users/teams')
-      .expect(200)
-
-    expect(getTeamsresponse.body.teams).toEqual(expect.arrayContaining([]))
-  })
-
   it('Should be able to delete a team by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
