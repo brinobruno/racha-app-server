@@ -7,6 +7,7 @@ import {
   getAllPlayersHandler,
   getPlayerByIdHandler,
   getPlayersByIdHandler,
+  updatePlayerByIdHandler,
 } from './players.controllers'
 
 export async function playersRoutes(app: FastifyInstance) {
@@ -30,6 +31,14 @@ export async function playersRoutes(app: FastifyInstance) {
       preHandler: [checkSessionIdExists], // Middleware
     },
     deletePlayerByIdHandler,
+  )
+
+  app.put(
+    '/:id',
+    {
+      preHandler: [checkSessionIdExists], // Middleware
+    },
+    updatePlayerByIdHandler,
   )
 
   // app.delete('/', async () => {
