@@ -1,9 +1,15 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { createPlayer, findPlayers, getAllPlayers } from './players.services'
+import {
+  createPlayer,
+  deletePlayer,
+  findPlayers,
+  getAllPlayers,
+} from './players.services'
 import { verifySessionId } from '../../helpers/verifySessionId'
 import { createPlayerBodySchema } from './players.schemas'
 import { setIdParamsSchema } from '../users/users.schemas'
+import { getSessionById } from '../../helpers/getSessionById'
 
 export async function createPlayerByIdHandler(
   request: FastifyRequest,
@@ -59,5 +65,31 @@ export async function getAllPlayersHandler(
     return reply.status(200).send({ players })
   } catch (error) {
     return reply.status(404).send({ message: 'No players found.' })
+  }
+}
+
+export async function deletePlayerByIdHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const getUserParamsSchema = setIdParamsSchema()
+  const sessionId = request.cookies.sessionId
+  const { id: playerId } = getUserParamsSchema.parse(request.params)
+
+  try {
+    verifySessionId(sessionId)
+
+    const session = await getSessionById(sessionId)
+    const userId = session?.id
+
+    await deletePlayer(playerId, userId)
+
+    return reply.status(200).send({ message: 'Player deleted' })
+  } catch (error: any) {
+    if (error.message.includes('Invalid uuid')) {
+      return reply.status(400).send({ error: 'Invalid UUID format' })
+    }
+
+    return reply.status(400).send({ error: 'Error deleting player' })
   }
 }
