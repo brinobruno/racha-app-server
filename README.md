@@ -113,6 +113,7 @@ This API project was developed for the purpose of providing the server-side need
   - [X] A team must be able to delete their own players.
 
   <strong>Business Rules</strong>
+  - [X] Player must be created either by overall or stats establishment (Pace, shooting, passing, dribbling, defending, physical)
   - [X] All operations for a player must only be allowed to be made by the user who created the team.
   - [X] All operations for a player must only be allowed if a user is logged in, containing the correct session ID.
 
