@@ -4,6 +4,17 @@ This API project was developed for the purpose of providing the server-side need
 
 <br />
 
+## Summary
+- [Technologies used](https://github.com/brinobruno/racha-app-server#%EF%B8%8F-technologies-used)
+
+- [How to run the project](https://github.com/brinobruno/racha-app-server#-how-to-run-the-project)
+
+- [Enviroment variables](https://github.com/brinobruno/racha-app-server#%EF%B8%8F-environment-variables)
+
+- [Functional requirements and business rules](https://github.com/brinobruno/racha-app-server#-functional-requirements-and-business-rules)
+
+- [Overall rating calculation](https://github.com/brinobruno/racha-app-server#-overall-rating-calculation)
+
 ## ⚙️ Technologies used
 
 - [Typescript](https://www.typescriptlang.org)
