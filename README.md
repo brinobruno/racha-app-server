@@ -1,22 +1,114 @@
-# Funcional requirements
-- [ ] User must be allowed to create a new account
-- [ ] User must be allowed to obtain a summary of their account
-- [ ] User must be allowed to list all players/teams made
+# 🔖 About the project
 
-# Business rules
-- [ ] Teams may have an even amount of players, in which case, there'd be no subs, or odd amount of players, in which case, there'd be sub(s)
-- [ ] It must be possible to identify the user amongst the requests
-- [ ] User must only visualize teams and players created by them - Use check-session-id to identify it
+This API project was developed for the purpose of providing the server-side needs for the Racha App - an application for casual groups of football players and small organizations to draft their team players.
 
-# Non-funcional requirements
-- [ ] 
+<br />
 
-# TODO
-- [ ] Uniform naming on tests/controllers/services
-- [ ] Add repository info for tests
+## ⚙️ Technologies used
 
-# Note:
-Player rating algorithm:
+- [Typescript](https://www.typescriptlang.org)
+- [Fastify](https://www.fastify.io)
+- [Zod](https://zod.dev)
+- [Jest](https://jestjs.io)
+- [Knex](https://knexjs.org)
+- [BCrypt](https://www.npmjs.com/package/bcryptjs)
+
+<br />
+
+## 👍🏻 How to run the project
+
+```bash
+
+    // Clone repository
+    $ git clone https://github.com/brinobruno/racha-app-server
+
+    // Access directory
+    $ cd racha-app-server
+
+    // Install dependencies
+    $ yarn
+
+    // Run project
+    $ yarn start
+```
+
+<br />
+
+## 🛠️ Environment variables
+1 - Check out .env.example
+
+2 - Create a .env file at the root of the project
+
+3 - Copy and fill with the contents of example
+
+<br />
+
+## 💼 Functional Requirements and Business Rules
+<details>
+<summary>
+  <strong>Users</strong>
+</summary>
+
+  <strong>Functional Requirements</strong>
+
+  - [X] Must be possible to create a new user.
+  - [X] Must be possible to list all existing users.
+  - [X] Must be possible to list an existing user's account.
+  - [X] Must be possible for a user to list all teams and players they made.
+  - [X] Must be possible for an existing user to login to their account.
+  - [X] Must be possible for an existing user to logout from their account.
+  - [X] Must be possible for an existing user to updated their own account.
+  - [X] Must be possible for an existing user to delete their own account.
+
+  <strong>Business Rules</strong>
+  - [X] Login, logout, update and delete operations for a user must only be allowed to be made by the user themself.
+  - [X] Logout, update and delete operations must only be allowed if a user is logged in, containing the correct session ID.
+  - [X] User must only visualize teams and players created by them.
+
+</details>
+<br />
+
+<details>
+<summary>
+  <strong>Teams</strong>
+</summary>
+
+  <strong>Functional Requirements</strong>
+  - [X] A user must be able to create a new team/new teams.
+  - [X] A user must be able to list all of their existing teams.
+  - [X] A user must be able to list one of their existing teams.
+  - [X] Must be possible for a user to list all teams and players they made.
+  - [X] A user must be able to update their own team.
+  - [X] A user must be able to delete their own team.
+
+  <strong>Business Rules</strong>
+  - [X] All operations for a team must only be allowed to be made by the user who created the team.
+  - [X] All operations for a team must only be allowed if a user is logged in, containing the correct session ID.
+
+</details>
+<br />
+
+<details>
+<summary>
+  <strong>Players</strong>
+</summary>
+
+  <strong>Functional Requirements</strong>
+  - [X] A team must be able to create a new player/new players.
+  - [X] A team must be able to list all of their existing players.
+  - [X] A team must be able to list one of their existing players.
+  - [X] It must be possible for a team to list all players they made.
+  - [X] A team must be able to update their own players.
+  - [X] A team must be able to delete their own players.
+
+  <strong>Business Rules</strong>
+  - [X] All operations for a player must only be allowed to be made by the user who created the team.
+  - [X] All operations for a player must only be allowed if a user is logged in, containing the correct session ID.
+
+</details>
+<br />
+
+## ⭐ Overall rating calculation
 Attack and defense-oriented position players overall will be calculated as:
 All stats sum / 5
 
@@ -31,4 +123,10 @@ On the other hand, good results were obtained by diving it by 5.5, the discrepan
 
 For now, on the MVP version, Goalkeepers will have only the overall attribute set.
 
-This measure will be the one used for now
+This measure will be the one used for now.
+
+<br />
+
+---
+
+<h3 align="center">Developed by Bruno Corrêa </h3>
