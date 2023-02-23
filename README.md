@@ -4,7 +4,7 @@ This API project was developed for the purpose of providing the server-side need
 
 <br />
 
-## Summary
+## 📝 Summary
 - [Technologies used](https://github.com/brinobruno/racha-app-server#%EF%B8%8F-technologies-used)
 
 - [How to run the project](https://github.com/brinobruno/racha-app-server#-how-to-run-the-project)
@@ -14,6 +14,8 @@ This API project was developed for the purpose of providing the server-side need
 - [Functional requirements and business rules](https://github.com/brinobruno/racha-app-server#-functional-requirements-and-business-rules)
 
 - [Overall rating calculation](https://github.com/brinobruno/racha-app-server#-overall-rating-calculation)
+
+<br/>
 
 ## ⚙️ Technologies used
 
