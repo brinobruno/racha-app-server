@@ -1,0 +1,633 @@
+_type: export
+__export_format: 4
+__export_date: 2023-02-23T21:01:03.215Z
+__export_source: insomnia.desktop.app:v2022.7.5
+resources:
+  - _id: req_8ee0c13e1bc749878668703557b7bdee
+    parentId: fld_ad85df1d5da2480f9ed8944d4938732d
+    modified: 1677093038367
+    created: 1676594999742
+    url: "{{ _.BASE_URL }}/users/"
+    name: Delete ALL users
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1677084941687
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_ad85df1d5da2480f9ed8944d4938732d
+    parentId: wrk_69a7231b6774488a96101d017cc3757d
+    modified: 1677093034558
+    created: 1677093034558
+    name: General
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1677093034558
+    _type: request_group
+  - _id: wrk_69a7231b6774488a96101d017cc3757d
+    parentId: null
+    modified: 1675807410858
+    created: 1675807410858
+    name: Racha App Collection
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_75c4b7ba1bda47aba8b907fa3a1f19fa
+    parentId: fld_ad85df1d5da2480f9ed8944d4938732d
+    modified: 1677093041189
+    created: 1677091534636
+    url: "{{ _.BASE_URL }}/users/teams/"
+    name: Delete ALL teams
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1677084941637
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_090d1959994f4ddea41b9a243580bf99
+    parentId: fld_ad85df1d5da2480f9ed8944d4938732d
+    modified: 1677093042846
+    created: 1677078348738
+    url: "{{ _.BASE_URL }}/users/teams/players/"
+    name: Delete ALL players
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1677084941587
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c0a3424c02fc4e899aa445807a3b5127
+    parentId: fld_710712ecbd014ecd920f22926235f8bc
+    modified: 1677098349422
+    created: 1676925379392
+    url: "{{ _.BASE_URL
+      }}/users/teams/players/create/721cd09d-a104-4603-a141-4e98da39d1ae"
+    name: Create player
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "NeymaRRRRRR",
+          "known_as": "Messi",
+         	"nationality": "Argentina",
+        	"position": "ST",
+        	"overall": 5
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1676930667314.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_710712ecbd014ecd920f22926235f8bc
+    parentId: wrk_69a7231b6774488a96101d017cc3757d
+    modified: 1676925372577
+    created: 1676925366878
+    name: Players
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1676547347228
+    _type: request_group
+  - _id: req_d7867239e4834ddd8cdc5cfc0e4e4a70
+    parentId: fld_710712ecbd014ecd920f22926235f8bc
+    modified: 1677093016546
+    created: 1676932429955
+    url: "{{ _.BASE_URL }}/users/teams/players/0d6eb025-cf9f-438e-b9ee-4c1c8ce05194"
+    name: Find players by team ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1676929785993.875
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_374d1788b86244cfaa3a798e6db6c6c2
+    parentId: fld_710712ecbd014ecd920f22926235f8bc
+    modified: 1677098373028
+    created: 1677093481225
+    url: "{{ _.BASE_URL
+      }}/users/teams/players/one/ec6bf341-a5ab-4054-9b24-f219889fa358"
+    name: Find player by ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1676929345333.6875
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_879834b92cb946c194ca1735a24ba4e8
+    parentId: fld_710712ecbd014ecd920f22926235f8bc
+    modified: 1676934521124
+    created: 1676934506379
+    url: "{{ _.BASE_URL }}/users/teams/players/all"
+    name: Find all players
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1676928904673.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_eb9558489e5b468aadc50c8805ebadb8
+    parentId: fld_710712ecbd014ecd920f22926235f8bc
+    modified: 1677094075106
+    created: 1677093009815
+    url: "{{ _.BASE_URL }}/users/teams/players/e44bde1e-b666-444d-bca4-ccdfcae9041c"
+    name: Delete player by ID
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1676925379342
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_cb2ac1bbb4714271a1ce10f44ec4f967
+    parentId: fld_710712ecbd014ecd920f22926235f8bc
+    modified: 1677098541613
+    created: 1677098310731
+    url: "{{ _.BASE_URL }}/users/teams/players/ec6bf341-a5ab-4054-9b24-f219889fa358"
+    name: Update player by ID
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Cristiano",
+          "known_as": "Ronaldo",
+         	"nationality": "Portugal",
+        	"position": "ST",
+        	"pace": 82,
+        	"shooting": 62,
+        	"passing": 82,
+        	"dribbling": 72,
+        	"defending": 82,
+        	"physical": 70
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1676925379292
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ff31e24846c243eb9c829a7606942b12
+    parentId: fld_a1897c275a1741fbaf5e600ba66ba306
+    modified: 1677093159602
+    created: 1676324027242
+    url: "{{ _.BASE_URL }}/users/teams/create/721cd09d-a104-4603-a141-4e98da39d1ae"
+    name: Create team
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"title": "New team 1faadd230",
+        	"owner": "777 2012asfsdf342"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1676324027242
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_a1897c275a1741fbaf5e600ba66ba306
+    parentId: wrk_69a7231b6774488a96101d017cc3757d
+    modified: 1676500330366
+    created: 1676334540375
+    name: Teams
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1676334511096
+    _type: request_group
+  - _id: req_c21ac2b3103a470bbaf8a0517de7bc1a
+    parentId: fld_a1897c275a1741fbaf5e600ba66ba306
+    modified: 1676334544959
+    created: 1676332343255
+    url: "{{ _.BASE_URL }}/users/teams/"
+    name: Get teams
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1676324027192
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0a66fbd3b91b45139c1341305fc4311d
+    parentId: fld_a1897c275a1741fbaf5e600ba66ba306
+    modified: 1677093152696
+    created: 1676398200903
+    url: "{{ _.BASE_URL }}/users/teams/721cd09d-a104-4603-a141-4e98da39d1ae"
+    name: Get team by ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1676324027142
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_19f21f8e6fbe42f28ad69e170a7cf7df
+    parentId: fld_a1897c275a1741fbaf5e600ba66ba306
+    modified: 1676660812211
+    created: 1676399313059
+    url: "{{ _.BASE_URL }}/users/teams/6582e4e3-041e-4cf8-a096-84a327140bee"
+    name: Delete team by ID
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1676324027092
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a4e3c4f7c7c24d70b9816c0d75a26852
+    parentId: fld_a1897c275a1741fbaf5e600ba66ba306
+    modified: 1676660636507
+    created: 1676409049746
+    url: "{{ _.BASE_URL }}/users/teams/e8039233-0ae4-4d88-b62f-0adfa62acc36"
+    name: Update team by ID
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "title": "XAXXAudfssdft2t",
+          "owner": "DDADfsff3"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1676324027042
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a2b21c99f49b404fa2dce91bf5ddc5ef
+    parentId: fld_95281176358a48caa756498e6ac4fef2
+    modified: 1677185804164
+    created: 1675807414615
+    url: "{{ _.BASE_URL }}/users/create"
+    name: Create user
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "creaate-n1ew1545a6f5@gmail.com",
+        	"password": "weakpassword"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1675807414615
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_95281176358a48caa756498e6ac4fef2
+    parentId: wrk_69a7231b6774488a96101d017cc3757d
+    modified: 1677093133512
+    created: 1676334511146
+    name: Users
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1676334511046
+    _type: request_group
+  - _id: req_39e5ec559cc240fbb196fa354fc8b5c0
+    parentId: fld_95281176358a48caa756498e6ac4fef2
+    modified: 1676850215076
+    created: 1675986546279
+    url: "{{ _.BASE_URL }}/users/login"
+    name: Login user
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "create-n1ew1545a65@gmail.com",
+        	"password": "weakpassword"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1675807414590
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_945913ec14934e25b8879d62f2d3d56b
+    parentId: fld_95281176358a48caa756498e6ac4fef2
+    modified: 1676850346563
+    created: 1676666077360
+    url: "{{ _.BASE_URL }}/users/logout/f5bf78f5-2d5b-4928-8cb3-0147c4dbd781"
+    name: Logout user by ID
+    description: ""
+    method: POST
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1675807414577.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_fb8980efff34434284bbbf47e698b765
+    parentId: fld_95281176358a48caa756498e6ac4fef2
+    modified: 1676334522513
+    created: 1675971161371
+    url: "{{ _.BASE_URL }}/users/"
+    name: Get users
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1675807414565
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9e8049da0587446ea4dfe0eda69a36e7
+    parentId: fld_95281176358a48caa756498e6ac4fef2
+    modified: 1676847582514
+    created: 1675973004389
+    url: "{{ _.BASE_URL }}/users/b258f339-77bb-401c-acbe-9bec783aa173"
+    name: Get user by ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1675807414515
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e1197e644a3d4ccead1e2859fc9394b4
+    parentId: fld_95281176358a48caa756498e6ac4fef2
+    modified: 1676848812408
+    created: 1676241304920
+    url: "{{ _.BASE_URL }}/users/2dac53a1-4f8e-49cf-88cb-d31eac8a04d3"
+    name: Update user by ID
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "1accodfsdffdudnat@hgfaghafjea1ast.com",
+        	"password": "weakpasasword"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1675807414465
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c6755b7e486b4d2da1373d0005facf19
+    parentId: fld_95281176358a48caa756498e6ac4fef2
+    modified: 1676845206142
+    created: 1676231914095
+    url: "{{ _.BASE_URL }}/users/1d613bf4-a9fe-4f78-9897-0821caa1cd29"
+    name: Delete user by ID
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1675807414415
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_0d7f1ac892bcccd846e53aa14099343a363f2d08
+    parentId: wrk_69a7231b6774488a96101d017cc3757d
+    modified: 1676067493895
+    created: 1675807410865
+    name: Base Environment
+    data:
+      BASE_URL: http://localhost:3333
+    dataPropertyOrder:
+      "&":
+        - BASE_URL
+    color: null
+    isPrivate: false
+    metaSortKey: 1675807410865
+    _type: environment
+  - _id: jar_0d7f1ac892bcccd846e53aa14099343a363f2d08
+    parentId: wrk_69a7231b6774488a96101d017cc3757d
+    modified: 1676925651680
+    created: 1675807410867
+    name: Default Jar
+    cookies:
+      - key: sessionId
+        value: 51619d7a-14b2-4d0b-ac2e-346989865cb1
+        maxAge: 604800000
+        domain: localhost
+        path: /
+        hostOnly: true
+        creation: 2023-02-19T23:43:29.205Z
+        lastAccessed: 2023-02-20T20:40:51.679Z
+        id: "6855961775935071"
+    _type: cookie_jar
+  - _id: spc_aaca815420c346249c4ce2b16e24e72d
+    parentId: wrk_69a7231b6774488a96101d017cc3757d
+    modified: 1675807410859
+    created: 1675807410859
+    fileName: Racha App Collection
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_fed39b65f5ba4dfcabf9a1fb9d537463
+    parentId: env_0d7f1ac892bcccd846e53aa14099343a363f2d08
+    modified: 1676067577422
+    created: 1676067474238
+    name: Dev
+    data:
+      BASE_URL: http://localhost:3333
+    dataPropertyOrder:
+      "&":
+        - BASE_URL
+    color: "#8d49f3"
+    isPrivate: false
+    metaSortKey: 1676067474238
+    _type: environment
+  - _id: env_dc1c3722bed5461fad69fa00e57aae75
+    parentId: env_0d7f1ac892bcccd846e53aa14099343a363f2d08
+    modified: 1676068382779
+    created: 1676067481027
+    name: Prod
+    data:
+      BASE_URL: https://racha-app-api.onrender.com
+    dataPropertyOrder:
+      "&":
+        - BASE_URL
+    color: "#58d336"
+    isPrivate: false
+    metaSortKey: 1676067481027
+    _type: environment
