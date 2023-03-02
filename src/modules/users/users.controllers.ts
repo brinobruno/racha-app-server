@@ -66,7 +66,10 @@ export async function loginUserHandler(
 
     await loginUser(body, sessionId)
 
-    return reply.status(200).send({ message: 'User logged in successfully' })
+    return reply.status(200).send({
+      message: 'User logged in successfully',
+      sessionId,
+    })
   } catch (error: any) {
     reply.status(error.code).send({ error: error.message })
   }
