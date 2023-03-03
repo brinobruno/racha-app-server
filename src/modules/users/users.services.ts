@@ -15,12 +15,10 @@ export async function createUser(
 ) {
   const { username, email, password } = input
 
-  const userEmailAlreadyExists =
-    await userRepository.checkUserEmailAlreadyExists(email)
-
-  const usernameAlreadyExists = await userRepository.checkUsernameAlreadyExists(
-    username,
-  )
+  const [userEmailAlreadyExists, usernameAlreadyExists] = await Promise.all([
+    userRepository.checkUserEmailAlreadyExists(email),
+    userRepository.checkUsernameAlreadyExists(username),
+  ])
 
   if (usernameAlreadyExists) {
     throw new Error()
