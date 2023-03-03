@@ -97,19 +97,17 @@ export async function updateUser(
 ) {
   const { username, email, password } = input
 
-  const emailAlreadyExists = await userRepository.checkUserEmailAlreadyExists(
-    email,
-  )
+  const userEmailAlreadyExists =
+    await userRepository.checkUserEmailAlreadyExists(email)
 
   const usernameAlreadyExists =
     await userRepository.checkUserEmailAlreadyExists(username)
 
-  if (usernameAlreadyExists) {
-    throw new HttpError(400, 'Username already exists')
-  }
-
-  if (emailAlreadyExists) {
-    throw new HttpError(400, 'Email already exists')
+  if (usernameAlreadyExists || userEmailAlreadyExists) {
+    const errorMessage = userEmailAlreadyExists
+      ? 'Email already exists'
+      : 'Username already exists'
+    throw new HttpError(400, errorMessage)
   }
 
   const passwordHash = await hash(password, 8)
