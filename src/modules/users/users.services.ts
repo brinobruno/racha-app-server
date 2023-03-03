@@ -13,17 +13,27 @@ export async function createUser(
   input: z.infer<typeof createUserBodySchema>,
   sessionId: string | undefined,
 ) {
-  const { email, password } = input
+  const { username, email, password } = input
 
-  const userAlreadyExists = await userRepository.checkUserAlreadyExists(email)
+  const userEmailAlreadyExists =
+    await userRepository.checkUserEmailAlreadyExists(email)
 
-  if (userAlreadyExists) {
+  const usernameAlreadyExists = await userRepository.checkUsernameAlreadyExists(
+    username,
+  )
+
+  if (usernameAlreadyExists) {
+    throw new Error()
+  }
+
+  if (userEmailAlreadyExists) {
     throw new Error()
   }
 
   const passwordHash = await hash(password, 8)
 
   const userToCreate = await userRepository.createUserAfterCheck(
+    username,
     email,
     passwordHash,
     sessionId,
@@ -88,9 +98,18 @@ export async function updateUser(
   id: string,
   sessionId: string | undefined,
 ) {
-  const { email, password } = input
+  const { username, email, password } = input
 
-  const emailAlreadyExists = await userRepository.checkUserAlreadyExists(email)
+  const emailAlreadyExists = await userRepository.checkUserEmailAlreadyExists(
+    email,
+  )
+
+  const usernameAlreadyExists =
+    await userRepository.checkUserEmailAlreadyExists(username)
+
+  if (usernameAlreadyExists) {
+    throw new HttpError(400, 'Username already exists')
+  }
 
   if (emailAlreadyExists) {
     throw new HttpError(400, 'Email already exists')
@@ -99,6 +118,7 @@ export async function updateUser(
   const passwordHash = await hash(password, 8)
 
   const updatedUser = await userRepository.updateUserById(id, {
+    username,
     email,
     password: passwordHash,
     sessionId,
