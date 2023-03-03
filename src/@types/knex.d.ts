@@ -9,6 +9,7 @@ declare module 'knex/types/tables' {
       created_at: string
       updated_at: string
       deleted_at: string
+      username: string
       email: string
       password: string
       active: boolean
