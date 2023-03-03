@@ -7,11 +7,13 @@ export function setIdParamsSchema() {
 }
 
 export const createUserBodySchema = z.object({
+  username: z.string(),
   email: z.string().email(),
   password: z.string(),
 })
 
 export const updateUserBodySchema = z.object({
+  username: z.string(),
   email: z.string().email(),
   password: z.string(),
   sessionId: z.string().optional(),
