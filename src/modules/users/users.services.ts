@@ -21,11 +21,11 @@ export async function createUser(
   ])
 
   if (usernameAlreadyExists) {
-    throw new Error()
+    throw new HttpError(400, 'Username already exists')
   }
 
   if (userEmailAlreadyExists) {
-    throw new Error()
+    throw new HttpError(400, 'Email already exists')
   }
 
   const passwordHash = await hash(password, 8)
