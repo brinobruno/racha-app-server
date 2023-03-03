@@ -20,12 +20,11 @@ export async function createUser(
     userRepository.checkUsernameAlreadyExists(username),
   ])
 
-  if (usernameAlreadyExists) {
-    throw new HttpError(400, 'Username already exists')
-  }
-
-  if (userEmailAlreadyExists) {
-    throw new HttpError(400, 'Email already exists')
+  if (usernameAlreadyExists || userEmailAlreadyExists) {
+    const errorMessage = userEmailAlreadyExists
+      ? 'Email already exists'
+      : 'Username already exists'
+    throw new HttpError(400, errorMessage)
   }
 
   const passwordHash = await hash(password, 8)
