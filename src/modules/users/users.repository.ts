@@ -20,11 +20,13 @@ export interface IUserRepository {
     id: string,
     sessionId: string | undefined,
   ): Promise<unknown>
-  checkUserAlreadyExists(email: string): Promise<object | undefined>
+  checkUserEmailAlreadyExists(email: string): Promise<object | undefined>
+  checkUsernameAlreadyExists(username: string): Promise<object | undefined>
   checkUserAlreadyExistsForLogin(
     email: string,
   ): Promise<ICheckUserForLoginOutput | undefined>
   createUserAfterCheck(
+    username: string,
     email: string,
     passwordHash: string,
     sessionId: string | undefined,
@@ -57,11 +59,19 @@ export const userRepository: IUserRepository = {
       .first()
   },
 
-  async checkUserAlreadyExists(email: string) {
+  async checkUserEmailAlreadyExists(email: string) {
     return await knex
       .select('email')
       .from('users')
       .where('email', email)
+      .first()
+  },
+
+  async checkUsernameAlreadyExists(username: string) {
+    return await knex
+      .select('username')
+      .from('users')
+      .where('username', username)
       .first()
   },
 
@@ -74,6 +84,7 @@ export const userRepository: IUserRepository = {
   },
 
   async createUserAfterCheck(
+    username: string,
     email: string,
     passwordHash: string,
     sessionId: string | undefined,
@@ -81,6 +92,7 @@ export const userRepository: IUserRepository = {
     return await knex('users')
       .insert({
         id: crypto.randomUUID(),
+        username,
         email,
         password: passwordHash,
         session_id: sessionId,
@@ -102,11 +114,16 @@ export const userRepository: IUserRepository = {
 
   async updateUserById(
     id: string,
-    { email, password, sessionId }: z.infer<typeof updateUserBodySchema>,
+    {
+      username,
+      email,
+      password,
+      sessionId,
+    }: z.infer<typeof updateUserBodySchema>,
   ) {
     return await knex('users')
       .where({ id })
-      .update({ email, password, session_id: sessionId })
+      .update({ username, email, password, session_id: sessionId })
       .returning('id')
   },
 
