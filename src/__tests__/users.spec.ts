@@ -33,6 +33,7 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
       })
@@ -55,6 +56,7 @@ describe('Users routes', () => {
 
     expect(getUserResponse.body.user).toEqual(
       expect.objectContaining({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
       }),
     )
@@ -62,6 +64,7 @@ describe('Users routes', () => {
 
   it('Should be able to login a user', async () => {
     const userCreated = await request(app.server).post('/users/create').send({
+      username: USER_REPOSITORY.USER_USERNAME,
       email: USER_REPOSITORY.USER_EMAIL,
       password: USER_REPOSITORY.USER_PASSWORD,
     })
@@ -80,6 +83,7 @@ describe('Users routes', () => {
 
   it('Should be able to logout a user by id', async () => {
     const userCreated = await request(app.server).post('/users/create').send({
+      username: USER_REPOSITORY.USER_USERNAME,
       email: USER_REPOSITORY.USER_EMAIL,
       password: USER_REPOSITORY.USER_PASSWORD,
     })
@@ -119,6 +123,7 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
       })
@@ -140,6 +145,7 @@ describe('Users routes', () => {
 
     expect(getUserResponse.body.user).toEqual(
       expect.objectContaining({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
       }),
     )
@@ -149,6 +155,7 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
       })
@@ -168,6 +175,7 @@ describe('Users routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
       })
@@ -179,6 +187,7 @@ describe('Users routes', () => {
       .put(`/users/${userId}`)
       .set('Cookie', cookies)
       .send({
+        username: USER_REPOSITORY.UPDATED_USER_USERNAME,
         email: USER_REPOSITORY.UPDATED_USER_EMAIL,
         password: USER_REPOSITORY.UPDATED_USER_PASSWORD,
       })
@@ -196,6 +205,9 @@ describe('Users routes', () => {
 
     expect(getUserResponse.body.user.email).toBe(
       USER_REPOSITORY.UPDATED_USER_EMAIL,
+    )
+    expect(getUserResponse.body.user.username).toBe(
+      USER_REPOSITORY.UPDATED_USER_USERNAME,
     )
     expect(isPasswordCorrect).toBe(true)
   })
