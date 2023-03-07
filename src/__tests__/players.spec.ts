@@ -35,7 +35,7 @@ describe('Players routes', () => {
 
   it('Should be able to create a player by user id', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -47,7 +47,7 @@ describe('Players routes', () => {
     const userId = createUserResponse.body.id
 
     const createTeamResponse = await request(app.server)
-      .post(`/users/teams/create/${userId}`)
+      .post(`/api/v1/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.TEAM_TITLE,
@@ -60,7 +60,7 @@ describe('Players routes', () => {
     const teamId = createTeamResponse.body.id
 
     await request(app.server)
-      .post(`/users/teams/players/create/${teamId}`)
+      .post(`/api/v1/users/teams/players/create/${teamId}`)
       .set('Cookie', cookies)
       .send({
         name: PLAYER_REPOSITORY.PLAYER_NAME,
@@ -75,7 +75,7 @@ describe('Players routes', () => {
 
   it('Should be able to list all players', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -87,7 +87,7 @@ describe('Players routes', () => {
     const userId = createUserResponse.body.id
 
     const createTeamResponse = await request(app.server)
-      .post(`/users/teams/create/${userId}`)
+      .post(`/api/v1/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.TEAM_TITLE,
@@ -100,7 +100,7 @@ describe('Players routes', () => {
     const teamId = createTeamResponse.body.id
 
     await request(app.server)
-      .post(`/users/teams/players/create/${teamId}`)
+      .post(`/api/v1/users/teams/players/create/${teamId}`)
       .set('Cookie', cookies)
       .send({
         name: PLAYER_REPOSITORY.PLAYER_NAME,
@@ -113,7 +113,7 @@ describe('Players routes', () => {
       .expect(201)
 
     const getPlayersResponse = await request(app.server)
-      .get('/users/teams/players/all')
+      .get('/api/v1/users/teams/players/all')
       .expect(200)
 
     expect(getPlayersResponse.body.players).toEqual(
@@ -132,7 +132,7 @@ describe('Players routes', () => {
 
   it('Should be able to list all players in a team', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -144,7 +144,7 @@ describe('Players routes', () => {
     const userId = createUserResponse.body.id
 
     const createTeamResponse = await request(app.server)
-      .post(`/users/teams/create/${userId}`)
+      .post(`/api/v1/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.TEAM_TITLE,
@@ -157,7 +157,7 @@ describe('Players routes', () => {
     const teamId = createTeamResponse.body.id
 
     await request(app.server)
-      .post(`/users/teams/players/create/${teamId}`)
+      .post(`/api/v1/users/teams/players/create/${teamId}`)
       .set('Cookie', cookies)
       .send({
         name: PLAYER_REPOSITORY.PLAYER_NAME,
@@ -170,7 +170,7 @@ describe('Players routes', () => {
       .expect(201)
 
     const getPlayersFromOneTeamResponse = await request(app.server)
-      .get(`/users/teams/players/${teamId}`)
+      .get(`/api/v1/users/teams/players/${teamId}`)
       .set('Cookie', cookies)
       .expect(200)
 
@@ -190,7 +190,7 @@ describe('Players routes', () => {
 
   it('Should be able to list a player', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -202,7 +202,7 @@ describe('Players routes', () => {
     const userId = createUserResponse.body.id
 
     const createTeamResponse = await request(app.server)
-      .post(`/users/teams/create/${userId}`)
+      .post(`/api/v1/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.TEAM_TITLE,
@@ -215,7 +215,7 @@ describe('Players routes', () => {
     const teamId = createTeamResponse.body.id
 
     const createdPlayerResponse = await request(app.server)
-      .post(`/users/teams/players/create/${teamId}`)
+      .post(`/api/v1/users/teams/players/create/${teamId}`)
       .set('Cookie', cookies)
       .send({
         name: PLAYER_REPOSITORY.PLAYER_NAME,
@@ -230,7 +230,7 @@ describe('Players routes', () => {
     const playerId = createdPlayerResponse.body.createdPlayer.id
 
     const getPlayerResponse = await request(app.server)
-      .get(`/users/teams/players/one/${playerId}`)
+      .get(`/api/v1/users/teams/players/one/${playerId}`)
       .set('Cookie', cookies)
       .expect(200)
 
@@ -248,7 +248,7 @@ describe('Players routes', () => {
 
   it('Should be able to delete a player by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -259,7 +259,7 @@ describe('Players routes', () => {
     const userId = createUserResponse.body.id
 
     const createTeamResponse = await request(app.server)
-      .post(`/users/teams/create/${userId}`)
+      .post(`/api/v1/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.TEAM_TITLE,
@@ -272,7 +272,7 @@ describe('Players routes', () => {
     const teamId = createTeamResponse.body.id
 
     const createdPlayerResponse = await request(app.server)
-      .post(`/users/teams/players/create/${teamId}`)
+      .post(`/api/v1/users/teams/players/create/${teamId}`)
       .set('Cookie', cookies)
       .send({
         name: PLAYER_REPOSITORY.PLAYER_NAME,
@@ -287,7 +287,7 @@ describe('Players routes', () => {
     const playerId = createdPlayerResponse.body.createdPlayer.id
 
     const deletePlayerResponse = await request(app.server)
-      .delete(`/users/teams/players/${playerId}`)
+      .delete(`/api/v1/users/teams/players/${playerId}`)
       .set('Cookie', cookies)
       .expect(200)
 
@@ -296,7 +296,7 @@ describe('Players routes', () => {
 
   it('Should be able to update a player by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -307,7 +307,7 @@ describe('Players routes', () => {
     const userId = createUserResponse.body.id
 
     const createTeamResponse = await request(app.server)
-      .post(`/users/teams/create/${userId}`)
+      .post(`/api/v1/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.TEAM_TITLE,
@@ -319,7 +319,7 @@ describe('Players routes', () => {
     const teamId = createTeamResponse.body.id
 
     const createdPlayerResponse = await request(app.server)
-      .post(`/users/teams/players/create/${teamId}`)
+      .post(`/api/v1/users/teams/players/create/${teamId}`)
       .set('Cookie', cookies)
       .send({
         name: PLAYER_REPOSITORY.PLAYER_NAME,
@@ -334,7 +334,7 @@ describe('Players routes', () => {
     const playerId = createdPlayerResponse.body.createdPlayer.id
 
     await request(app.server)
-      .put(`/users/teams/players/${playerId}`)
+      .put(`/api/v1/users/teams/players/${playerId}`)
       .set('Cookie', cookies)
       .send({
         name: PLAYER_REPOSITORY.UPDATED_PLAYER_NAME,
@@ -347,7 +347,7 @@ describe('Players routes', () => {
       .expect(200)
 
     const getPlayerResponse = await request(app.server)
-      .get(`/users/teams/players/one/${playerId}`)
+      .get(`/api/v1/users/teams/players/one/${playerId}`)
       .set('Cookie', cookies)
       .expect(200)
 

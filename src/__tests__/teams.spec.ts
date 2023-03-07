@@ -30,7 +30,7 @@ describe('Teams routes', () => {
 
   it('Should be able to create a team by user id', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -42,7 +42,7 @@ describe('Teams routes', () => {
     const userId = createUserResponse.body.id
 
     await request(app.server)
-      .post(`/users/teams/create/${userId}`)
+      .post(`/api/v1/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.TEAM_TITLE,
@@ -55,7 +55,7 @@ describe('Teams routes', () => {
 
   it('Should be able to list teams if there are any', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -67,7 +67,7 @@ describe('Teams routes', () => {
     const userId = createUserResponse.body.id
 
     await request(app.server)
-      .post(`/users/teams/create/${userId}`)
+      .post(`/api/v1/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.TEAM_TITLE,
@@ -78,7 +78,7 @@ describe('Teams routes', () => {
       .expect(201)
 
     const getTeamsresponse = await request(app.server)
-      .get('/users/teams')
+      .get('/api/v1/users/teams')
       .expect(200)
 
     expect(getTeamsresponse.body.teams).toEqual(
@@ -95,7 +95,7 @@ describe('Teams routes', () => {
 
   it('Should be able to delete a team by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -106,7 +106,7 @@ describe('Teams routes', () => {
     const userId = createUserResponse.body.id
 
     const createTeamResponse = await request(app.server)
-      .post(`/users/teams/create/${userId}`)
+      .post(`/api/v1/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.TEAM_TITLE,
@@ -119,7 +119,7 @@ describe('Teams routes', () => {
     const newTeamId = createTeamResponse.body.id
 
     const deleteTeamResponse = await request(app.server)
-      .delete(`/users/teams/${newTeamId}`)
+      .delete(`/api/v1/users/teams/${newTeamId}`)
       .set('Cookie', cookies)
       .expect(200)
 
@@ -128,7 +128,7 @@ describe('Teams routes', () => {
 
   it('Should be able to update a team by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -139,7 +139,7 @@ describe('Teams routes', () => {
     const userId = createUserResponse.body.id
 
     const createTeamResponse = await request(app.server)
-      .post(`/users/teams/create/${userId}`)
+      .post(`/api/v1/users/teams/create/${userId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.TEAM_TITLE,
@@ -151,7 +151,7 @@ describe('Teams routes', () => {
     const teamId = createTeamResponse.body.id
 
     await request(app.server)
-      .put(`/users/teams/${teamId}`)
+      .put(`/api/v1/users/teams/${teamId}`)
       .set('Cookie', cookies)
       .send({
         title: TEAM_REPOSITORY.UPDATED_TEAM_TITLE,
@@ -162,7 +162,7 @@ describe('Teams routes', () => {
       .expect(200)
 
     const getTeamResponse = await request(app.server)
-      .get(`/users/teams/${teamId}`)
+      .get(`/api/v1/users/teams/${teamId}`)
       .set('Cookie', cookies)
       .expect(200)
 

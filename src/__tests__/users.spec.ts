@@ -31,7 +31,7 @@ describe('Users routes', () => {
 
   it('Should be able to create a new account', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -43,7 +43,7 @@ describe('Users routes', () => {
     const userId = createUserResponse.body.id
 
     const getUserResponse = await request(app.server)
-      .get(`/users/${userId}`)
+      .get(`/api/v1/users/${userId}`)
       .set('Cookie', cookies)
       .expect(200)
 
@@ -63,16 +63,18 @@ describe('Users routes', () => {
   })
 
   it('Should be able to login a user', async () => {
-    const userCreated = await request(app.server).post('/users/create').send({
-      username: USER_REPOSITORY.USER_USERNAME,
-      email: USER_REPOSITORY.USER_EMAIL,
-      password: USER_REPOSITORY.USER_PASSWORD,
-    })
+    const userCreated = await request(app.server)
+      .post('/api/v1/users/create')
+      .send({
+        username: USER_REPOSITORY.USER_USERNAME,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
+      })
 
     expect(userCreated.statusCode).toBe(201)
 
     const authenticatedUser = await request(app.server)
-      .post('/users/login')
+      .post('/api/v1/users/login')
       .send({
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
@@ -82,11 +84,13 @@ describe('Users routes', () => {
   })
 
   it('Should be able to logout a user by id', async () => {
-    const userCreated = await request(app.server).post('/users/create').send({
-      username: USER_REPOSITORY.USER_USERNAME,
-      email: USER_REPOSITORY.USER_EMAIL,
-      password: USER_REPOSITORY.USER_PASSWORD,
-    })
+    const userCreated = await request(app.server)
+      .post('/api/v1/users/create')
+      .send({
+        username: USER_REPOSITORY.USER_USERNAME,
+        email: USER_REPOSITORY.USER_EMAIL,
+        password: USER_REPOSITORY.USER_PASSWORD,
+      })
 
     expect(userCreated.statusCode).toBe(201)
 
@@ -94,7 +98,7 @@ describe('Users routes', () => {
     const cookies = userCreated.get('Set-Cookie')
 
     const authenticatedUser = await request(app.server)
-      .post('/users/login')
+      .post('/api/v1/users/login')
       .set('Cookie', cookies)
       .send({
         email: USER_REPOSITORY.USER_EMAIL,
@@ -104,7 +108,7 @@ describe('Users routes', () => {
     expect(authenticatedUser.statusCode).toBe(200)
 
     const userToLogout = await request(app.server)
-      .post(`/users/logout/${newUserId}`)
+      .post(`/api/v1/users/logout/${newUserId}`)
       .set('Cookie', cookies)
       .expect(200)
 
@@ -114,14 +118,14 @@ describe('Users routes', () => {
   })
 
   it('Should be able to list all users', async () => {
-    const response = await request(app.server).get('/users').expect(200)
+    const response = await request(app.server).get('/api/v1/users').expect(200)
 
     expect(response.body.users).toEqual([])
   })
 
   it('Should be able to list a user by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -132,7 +136,7 @@ describe('Users routes', () => {
     const newUserId = createUserResponse.body.id
 
     const getUserResponse = await request(app.server)
-      .get(`/users/${newUserId}`)
+      .get(`/api/v1/users/${newUserId}`)
       .set('Cookie', cookies)
       .expect(200)
 
@@ -153,7 +157,7 @@ describe('Users routes', () => {
 
   it('Should be able to delete a user by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -164,7 +168,7 @@ describe('Users routes', () => {
     const newUserId = createUserResponse.body.id
 
     const deleteUserResponse = await request(app.server)
-      .delete(`/users/${newUserId}`)
+      .delete(`/api/v1/users/${newUserId}`)
       .set('Cookie', cookies)
       .expect(200)
 
@@ -173,7 +177,7 @@ describe('Users routes', () => {
 
   it('Should be able to update a user by id if cookie is present', async () => {
     const createUserResponse = await request(app.server)
-      .post('/users/create')
+      .post('/api/v1/users/create')
       .send({
         username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
@@ -184,7 +188,7 @@ describe('Users routes', () => {
     const userId = createUserResponse.body.id
 
     await request(app.server)
-      .put(`/users/${userId}`)
+      .put(`/api/v1/users/${userId}`)
       .set('Cookie', cookies)
       .send({
         username: USER_REPOSITORY.UPDATED_USER_USERNAME,
@@ -194,7 +198,7 @@ describe('Users routes', () => {
       .expect(200)
 
     const getUserResponse = await request(app.server)
-      .get(`/users/${userId}`)
+      .get(`/api/v1/users/${userId}`)
       .set('Cookie', cookies)
       .expect(200)
 
