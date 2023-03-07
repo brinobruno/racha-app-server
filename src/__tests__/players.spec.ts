@@ -37,6 +37,7 @@ describe('Players routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
       })
@@ -76,6 +77,7 @@ describe('Players routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
       })
@@ -132,6 +134,7 @@ describe('Players routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
       })
@@ -189,6 +192,7 @@ describe('Players routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
       })
@@ -246,6 +250,7 @@ describe('Players routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
       })
@@ -293,6 +298,7 @@ describe('Players routes', () => {
     const createUserResponse = await request(app.server)
       .post('/users/create')
       .send({
+        username: USER_REPOSITORY.USER_USERNAME,
         email: USER_REPOSITORY.USER_EMAIL,
         password: USER_REPOSITORY.USER_PASSWORD,
       })
