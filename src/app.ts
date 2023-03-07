@@ -15,13 +15,13 @@ app.register(cors, {
 app.register(cookie)
 
 app.register(usersRoutes, {
-  prefix: 'users',
+  prefix: 'api/v1/users',
 })
 
 app.register(teamsRoutes, {
-  prefix: 'users/teams',
+  prefix: 'api/v1/users/teams',
 })
 
 app.register(playersRoutes, {
-  prefix: 'users/teams/players',
+  prefix: 'api/v1/users/teams/players',
 })
