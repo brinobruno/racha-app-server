@@ -11,7 +11,7 @@ interface IUpdateOutput {
 export interface ITeamRepository {
   findTeams(): Promise<object[]>
   getTeamById(id: string): Promise<any>
-  checkTeamAlreadyExists(title: string): Promise<object>
+  checkTeamAlreadyExists(title: string): Promise<unknown> | Promise<undefined>
   createTeamAfterCheck(
     userId: string | undefined,
     title: string,
