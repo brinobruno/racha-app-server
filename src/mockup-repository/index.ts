@@ -1,9 +1,11 @@
 export const USER_REPOSITORY = {
   /* User */
+  USER_USERNAME: 'brinozada',
   USER_EMAIL: 'test@jest.com',
   USER_PASSWORD: 'weakpassword123',
 
   /* Updated user */
+  UPDATED_USER_USERNAME: 'brino.js',
   UPDATED_USER_EMAIL: 'updated@jest.com',
   UPDATED_USER_PASSWORD: 'strongpassword456',
 }
