@@ -39,9 +39,10 @@ export async function createUserHandler(
 
     const user = await createUser(body, sessionId)
 
-    return reply
-      .status(201)
-      .send({ message: 'User created successfully.', id: user[0].id })
+    return reply.status(201).send({
+      message: 'User created successfully.',
+      user: user[0],
+    })
   } catch (error) {
     return reply.status(403).send({ error: 'User already exists' })
   }
