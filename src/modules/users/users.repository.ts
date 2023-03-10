@@ -30,7 +30,7 @@ export interface IUserRepository {
     email: string,
     passwordHash: string,
     sessionId: string | undefined,
-  ): Promise<Array<{ id: string }>>
+  ): Promise<Array<{ user: string }>>
   loginUserWithSessionId(
     email: string,
     sessionId: string | undefined,
@@ -97,7 +97,7 @@ export const userRepository: IUserRepository = {
         password: passwordHash,
         session_id: sessionId,
       })
-      .returning('id')
+      .returning(['id', 'username', 'email'])
   },
 
   async loginUserWithSessionId(email: string, sessionId: string | undefined) {
