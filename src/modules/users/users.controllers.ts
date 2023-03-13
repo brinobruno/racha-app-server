@@ -65,11 +65,11 @@ export async function loginUserHandler(
       })
     }
 
-    await loginUser(body, sessionId)
+    const user: Array<object> = await loginUser(body, sessionId)
 
     return reply.status(200).send({
       message: 'User logged in successfully',
-      sessionId,
+      user: user[0],
     })
   } catch (error: any) {
     reply.status(error.code).send({ error: error.message })

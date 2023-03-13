@@ -51,16 +51,16 @@ export async function loginUser(
     throw new HttpError(422, 'User does not exist')
   }
 
-  const matchPassword = await compare(password, userExists.password)
+  const matchPassword = await compare(password, userExists?.password)
 
   if (!matchPassword) {
     throw new HttpError(401, 'Incorrect email or password')
   }
 
   try {
-    await userRepository.loginUserWithSessionId(email, sessionId)
+    const user = await userRepository.loginUserWithSessionId(email, sessionId)
 
-    return userExists
+    return user
   } catch (error) {
     throw new Error()
   }

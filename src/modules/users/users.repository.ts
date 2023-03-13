@@ -101,9 +101,12 @@ export const userRepository: IUserRepository = {
   },
 
   async loginUserWithSessionId(email: string, sessionId: string | undefined) {
-    return knex('users').where('email', email).update({
-      session_id: sessionId,
-    })
+    return knex('users')
+      .where('email', email)
+      .update({
+        session_id: sessionId,
+      })
+      .returning(['id', 'username', 'email'])
   },
 
   async logoutUserById(id: string) {
