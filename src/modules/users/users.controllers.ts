@@ -42,6 +42,7 @@ export async function createUserHandler(
     return reply.status(201).send({
       message: 'User created successfully.',
       user: user[0],
+      sessionId,
     })
   } catch (error) {
     return reply.status(403).send({ error: 'User already exists' })
@@ -70,6 +71,7 @@ export async function loginUserHandler(
     return reply.status(200).send({
       message: 'User logged in successfully',
       user: user[0],
+      sessionId,
     })
   } catch (error: any) {
     reply.status(error.code).send({ error: error.message })
