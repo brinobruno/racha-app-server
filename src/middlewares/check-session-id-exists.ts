@@ -6,16 +6,15 @@ export async function checkSessionIdExists(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const sessionId = request.cookies.sessionId
+  const sessionId = request.headers.cookies
 
   if (!sessionId) {
     return reply.status(401).send({
       error: 'Unauthorized: No session ID present',
     })
-  }
+  } // Retrieve the session information from the database
 
-  // Retrieve the session information from the database
-  const session = await getSessionById(sessionId)
+  const session = await getSessionById(sessionId.toString())
 
   if (!session) {
     return reply.status(401).send({
