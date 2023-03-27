@@ -11,6 +11,7 @@ interface IUpdateOutput {
 export interface ITeamRepository {
   findTeams(): Promise<object[]>
   getTeamById(id: string): Promise<any>
+  getTeamsByUserId(id: string): Promise<any>
   checkTeamAlreadyExists(title: string): Promise<unknown> | Promise<undefined>
   createTeamAfterCheck(
     userId: string | undefined,
@@ -32,6 +33,10 @@ export const teamRepository: ITeamRepository = {
 
   async getTeamById(id: string) {
     return await knex('teams').where({ id }).first()
+  },
+
+  async getTeamsByUserId(id: string) {
+    return await knex('teams').where({ user_id: id })
   },
 
   async checkTeamAlreadyExists(title: string) {
