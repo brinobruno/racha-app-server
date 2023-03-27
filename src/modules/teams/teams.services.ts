@@ -36,6 +36,14 @@ export async function findTeam(teamId: string) {
   return team
 }
 
+export async function findTeamsByUserId(userId: string) {
+  const teams = await teamRepository.getTeamsByUserId(userId)
+
+  if (!teams) throw new HttpError(404, 'Teams not found')
+
+  return teams
+}
+
 export async function deleteTeam(teamId: string, userId: string | undefined) {
   const teamExists = await teamRepository.getTeamById(teamId)
 
