@@ -19,12 +19,11 @@ export async function createTeamByIdHandler(
 ) {
   const body = createTeamBodySchema.parse(request.body)
   const sessionId = request.cookies.sessionId
+  const getUserParamsSchema = setIdParamsSchema()
+  const { id: userId } = getUserParamsSchema.parse(request.params)
 
   try {
     verifySessionId(sessionId)
-
-    const session = await getSessionById(sessionId)
-    const userId = session?.id
 
     const createdTeam = await createTeam(body, userId)
 
