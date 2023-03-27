@@ -5,7 +5,13 @@ import { setIdParamsSchema } from '../users/users.schemas'
 import { verifySessionId } from '../../helpers/verifySessionId'
 import { getSessionById } from '../../helpers/getSessionById'
 import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
-import { createTeam, deleteTeam, findTeam, updateTeam } from './teams.services'
+import {
+  createTeam,
+  deleteTeam,
+  findTeam,
+  findTeamsByUserId,
+  updateTeam,
+} from './teams.services'
 
 export async function createTeamByIdHandler(
   request: FastifyRequest,
@@ -55,6 +61,27 @@ export async function getTeamByIdHandler(
     const team = await findTeam(teamId)
 
     return reply.status(200).send({ message: 'Team found', team })
+  } catch (error: any) {
+    if (error.message.includes('Invalid uuid')) {
+      return reply.status(400).send({ error: 'Invalid UUID format' })
+    }
+
+    reply.status(error.code).send({ error: error.message })
+  }
+}
+
+export async function getTeamByUserIdHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const getUserParamsSchema = setIdParamsSchema()
+
+  try {
+    const { id: userId } = getUserParamsSchema.parse(request.params)
+
+    const teams = await findTeamsByUserId(userId)
+
+    return reply.status(200).send({ message: 'Teams found', teams })
   } catch (error: any) {
     if (error.message.includes('Invalid uuid')) {
       return reply.status(400).send({ error: 'Invalid UUID format' })
