@@ -16,13 +16,7 @@ export async function usersRoutes(app: FastifyInstance) {
 
   app.post('/login', loginUserHandler)
 
-  app.post(
-    '/logout/:id',
-    {
-      preHandler: [checkSessionIdExists], // Middleware
-    },
-    logoutUserByIdHandler,
-  )
+  app.post('/logout/:id', logoutUserByIdHandler)
 
   app.get('/', getUsersHandler)
 
