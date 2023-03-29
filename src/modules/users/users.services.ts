@@ -66,8 +66,8 @@ export async function loginUser(
   }
 }
 
-export async function logoutUser(id: string, sessionId: string | undefined) {
-  const userExists = await userRepository.findUserByIdAndSession(id, sessionId)
+export async function logoutUser(id: string) {
+  const userExists = await userRepository.findUserById(id)
 
   if (!userExists) throw new HttpError(404, 'User not found')
 

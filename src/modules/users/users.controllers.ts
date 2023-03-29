@@ -86,9 +86,8 @@ export async function logoutUserByIdHandler(
 
   try {
     const { id } = getUserParamsSchema.parse(request.params)
-    const sessionId = request.cookies.sessionId
 
-    await logoutUser(id, sessionId)
+    await logoutUser(id)
 
     reply.cookie('sessionId', '', {
       path: '/',
