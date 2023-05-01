@@ -45,7 +45,7 @@ export async function getPlayersByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const sessionId = request.cookies.sessionId
+  const sessionId = request.headers.cookies
   const getTeamParamsSchema = setIdParamsSchema()
 
   try {
@@ -57,7 +57,10 @@ export async function getPlayersByIdHandler(
 
     return reply.status(200).send({ players })
   } catch (error) {
-    return reply.status(404).send({ message: 'No players or team found.' })
+    console.log(request.headers)
+    return reply
+      .status(404)
+      .send({ message: 'No players or team found.', error })
   }
 }
 
