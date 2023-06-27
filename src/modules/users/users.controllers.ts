@@ -56,11 +56,12 @@ export async function loginUserHandler(
   const body = loginUserBodySchema.parse(request.body)
 
   try {
-    const { user } = await loginUser(body)
+    const { user, token } = await loginUser(body)
 
     return reply.status(200).send({
       message: 'User logged in successfully',
       user,
+      token,
     })
   } catch (error: any) {
     reply.status(error.code).send({ error: error.message })
