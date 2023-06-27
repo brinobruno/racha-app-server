@@ -4,12 +4,12 @@ import { compare, hash } from 'bcryptjs'
 
 import { HttpError } from '../../errors/customException'
 import { userRepository } from './users.repository'
+import { env } from '../../env'
 import {
   createUserBodySchema,
   loginUserBodySchema,
   updateUserBodySchema,
 } from './users.schemas'
-import { env } from '../../env'
 
 const SECRET_KEY = env.JWT_SECRET_KEY
 
