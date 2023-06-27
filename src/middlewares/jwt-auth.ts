@@ -1,7 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
 
-export const SECRET_KEY: Secret = 'your-secret-key-here'
+import { env } from '../env'
+
+export const SECRET_KEY: Secret = env.JWT_SECRET_KEY
 
 export interface CustomRequest extends FastifyRequest {
   token: string | JwtPayload
@@ -18,6 +20,10 @@ export const auth = async (request: FastifyRequest, reply: FastifyReply) => {
     const decoded = jwt.verify(token, SECRET_KEY)
     ;(request as CustomRequest).token = decoded
   } catch (error) {
-    reply.status(401).send('Please authenticate')
+    if (error instanceof jwt.JsonWebTokenError) {
+      reply.status(401).send('Invalid Token')
+    } else {
+      reply.status(401).send('Please authenticate')
+    }
   }
 }
