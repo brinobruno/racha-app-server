@@ -54,24 +54,13 @@ export async function loginUserHandler(
   reply: FastifyReply,
 ) {
   const body = loginUserBodySchema.parse(request.body)
-  let sessionId = request.cookies.sessionId
 
   try {
-    if (!sessionId) {
-      sessionId = crypto.randomUUID()
-
-      reply.cookie('sessionId', sessionId, {
-        path: '/',
-        maxAge: getDaysAmountInMS(Constants.SESSION_ID_MAX_AGE_DAYS_AMOUNT),
-      })
-    }
-
-    const { user } = await loginUser(body, sessionId)
+    const { user } = await loginUser(body)
 
     return reply.status(200).send({
       message: 'User logged in successfully',
-      user: user[0],
-      sessionId,
+      user,
     })
   } catch (error: any) {
     reply.status(error.code).send({ error: error.message })

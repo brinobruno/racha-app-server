@@ -43,10 +43,7 @@ export async function createUser(
   return userToCreate
 }
 
-export async function loginUser(
-  input: z.infer<typeof loginUserBodySchema>,
-  sessionId: string | undefined,
-) {
+export async function loginUser(input: z.infer<typeof loginUserBodySchema>) {
   const { email, password } = input
 
   const userExists = await userRepository.checkUserAlreadyExistsForLogin(email)
