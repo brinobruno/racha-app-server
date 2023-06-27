@@ -12,7 +12,7 @@ import {
 } from './users.controllers'
 
 export async function usersRoutes(app: FastifyInstance) {
-  app.post('/create', createUserHandler)
+  app.post('/signup', createUserHandler)
 
   app.post('/login', loginUserHandler)
 
