@@ -9,6 +9,7 @@ interface IUpdateOutput {
 }
 
 interface ICheckUserForLoginOutput {
+  id: string
   email: string
   password: string
 }
@@ -81,6 +82,7 @@ export const userRepository: IUserRepository = {
       .from('users')
       .where('email', email)
       .first()
+      .returning(['id', 'email', 'password'])
   },
 
   async createUserAfterCheck(

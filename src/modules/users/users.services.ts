@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import jwt from 'jsonwebtoken'
 import { compare, hash } from 'bcryptjs'
 
 import { HttpError } from '../../errors/customException'
@@ -8,6 +9,9 @@ import {
   loginUserBodySchema,
   updateUserBodySchema,
 } from './users.schemas'
+import { env } from '../../env'
+
+const SECRET_KEY = env.JWT_SECRET_KEY
 
 export async function createUser(
   input: z.infer<typeof createUserBodySchema>,
@@ -58,9 +62,17 @@ export async function loginUser(
   }
 
   try {
-    const user = await userRepository.loginUserWithSessionId(email, sessionId)
+    const user = await userRepository.checkUserAlreadyExistsForLogin(email)
 
-    return user
+    const token = jwt.sign(
+      { id: user?.id?.toString(), email: user?.email },
+      SECRET_KEY,
+      {
+        expiresIn: '2 days',
+      },
+    )
+
+    return { user, token }
   } catch (error) {
     throw new Error()
   }

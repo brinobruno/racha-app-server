@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify'
 
 import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
+import { auth } from '../../middlewares/jwt-auth'
 import {
   createUserHandler,
   deleteUserByIdHandler,
@@ -18,7 +19,7 @@ export async function usersRoutes(app: FastifyInstance) {
 
   app.post('/logout/:id', logoutUserByIdHandler)
 
-  app.get('/', getUsersHandler)
+  app.get('/', { preHandler: [auth] }, getUsersHandler)
 
   app.get(
     '/:id',
