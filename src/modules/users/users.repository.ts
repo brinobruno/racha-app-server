@@ -27,10 +27,6 @@ export interface IUserRepository {
     email: string,
     passwordHash: string,
   ): Promise<Array<{ user: string }>>
-  loginUserWithSessionId(
-    email: string,
-    sessionId: string | undefined,
-  ): Promise<any>
   logoutUserById(id: string): Promise<any>
   updateUserById(
     id: string,
@@ -84,15 +80,6 @@ export const userRepository: IUserRepository = {
         username,
         email,
         password: passwordHash,
-      })
-      .returning(['id', 'username', 'email'])
-  },
-
-  async loginUserWithSessionId(email: string, sessionId: string | undefined) {
-    return knex('users')
-      .where('email', email)
-      .update({
-        session_id: sessionId,
       })
       .returning(['id', 'username', 'email'])
   },
