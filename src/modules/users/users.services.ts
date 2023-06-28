@@ -91,8 +91,8 @@ export async function findUser(id: string) {
   return user
 }
 
-export async function deleteUser(id: string, sessionId: string | undefined) {
-  const userExists = await userRepository.findUserByIdAndSession(id, sessionId)
+export async function deleteUser(id: string) {
+  const userExists = await userRepository.findUserById(id)
 
   if (!userExists) throw new HttpError(404, 'User not found')
 

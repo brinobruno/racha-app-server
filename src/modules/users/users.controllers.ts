@@ -2,7 +2,6 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import crypto from 'node:crypto'
 
 import { userRepository } from './users.repository'
-import { verifySessionId } from '../../helpers/verifySessionId'
 import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
 import { Constants } from '../../constants'
 import {
@@ -127,13 +126,10 @@ export async function deleteUserByIdHandler(
   reply: FastifyReply,
 ) {
   const getUserParamsSchema = setIdParamsSchema()
-  const sessionId = request.cookies.sessionId
   const { id } = getUserParamsSchema.parse(request.params)
 
   try {
-    verifySessionId(sessionId)
-
-    await deleteUser(id, sessionId)
+    await deleteUser(id)
 
     reply.cookie('sessionId', '', {
       path: '/',
