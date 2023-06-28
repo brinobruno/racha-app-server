@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 
-import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
+import { auth } from '../../middlewares/jwt-auth'
 import {
   createTeamByIdHandler,
   deleteTeamByIdHandler,
@@ -14,7 +14,7 @@ export async function teamsRoutes(app: FastifyInstance) {
   app.post(
     '/create/:id',
     {
-      preHandler: [checkSessionIdExists],
+      preHandler: [auth],
     },
     createTeamByIdHandler,
   )
@@ -24,7 +24,7 @@ export async function teamsRoutes(app: FastifyInstance) {
   app.get(
     '/:id',
     {
-      preHandler: [checkSessionIdExists], // Middleware
+      preHandler: [auth], // Middleware
     },
     getTeamByIdHandler,
   )
@@ -32,7 +32,7 @@ export async function teamsRoutes(app: FastifyInstance) {
   app.get(
     '/all/:id',
     {
-      preHandler: [checkSessionIdExists], // Middleware
+      preHandler: [auth], // Middleware
     },
     getTeamByUserIdHandler,
   )
@@ -40,7 +40,7 @@ export async function teamsRoutes(app: FastifyInstance) {
   app.delete(
     '/:id',
     {
-      preHandler: [checkSessionIdExists], // Middleware
+      preHandler: [auth], // Middleware
     },
     deleteTeamByIdHandler,
   )
@@ -48,7 +48,7 @@ export async function teamsRoutes(app: FastifyInstance) {
   app.put(
     '/:id',
     {
-      preHandler: [checkSessionIdExists], // Middleware
+      preHandler: [auth], // Middleware
     },
     updateTeamByIdHandler,
   )
