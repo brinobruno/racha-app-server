@@ -22,7 +22,7 @@ export async function playersRoutes(app: FastifyInstance) {
   app.get(
     '/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     getPlayersByIdHandler,
   )
@@ -30,7 +30,7 @@ export async function playersRoutes(app: FastifyInstance) {
   app.get(
     '/one/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     getPlayerByIdHandler,
   )
@@ -38,7 +38,7 @@ export async function playersRoutes(app: FastifyInstance) {
   app.get(
     '/all',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     getAllPlayersHandler,
   )
@@ -46,7 +46,7 @@ export async function playersRoutes(app: FastifyInstance) {
   app.delete(
     '/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     deletePlayerByIdHandler,
   )
@@ -54,7 +54,7 @@ export async function playersRoutes(app: FastifyInstance) {
   app.put(
     '/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     updatePlayerByIdHandler,
   )

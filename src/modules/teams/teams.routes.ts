@@ -30,7 +30,7 @@ export async function teamsRoutes(app: FastifyInstance) {
   app.get(
     '/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     getTeamByIdHandler,
   )
@@ -38,7 +38,7 @@ export async function teamsRoutes(app: FastifyInstance) {
   app.get(
     '/all/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     getTeamByUserIdHandler,
   )
@@ -46,7 +46,7 @@ export async function teamsRoutes(app: FastifyInstance) {
   app.delete(
     '/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     deleteTeamByIdHandler,
   )
@@ -54,7 +54,7 @@ export async function teamsRoutes(app: FastifyInstance) {
   app.put(
     '/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     updateTeamByIdHandler,
   )

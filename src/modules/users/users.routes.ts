@@ -29,7 +29,7 @@ export async function usersRoutes(app: FastifyInstance) {
   app.get(
     '/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     getUserByIdHandler,
   )
@@ -37,7 +37,7 @@ export async function usersRoutes(app: FastifyInstance) {
   app.delete(
     '/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     deleteUserByIdHandler,
   )
@@ -45,7 +45,7 @@ export async function usersRoutes(app: FastifyInstance) {
   app.put(
     '/:id',
     {
-      preHandler: [auth], // Middleware
+      preHandler: [auth],
     },
     updateUserByIdHandler,
   )
