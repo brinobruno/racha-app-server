@@ -75,8 +75,6 @@ export async function logoutUser(id: string) {
   const userExists = await userRepository.findUserById(id)
 
   if (!userExists) throw new HttpError(404, 'User not found')
-
-  return await userRepository.logoutUserById(id)
 }
 
 export async function findUser(id: string) {

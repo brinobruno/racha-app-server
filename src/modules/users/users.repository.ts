@@ -27,7 +27,6 @@ export interface IUserRepository {
     email: string,
     passwordHash: string,
   ): Promise<Array<{ user: string }>>
-  logoutUserById(id: string): Promise<any>
   updateUserById(
     id: string,
     data: z.infer<typeof updateUserBodySchema>,
@@ -82,12 +81,6 @@ export const userRepository: IUserRepository = {
         password: passwordHash,
       })
       .returning(['id', 'username', 'email'])
-  },
-
-  async logoutUserById(id: string) {
-    return knex('users')
-      .where('id', id)
-      .update({ session_id: knex.raw('null') })
   },
 
   async updateUserById(
