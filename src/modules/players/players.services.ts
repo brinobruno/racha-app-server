@@ -75,10 +75,7 @@ export async function getAllPlayers() {
   }
 }
 
-export async function deletePlayer(
-  playerId: string,
-  userId: string | undefined,
-) {
+export async function deletePlayer(playerId: string) {
   const playerExists = await playerRepository.getPlayerById(playerId)
   const teamId = playerExists.team_id
   const teamExists = await teamRepository.getTeamById(teamId)
@@ -86,9 +83,6 @@ export async function deletePlayer(
   try {
     if (!teamExists) throw new HttpError(404, 'Team not found')
     if (!playerExists) throw new HttpError(404, 'Player not found')
-
-    // Check if the team's user_id matches the user's id
-    compareIdsToBeEqual({ firstId: teamExists.user_id, secondId: userId })
 
     // Check if the player's team_id matches the team's id
     compareIdsToBeEqual({ firstId: teamExists.id, secondId: teamId })
@@ -112,7 +106,6 @@ export async function updatePlayer(
     ...rest
   }: z.infer<typeof updatePlayerBodySchema>,
   playerId: string,
-  userId: string | undefined,
 ) {
   const playerExists = await playerRepository.getPlayerById(playerId)
   const teamId = playerExists.team_id
@@ -121,9 +114,6 @@ export async function updatePlayer(
   try {
     if (!teamExists) throw new HttpError(404, 'Team not found')
     if (!playerExists) throw new HttpError(404, 'Player not found')
-
-    // Check if the team's user_id matches the user's id
-    compareIdsToBeEqual({ firstId: teamExists.user_id, secondId: userId })
 
     // Check if the player's team_id matches the team's id
     compareIdsToBeEqual({ firstId: teamExists.id, secondId: teamId })

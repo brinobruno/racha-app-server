@@ -1,8 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { verifySessionId } from '../../helpers/verifySessionId'
 import { setIdParamsSchema } from '../users/users.schemas'
-import { getSessionById } from '../../helpers/getSessionById'
 import { playerRepository } from './players.repository'
 import { HttpError } from '../../errors/customException'
 import {
@@ -22,12 +20,9 @@ export async function createPlayerByIdHandler(
   reply: FastifyReply,
 ) {
   const body = createPlayerBodySchema.parse(request.body)
-  const sessionId = request.cookies.sessionId
   const getTeamParamsSchema = setIdParamsSchema()
 
   try {
-    verifySessionId(sessionId)
-
     const { id: teamId } = getTeamParamsSchema.parse(request.params)
 
     const createdPlayer = await createPlayer(body, teamId)
@@ -45,12 +40,9 @@ export async function getPlayersByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const sessionId = request.headers.cookies
   const getTeamParamsSchema = setIdParamsSchema()
 
   try {
-    verifySessionId(sessionId)
-
     const { id: teamId } = getTeamParamsSchema.parse(request.params)
 
     const players = await findPlayers(teamId)
@@ -68,12 +60,9 @@ export async function getPlayerByIdHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const sessionId = request.cookies.sessionId
   const getTeamParamsSchema = setIdParamsSchema()
 
   try {
-    verifySessionId(sessionId)
-
     const { id: playerId } = getTeamParamsSchema.parse(request.params)
 
     const player = await playerRepository.getPlayerById(playerId)
@@ -104,16 +93,10 @@ export async function deletePlayerByIdHandler(
   reply: FastifyReply,
 ) {
   const getUserParamsSchema = setIdParamsSchema()
-  const sessionId = request.cookies.sessionId
   const { id: playerId } = getUserParamsSchema.parse(request.params)
 
   try {
-    verifySessionId(sessionId)
-
-    const session = await getSessionById(sessionId)
-    const userId = session?.id
-
-    await deletePlayer(playerId, userId)
+    await deletePlayer(playerId)
 
     return reply.status(200).send({ message: 'Player deleted' })
   } catch (error: any) {
@@ -131,16 +114,10 @@ export async function updatePlayerByIdHandler(
 ) {
   const getTeamParamsSchema = setIdParamsSchema()
   const body = updatePlayerBodySchema.parse(request.body)
-  const sessionId = request.cookies.sessionId
   const { id: playerId } = getTeamParamsSchema.parse(request.params)
 
   try {
-    verifySessionId(sessionId)
-
-    const session = await getSessionById(sessionId)
-    const userId = session?.id
-
-    const updatedPlayer = await updatePlayer(body, playerId, userId)
+    const updatedPlayer = await updatePlayer(body, playerId)
 
     return reply
       .status(200)
