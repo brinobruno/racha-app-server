@@ -23,11 +23,12 @@ export async function createUserHandler(
   const body = createUserBodySchema.parse(request.body)
 
   try {
-    const user = await createUser(body)
+    const { user, token } = await createUser(body)
 
     return reply.status(201).send({
       message: 'User created successfully.',
-      user: user[0],
+      user,
+      token,
     })
   } catch (error) {
     return reply.status(403).send({ error: 'User already exists' })

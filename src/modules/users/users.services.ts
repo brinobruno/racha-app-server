@@ -37,7 +37,11 @@ export async function createUser(input: z.infer<typeof createUserBodySchema>) {
     passwordHash,
   )
 
-  return userToCreate
+  const token = jwt.sign({ id: userToCreate[0]?.user?.id, email }, SECRET_KEY, {
+    expiresIn: `${Constants.JWT_MAX_AGE_DAYS_AMOUNT} days`,
+  })
+
+  return { user: userToCreate, token }
 }
 
 export async function loginUser(input: z.infer<typeof loginUserBodySchema>) {

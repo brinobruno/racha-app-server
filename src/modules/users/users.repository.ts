@@ -26,7 +26,7 @@ export interface IUserRepository {
     username: string,
     email: string,
     passwordHash: string,
-  ): Promise<Array<{ user: string }>>
+  ): Promise<Array<{ user: any }>>
   updateUserById(
     id: string,
     data: z.infer<typeof updateUserBodySchema>,
