@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import { z } from 'zod'
 
-import { compareIdsToBeEqual } from '../../helpers/compareIdsToBeEqual'
 import { HttpError } from '../../errors/customException'
 import { teamRepository } from './teams.repository'
 import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
@@ -44,13 +43,13 @@ export async function findTeamsByUserId(userId: string) {
   return teams
 }
 
-export async function deleteTeam(teamId: string, userId: string | undefined) {
+export async function deleteTeam(teamId: string) {
   const teamExists = await teamRepository.getTeamById(teamId)
 
   if (!teamExists) throw new HttpError(404, 'Team not found')
 
   // Check if the team's user_id matches the user's id
-  compareIdsToBeEqual({ firstId: teamExists.user_id, secondId: userId })
+  // compareIdsToBeEqual({ firstId: teamExists.user_id, secondId: userId })
 
   await teamRepository.deleteTeamById(teamId)
 }
@@ -58,14 +57,13 @@ export async function deleteTeam(teamId: string, userId: string | undefined) {
 export async function updateTeam(
   input: z.infer<typeof updateTeamBodySchema>,
   teamId: string,
-  userId: string | undefined,
 ) {
   const { title, owner, badge_url, active } = input
 
-  const teamToUpdate = await teamRepository.getTeamById(teamId)
+  // const teamToUpdate = await teamRepository.getTeamById(teamId)
 
   // Check if the team's user_id matches the user's id
-  compareIdsToBeEqual({ firstId: teamToUpdate.user_id, secondId: userId })
+  // compareIdsToBeEqual({ firstId: teamToUpdate.user_id, secondId: userId })
 
   const updatedTeam = await teamRepository.updateTeamById(teamId, {
     title,

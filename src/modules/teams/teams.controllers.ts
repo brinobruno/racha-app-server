@@ -2,8 +2,6 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 
 import { teamRepository } from './teams.repository'
 import { setIdParamsSchema } from '../users/users.schemas'
-import { verifySessionId } from '../../helpers/verifySessionId'
-import { getSessionById } from '../../helpers/getSessionById'
 import { createTeamBodySchema, updateTeamBodySchema } from './teams.schemas'
 import {
   createTeam,
@@ -18,13 +16,10 @@ export async function createTeamByIdHandler(
   reply: FastifyReply,
 ) {
   const body = createTeamBodySchema.parse(request.body)
-  const sessionId = request.cookies.sessionId
   const getUserParamsSchema = setIdParamsSchema()
   const { id: userId } = getUserParamsSchema.parse(request.params)
 
   try {
-    verifySessionId(sessionId)
-
     const createdTeam = await createTeam(body, userId)
 
     return reply
@@ -95,16 +90,10 @@ export async function deleteTeamByIdHandler(
   reply: FastifyReply,
 ) {
   const getUserParamsSchema = setIdParamsSchema()
-  const sessionId = request.cookies.sessionId
   const { id: teamId } = getUserParamsSchema.parse(request.params)
 
   try {
-    verifySessionId(sessionId)
-
-    const session = await getSessionById(sessionId)
-    const userId = session?.id
-
-    await deleteTeam(teamId, userId)
+    await deleteTeam(teamId)
 
     return reply.status(200).send({ message: 'Team deleted' })
   } catch (error: any) {
@@ -122,16 +111,10 @@ export async function updateTeamByIdHandler(
 ) {
   const getTeamParamsSchema = setIdParamsSchema()
   const body = updateTeamBodySchema.parse(request.body)
-  const sessionId = request.cookies.sessionId
   const { id: teamId } = getTeamParamsSchema.parse(request.params)
 
   try {
-    verifySessionId(sessionId)
-
-    const session = await getSessionById(sessionId)
-    const userId = session?.id
-
-    await updateTeam(body, teamId, userId)
+    await updateTeam(body, teamId)
 
     return reply
       .status(200)
