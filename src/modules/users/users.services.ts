@@ -4,6 +4,7 @@ import { compare, hash } from 'bcryptjs'
 
 import { HttpError } from '../../errors/customException'
 import { userRepository } from './users.repository'
+import { Constants } from '../../constants'
 import { env } from '../../env'
 import {
   createUserBodySchema,
@@ -61,7 +62,7 @@ export async function loginUser(input: z.infer<typeof loginUserBodySchema>) {
       { id: user?.id?.toString(), email: user?.email },
       SECRET_KEY,
       {
-        expiresIn: '2 days',
+        expiresIn: `${Constants.JWT_MAX_AGE_DAYS_AMOUNT} days`,
       },
     )
 
