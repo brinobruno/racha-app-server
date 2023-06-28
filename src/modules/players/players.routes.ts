@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 
-import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
+import { auth } from '../../middlewares/jwt-auth'
 import {
   createPlayerByIdHandler,
   deletePlayerByIdHandler,
@@ -14,7 +14,7 @@ export async function playersRoutes(app: FastifyInstance) {
   app.post(
     '/create/:id',
     {
-      preHandler: [checkSessionIdExists],
+      preHandler: [auth],
     },
     createPlayerByIdHandler,
   )
@@ -28,7 +28,7 @@ export async function playersRoutes(app: FastifyInstance) {
   app.delete(
     '/:id',
     {
-      preHandler: [checkSessionIdExists], // Middleware
+      preHandler: [auth], // Middleware
     },
     deletePlayerByIdHandler,
   )
@@ -36,7 +36,7 @@ export async function playersRoutes(app: FastifyInstance) {
   app.put(
     '/:id',
     {
-      preHandler: [checkSessionIdExists], // Middleware
+      preHandler: [auth], // Middleware
     },
     updatePlayerByIdHandler,
   )
