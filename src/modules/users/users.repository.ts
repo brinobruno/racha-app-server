@@ -30,7 +30,6 @@ export interface IUserRepository {
     username: string,
     email: string,
     passwordHash: string,
-    sessionId: string | undefined,
   ): Promise<Array<{ user: string }>>
   loginUserWithSessionId(
     email: string,
@@ -89,7 +88,6 @@ export const userRepository: IUserRepository = {
     username: string,
     email: string,
     passwordHash: string,
-    sessionId: string | undefined,
   ) {
     return await knex('users')
       .insert({
@@ -97,7 +95,6 @@ export const userRepository: IUserRepository = {
         username,
         email,
         password: passwordHash,
-        session_id: sessionId,
       })
       .returning(['id', 'username', 'email'])
   },

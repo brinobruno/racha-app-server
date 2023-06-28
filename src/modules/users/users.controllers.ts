@@ -1,9 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import crypto from 'node:crypto'
 
 import { userRepository } from './users.repository'
-import { getDaysAmountInMS } from '../../utils/getDaysAmountInMS'
-import { Constants } from '../../constants'
 import {
   setIdParamsSchema,
   createUserBodySchema,
@@ -24,24 +21,13 @@ export async function createUserHandler(
   reply: FastifyReply,
 ) {
   const body = createUserBodySchema.parse(request.body)
-  let sessionId = request.cookies.sessionId
 
   try {
-    if (!sessionId) {
-      sessionId = crypto.randomUUID()
-
-      reply.cookie('sessionId', sessionId, {
-        path: '/',
-        maxAge: getDaysAmountInMS(Constants.SESSION_ID_MAX_AGE_DAYS_AMOUNT),
-      })
-    }
-
-    const user = await createUser(body, sessionId)
+    const user = await createUser(body)
 
     return reply.status(201).send({
       message: 'User created successfully.',
       user: user[0],
-      sessionId,
     })
   } catch (error) {
     return reply.status(403).send({ error: 'User already exists' })

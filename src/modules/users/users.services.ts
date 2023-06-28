@@ -13,10 +13,7 @@ import {
 
 const SECRET_KEY = env.JWT_SECRET_KEY
 
-export async function createUser(
-  input: z.infer<typeof createUserBodySchema>,
-  sessionId: string | undefined,
-) {
+export async function createUser(input: z.infer<typeof createUserBodySchema>) {
   const { username, email, password } = input
 
   const [userEmailAlreadyExists, usernameAlreadyExists] = await Promise.all([
@@ -37,7 +34,6 @@ export async function createUser(
     username,
     email,
     passwordHash,
-    sessionId,
   )
 
   return userToCreate
