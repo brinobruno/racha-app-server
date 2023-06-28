@@ -19,7 +19,13 @@ export async function teamsRoutes(app: FastifyInstance) {
     createTeamByIdHandler,
   )
 
-  app.get('/', getTeamsHandler)
+  app.get(
+    '/',
+    {
+      preHandler: [auth],
+    },
+    getTeamsHandler,
+  )
 
   app.get(
     '/:id',
