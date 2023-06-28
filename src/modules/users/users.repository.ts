@@ -119,16 +119,11 @@ export const userRepository: IUserRepository = {
 
   async updateUserById(
     id: string,
-    {
-      username,
-      email,
-      password,
-      sessionId,
-    }: z.infer<typeof updateUserBodySchema>,
+    { username, email, password }: z.infer<typeof updateUserBodySchema>,
   ) {
     return await knex('users')
       .where({ id })
-      .update({ username, email, password, session_id: sessionId })
+      .update({ username, email, password })
       .returning('id')
   },
 

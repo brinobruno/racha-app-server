@@ -155,9 +155,8 @@ export async function updateUserByIdHandler(
 
   try {
     const { id } = getUserParamsSchema.parse(request.params)
-    const sessionId = request.cookies.sessionId
 
-    const updatedUser = await updateUser(body, id, sessionId)
+    const updatedUser = await updateUser(body, id)
 
     return reply
       .status(200)

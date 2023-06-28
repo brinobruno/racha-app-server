@@ -102,7 +102,6 @@ export async function deleteUser(id: string) {
 export async function updateUser(
   input: z.infer<typeof updateUserBodySchema>,
   id: string,
-  sessionId: string | undefined,
 ) {
   const { username, email, password } = input
 
@@ -125,7 +124,6 @@ export async function updateUser(
     username,
     email,
     password: passwordHash,
-    sessionId,
   })
 
   return updatedUser
