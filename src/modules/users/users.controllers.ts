@@ -64,10 +64,6 @@ export async function logoutUserByIdHandler(
 
     await logoutUser(id)
 
-    reply.cookie('sessionId', '', {
-      path: '/',
-    })
-
     return reply.status(200).send({ message: 'User logged out' })
   } catch (error: any) {
     if (error.message.includes('Invalid uuid')) {
@@ -116,10 +112,6 @@ export async function deleteUserByIdHandler(
 
   try {
     await deleteUser(id)
-
-    reply.cookie('sessionId', '', {
-      path: '/',
-    })
 
     return reply.status(200).send({ message: 'User deleted' })
   } catch (error: any) {
