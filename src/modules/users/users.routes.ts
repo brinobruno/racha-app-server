@@ -1,6 +1,5 @@
 import { FastifyInstance } from 'fastify'
 
-import { checkSessionIdExists } from '../../middlewares/check-session-id-exists'
 import { auth } from '../../middlewares/jwt-auth'
 import {
   createUserHandler,
@@ -24,7 +23,7 @@ export async function usersRoutes(app: FastifyInstance) {
   app.get(
     '/:id',
     {
-      preHandler: [checkSessionIdExists], // Middleware
+      preHandler: [auth], // Middleware
     },
     getUserByIdHandler,
   )
@@ -32,7 +31,7 @@ export async function usersRoutes(app: FastifyInstance) {
   app.delete(
     '/:id',
     {
-      preHandler: [checkSessionIdExists], // Middleware
+      preHandler: [auth], // Middleware
     },
     deleteUserByIdHandler,
   )
@@ -40,7 +39,7 @@ export async function usersRoutes(app: FastifyInstance) {
   app.put(
     '/:id',
     {
-      preHandler: [checkSessionIdExists], // Middleware
+      preHandler: [auth], // Middleware
     },
     updateUserByIdHandler,
   )
