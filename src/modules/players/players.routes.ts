@@ -19,11 +19,29 @@ export async function playersRoutes(app: FastifyInstance) {
     createPlayerByIdHandler,
   )
 
-  app.get('/:id', getPlayersByIdHandler)
+  app.get(
+    '/:id',
+    {
+      preHandler: [auth], // Middleware
+    },
+    getPlayersByIdHandler,
+  )
 
-  app.get('/one/:id', getPlayerByIdHandler)
+  app.get(
+    '/one/:id',
+    {
+      preHandler: [auth], // Middleware
+    },
+    getPlayerByIdHandler,
+  )
 
-  app.get('/all', getAllPlayersHandler)
+  app.get(
+    '/all',
+    {
+      preHandler: [auth], // Middleware
+    },
+    getAllPlayersHandler,
+  )
 
   app.delete(
     '/:id',
