@@ -61,7 +61,7 @@ export const userRepository: IUserRepository = {
 
   async checkUserAlreadyExistsForLogin(email: string) {
     return await knex
-      .select('email', 'password')
+      .select('id', 'email', 'password')
       .from('users')
       .where('email', email)
       .first()
