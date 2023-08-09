@@ -41,7 +41,7 @@ export async function createUser(input: z.infer<typeof createUserBodySchema>) {
     expiresIn: `${Constants.JWT_MAX_AGE_DAYS_AMOUNT} days`,
   })
 
-  return { user: userToCreate, token }
+  return { user: userToCreate[0], token }
 }
 
 export async function loginUser(input: z.infer<typeof loginUserBodySchema>) {
