@@ -18,7 +18,9 @@ export interface IUserRepository {
   findUsers(): Promise<object[]>
   findUserById(id: string): Promise<unknown>
   checkUserEmailAlreadyExists(email: string): Promise<object | undefined>
-  checkUsernameAlreadyExists(username: string): Promise<object | undefined>
+  checkUsernameAlreadyExists(
+    username: string | undefined,
+  ): Promise<object | undefined>
   checkUserAlreadyExistsForLogin(
     email: string,
   ): Promise<ICheckUserForLoginOutput | undefined>
@@ -51,7 +53,7 @@ export const userRepository: IUserRepository = {
       .first()
   },
 
-  async checkUsernameAlreadyExists(username: string) {
+  async checkUsernameAlreadyExists(username: string | undefined) {
     return await knex
       .select('username')
       .from('users')
@@ -85,11 +87,11 @@ export const userRepository: IUserRepository = {
 
   async updateUserById(
     id: string,
-    { username, email, password }: z.infer<typeof updateUserBodySchema>,
+    { username }: z.infer<typeof updateUserBodySchema>,
   ) {
     return await knex('users')
       .where({ id })
-      .update({ username, email, password })
+      .update({ username })
       .returning('id')
   },
 

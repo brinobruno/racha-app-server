@@ -102,7 +102,7 @@ export async function updateUser(
   input: z.infer<typeof updateUserBodySchema>,
   id: string,
 ) {
-  const { username, email, password } = input
+  const { username } = input
 
   // const userEmailAlreadyExists =
   //   await userRepository.checkUserEmailAlreadyExists(email)
@@ -123,12 +123,10 @@ export async function updateUser(
   //   throw new HttpError(400, errorMessage)
   // }
 
-  const passwordHash = await hash(password, 8)
+  // const passwordHash = await hash(password, 8)
 
   const updatedUser = await userRepository.updateUserById(id, {
     username,
-    email,
-    password: passwordHash,
   })
 
   return updatedUser

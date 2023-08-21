@@ -13,9 +13,7 @@ export const createUserBodySchema = z.object({
 })
 
 export const updateUserBodySchema = z.object({
-  username: z.string(),
-  email: z.string().email(),
-  password: z.string(),
+  username: z.string().optional(),
 })
 
 export const loginUserBodySchema = z.object({
