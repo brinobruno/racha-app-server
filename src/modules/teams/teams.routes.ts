@@ -12,7 +12,7 @@ import {
 
 export async function teamsRoutes(app: FastifyInstance) {
   app.post(
-    '/create/:id',
+    '/:id',
     {
       preHandler: [auth],
     },
